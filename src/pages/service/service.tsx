@@ -68,7 +68,7 @@ const ServiceMain = () => {
             {/* brand area */}
 
             {/* line image slider  */}
-            <LineImgSlider />
+            {/* <LineImgSlider /> */}
             {/* line image slider  */}
 
             {/* big text */}

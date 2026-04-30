@@ -115,6 +115,9 @@ const brand_data = [
 export function BrandItems() {
   return (
     <>
+      <h3 style={{ color: "white" }} className="text-center pb-40 ">
+        The brands we empowered
+      </h3>
       {brand_data.map((item) => (
         <div key={item.id} className="col-xl-3 col-lg-3 col-md-6">
           <div className="tp-brand-4-item p-relative">
