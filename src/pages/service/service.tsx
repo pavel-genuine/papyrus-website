@@ -22,6 +22,7 @@ import { charAnimation, fadeAnimation } from "@/utils/title-animation";
 import { servicePanel } from "@/utils/panel-animation";
 import HeaderOne from "@/layouts/headers/header-one";
 import FooterFour from "@/layouts/footers/footer-four";
+import ServiceThree from "@/components/service/service-three";
 
 const ServiceMain = () => {
   useScrollSmooth();
@@ -49,28 +50,7 @@ const ServiceMain = () => {
             {/* service hero */}
 
             {/* service area */}
-            <div className="tp-service-5-area sv-service-style pb-70">
-              <div className="container container-1530">
-                <div className="row">
-                  <div className="col-xl-12">
-                    <div className="tp-service-5-title-box mb-90">
-                      <span className="ab-inner-subtitle mb-20">
-                        <Leaf />
-                        Services
-                      </span>
-                      <h4 className="tp-service-5-title">
-                        We strongly believe that only design reinforced by{" "}
-                        <br />
-                        strategy can provide real results.
-                      </h4>
-                    </div>
-                  </div>
-                </div>
-                <div className="tp-service-5-wrap">
-                  <ServiceItems />
-                </div>
-              </div>
-            </div>
+            <ServiceThree />
             {/* service area */}
 
             {/* service area */}

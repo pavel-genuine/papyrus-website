@@ -9,19 +9,31 @@ import s_3 from "@/assets/img/home-01/service/service-icon-3.png";
 const service_data = [
   {
     id: 1,
-    title: "Branding",
+    title: "Strategic Planning",
     desc: "Branding is one of the most important ingredients for the success of any business.",
     icon: s_2,
   },
   {
     id: 2,
-    title: "Website design",
+    title: "Communication Planning",
     desc: "The perfect cocktail should still look and taste perfect no matter the size of the glass you serve it in.",
     icon: s_1,
   },
   {
     id: 3,
-    title: "Marketing",
+    title: "Advertising",
+    desc: "We take that same approach with the apps & websites we create. you go there because of the overall experience.",
+    icon: s_3,
+  },
+  {
+    id: 4,
+    title: "Advertising",
+    desc: "We take that same approach with the apps & websites we create. you go there because of the overall experience.",
+    icon: s_3,
+  },
+  {
+    id: 5,
+    title: "Advertising",
     desc: "We take that same approach with the apps & websites we create. you go there because of the overall experience.",
     icon: s_3,
   },
@@ -36,7 +48,11 @@ export function ServiceItems() {
         <div key={item.id} className="col-xxl-3 col-xl-4 col-lg-4 col-md-6">
           <div className="tp-service-5-item tp_fade_bottom space-1">
             <div className="tp-service-4-icon">
-              <Image style={{ width: "auto", height: "auto" }} src={item.icon} alt="icon" />
+              <Image
+                style={{ width: "auto", height: "auto" }}
+                src={item.icon}
+                alt="icon"
+              />
             </div>
             <div className="tp-service-4-content">
               <h4 className="tp-service-4-title-sm tp-text-black">
@@ -71,7 +87,7 @@ export default function ServiceFive() {
           </div>
         </div>
         <div className="tp-service-5-wrap">
-          <ServiceItems/>
+          <ServiceItems />
         </div>
       </div>
     </div>
