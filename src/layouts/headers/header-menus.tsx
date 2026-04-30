@@ -78,10 +78,12 @@ const HeaderMenus = () => {
                           />
                         </div>
                         <div className="tp-shop-banner-content">
-                          <h4 className="tp-shop-banner-title">Sale</h4>
-                          <span>20% Off all Shoes</span>
-                          <Link className="tp-shop-btn" href="/shop">
-                            Shop Now
+                          <h4 className="tp-shop-banner-title">
+                            Services We Offer
+                          </h4>
+                          <span>Get Out of the Box</span>
+                          <Link className="tp-shop-btn" href="/contact">
+                            Get Wired
                           </Link>
                         </div>
                       </div>
