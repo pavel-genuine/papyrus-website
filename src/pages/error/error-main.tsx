@@ -11,7 +11,8 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 import Wrapper from "@/layouts/wrapper";
 import HeaderEleven from "@/layouts/headers/header-eleven";
 import FooterTwo from "@/layouts/footers/footer-two";
-import error from '@/assets/img/error/error.png';
+import error from "@/assets/img/error/error.png";
+import HeaderOne from "@/layouts/headers/header-one";
 
 const ErrorMain = () => {
   useScrollSmooth();
@@ -19,7 +20,7 @@ const ErrorMain = () => {
   return (
     <Wrapper>
       {/* header area start */}
-      <HeaderEleven />
+      <HeaderOne />
       {/* header area end */}
 
       <div id="smooth-wrapper">
@@ -32,7 +33,12 @@ const ErrorMain = () => {
                   <div className="col-xl-12">
                     <div className="tp-error-wrapper text-center">
                       <h4 className="tp-error-title">Oops!</h4>
-                      <Image priority src={error} alt="error-img" style={{ height: 'auto' }} />
+                      <Image
+                        priority
+                        src={error}
+                        alt="error-img"
+                        style={{ height: "auto" }}
+                      />
                       <div className="tp-error-content">
                         <h4 className="tp-error-title-sm">
                           Something went Wrong...

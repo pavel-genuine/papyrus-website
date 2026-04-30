@@ -16,7 +16,7 @@ const menu_data: IMenuDT[] = [
   {
     id: 3,
     title: "Our Areas",
-    link: "#",
+    link: "/service",
     pages_mega_menu: {
       first: {
         title: "SERVICES",
