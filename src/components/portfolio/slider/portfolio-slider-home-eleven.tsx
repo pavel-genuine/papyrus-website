@@ -107,8 +107,10 @@ function triggerWebGLTransition(webGL: any, realIndex: number) {
 }
 
 export default function PortfolioSliderHomeEleven() {
-  const [width, setWidth] = useState(window.innerWidth);
-  const [height, setHeight] = useState(window.innerHeight);
+  // CORRECT — default to 0, update on client
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
   const webGLContainerRef = useRef<HTMLDivElement>(null);
   const swiperRef = useRef<any>(null);
   const webGLRef = useRef<any>(null);
@@ -116,6 +118,11 @@ export default function PortfolioSliderHomeEleven() {
   const [activeSlide, setActiveSlide] = useState<
     (typeof slider_data)[0] | null
   >(null);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  }, []);
 
   const handleOpen = (item: (typeof slider_data)[0]) => {
     activeSlideRef.current = item;
