@@ -115,6 +115,11 @@
         }
     }
 }
+
+// .menu-title:hover a {
+//     color: #f7941d;
+// }
+
 .homemenu{
     &-title{
         font-size: 15px;
@@ -321,6 +326,8 @@
         }
     }
 }
+
+
 .tp-main-menu-mobile{
     & .tp-submenu{
         display: none;

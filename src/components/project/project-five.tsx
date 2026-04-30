@@ -81,7 +81,7 @@ export default function ProjectFive({ style_2 = false }: IProps) {
             <div key={item.id} className="col-xl-6 col-lg-6 col-md-6">
               <div
                 className="tp-project-5-2-thumb fix mb-140 p-relative not-hide-cursor"
-                data-cursor="View<br>Demo"
+                data-cursor="View<br>More"
               >
                 <Link className="cursor-hide" href="/our-canvas">
                   <span className="tp_img_reveal">
