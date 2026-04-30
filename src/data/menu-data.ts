@@ -8,7 +8,7 @@ const menu_data: IMenuDT[] = [
   },
   {
     id: 2,
-    title: "Our Works",
+    title: "Our Canvas",
     link: "/",
     home_menus: [
       {
@@ -46,7 +46,7 @@ const menu_data: IMenuDT[] = [
   },
   {
     id: 3,
-    title: "Services",
+    title: "Our Areas",
     link: "#",
     pages_mega_menu: {
       first: {
@@ -85,7 +85,7 @@ const menu_data: IMenuDT[] = [
 
   {
     id: 6,
-    title: "Contact",
+    title: "Let's Connect",
     link: "/contact",
   },
   // {
