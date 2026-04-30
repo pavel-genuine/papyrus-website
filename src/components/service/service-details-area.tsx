@@ -8,127 +8,322 @@ import Link from "next/link";
 import sv_1 from "@/assets/img/inner-service/sercive-details/sv-details-1.jpg";
 import sv_2 from "@/assets/img/inner-service/sercive-details/sv-details-2.jpg";
 import sv_3 from "@/assets/img/inner-service/sercive-details/sv-details-3.jpg";
+import port_1 from "@/assets/img/inner-project/showcase/showcase-1.jpg";
+import port_2 from "@/assets/img/inner-project/showcase/showcase-2.jpg";
+import port_3 from "@/assets/img/inner-project/showcase/showcase-3.jpg";
+import port_4 from "@/assets/img/inner-project/showcase/showcase-4.jpg";
 
 const servicesList = [
   {
     id: 1,
     title: "Logo Design",
+    mainImg: sv_1,
+    thumb1: sv_2,
+    thumb2: sv_3,
     desc: "Your logo is at the heart of your identity. An impactful design, tailor-made and in line with your activity will allow you to differentiate yourself and mark your audience.",
+    features: [
+      "Graphic research",
+      "Logo presentation",
+      "Redesign advice",
+      "Professional formats",
+    ],
   },
   {
     id: 2,
     title: "PR & Media Buying",
-    desc: "Strategic media procurement and public relations management to maximize your brand's reach and authority.",
+    mainImg: port_1,
+    thumb1: port_2,
+    thumb2: sv_1,
+    desc: "Strategic media procurement and public relations management to maximize your brand's reach and authority across top-tier publications.",
+    features: [
+      "Media Relations",
+      "Press Releases",
+      "Crisis Management",
+      "Media Planning",
+    ],
   },
   {
     id: 3,
     title: "LAUNCHING",
-    desc: "Crafting memorable brand launches that create immediate market impact and long-term consumer interest.",
+    mainImg: port_2,
+    thumb1: port_3,
+    thumb2: port_4,
+    desc: "Crafting memorable brand launches that create immediate market impact and long-term consumer interest through strategic event planning.",
+    features: [
+      "Teaser Campaigns",
+      "Launch Events",
+      "Influencer Kits",
+      "PR Coverage",
+    ],
   },
   {
     id: 4,
     title: "ANNUAL REPORT",
-    desc: "Professional layout and data visualization for corporate reports that communicate success and transparency.",
+    mainImg: port_3,
+    thumb1: port_1,
+    thumb2: sv_2,
+    desc: "Professional layout and data visualization for corporate reports that communicate success and transparency to stakeholders.",
+    features: [
+      "Data Visualization",
+      "Copywriting",
+      "Financial Layouts",
+      "Digital PDF sets",
+    ],
   },
   {
     id: 5,
     title: "PACKAGING",
-    desc: "Functional and aesthetic packaging solutions that stand out on the shelf while protecting your product identity.",
+    mainImg: port_4,
+    thumb1: sv_3,
+    thumb2: port_2,
+    desc: "Functional and aesthetic packaging solutions that stand out on the shelf while protecting your product's unique brand identity.",
+    features: [
+      "Die-cut Design",
+      "Material Selection",
+      "Eco-friendly options",
+      "Prototyping",
+    ],
   },
   {
     id: 6,
     title: "Digital & Social Media Marketing",
-    desc: "Comprehensive management of your digital ecosystem, focusing on growth, engagement, and community building.",
+    mainImg: sv_1,
+    thumb1: port_4,
+    thumb2: sv_2,
+    desc: "Comprehensive management of your digital ecosystem, focusing on growth, engagement, and cross-platform community building.",
+    features: ["Content Strategy", "Paid Ads", "Community Mgmt", "Analytics"],
   },
   {
     id: 7,
     title: "EVENT",
-    desc: "Managing large-scale corporate events and brand experiences with meticulous attention to detail and logistics.",
+    mainImg: port_1,
+    thumb1: sv_3,
+    thumb2: port_3,
+    desc: "Managing large-scale corporate events and brand experiences with meticulous attention to detail and on-site logistics.",
+    features: [
+      "Venue Scouting",
+      "Theme Design",
+      "Vendor Mgmt",
+      "On-site Coordination",
+    ],
   },
   {
     id: 8,
     title: "CALENDAR",
-    desc: "Customized corporate calendars that keep your brand in front of clients consistently throughout the year.",
+    mainImg: sv_2,
+    thumb1: port_2,
+    thumb2: sv_1,
+    desc: "Customized corporate calendars that keep your brand in front of clients consistently every single day of the year.",
+    features: [
+      "Custom Layouts",
+      "Thematic Imagery",
+      "Premium Printing",
+      "Distribution",
+    ],
   },
   {
     id: 9,
     title: "BROCHURE & CATALOGUE",
-    desc: "Premium print materials designed to showcase your products and services with elegance and clarity.",
+    mainImg: port_3,
+    thumb1: sv_2,
+    thumb2: port_1,
+    desc: "Premium print materials designed to showcase your products and services with professional elegance and absolute clarity.",
+    features: [
+      "Layout Design",
+      "Product Photography",
+      "Typography",
+      "Paper Selection",
+    ],
   },
   {
     id: 10,
     title: "TVC",
-    desc: "High-quality television commercial production that tells your brand story with cinematic impact.",
+    mainImg: sv_1,
+    thumb1: port_4,
+    thumb2: port_2,
+    desc: "High-quality television commercial production that tells your brand story with cinematic impact and mass market appeal.",
+    features: [
+      "Script Writing",
+      "Storyboarding",
+      "Production",
+      "Color Grading",
+    ],
   },
   {
     id: 11,
     title: "CAMPAIGN",
-    desc: "Integrated marketing campaigns designed to achieve specific business goals across all strategic platforms.",
+    mainImg: port_2,
+    thumb1: sv_1,
+    thumb2: port_3,
+    desc: "Integrated marketing campaigns designed to achieve specific business goals across all strategic media platforms.",
+    features: ["Concept Dev", "Multi-channel setup", "Execution", "Reporting"],
   },
   {
     id: 12,
     title: "SOCIAL",
-    desc: "Creating viral-worthy social content that builds genuine connection and loyalty with your followers.",
+    mainImg: sv_3,
+    thumb1: port_4,
+    thumb2: sv_2,
+    desc: "Creating viral-worthy social content that builds genuine connection and long-lasting loyalty with your online followers.",
+    features: [
+      "Trend Hijacking",
+      "Reels/TikToks",
+      "Grid Aesthetic",
+      "Bio Optimization",
+    ],
   },
   {
     id: 13,
     title: "LEAFLET",
-    desc: "Direct marketing materials that deliver your message straight to the hands of your target customers.",
+    mainImg: port_1,
+    thumb1: sv_2,
+    thumb2: sv_1,
+    desc: "Direct marketing materials that deliver your message straight to the hands of your target customers with impact.",
+    features: [
+      "A5/A4 Layouts",
+      "Copywriting",
+      "Distribution Maps",
+      "Print Finishing",
+    ],
   },
   {
     id: 14,
     title: "OVC",
-    desc: "Engaging online video content optimized for digital platforms, social media feeds, and mobile viewing.",
+    mainImg: port_4,
+    thumb1: port_1,
+    thumb2: sv_3,
+    desc: "Engaging online video content optimized for digital platforms, social media feeds, and high-performance mobile viewing.",
+    features: [
+      "Format Optimization",
+      "Subtitles",
+      "Fast-paced Editing",
+      "Hook Creation",
+    ],
   },
   {
     id: 15,
     title: "ACTIVATION",
-    desc: "Driving direct consumer engagement through high-energy brand activations and field marketing.",
+    mainImg: sv_1,
+    thumb1: port_3,
+    thumb2: port_2,
+    desc: "Driving direct consumer engagement through high-energy brand activations and localized field marketing activities.",
+    features: ["Sampling", "BTL Strategy", "Roadshows", "User Interaction"],
   },
   {
     id: 16,
     title: "MUSIC VIDEO",
-    desc: "Creative visual production for artists, blending cinematic storytelling with rhythmic brand integration.",
+    mainImg: port_2,
+    thumb1: sv_1,
+    thumb2: sv_3,
+    desc: "Creative visual production for artists, blending cinematic storytelling with rhythmic brand integration and artistry.",
+    features: ["Concept Art", "VFX", "Choreography Shots", "Lighting Setup"],
   },
   {
     id: 17,
     title: "BILL BOARD",
-    desc: "Large-scale outdoor visibility designed for maximum impact and instant brand recognition on the move.",
+    mainImg: port_3,
+    thumb1: port_4,
+    thumb2: sv_2,
+    desc: "Large-scale outdoor visibility designed for maximum impact and instant brand recognition even from a distance.",
+    features: [
+      "Visibility Audit",
+      "Minimalist Copy",
+      "High-res Graphics",
+      "Site Selection",
+    ],
   },
   {
     id: 18,
     title: "AV",
-    desc: "Professional Audio-Visual solutions for corporate presentations, documentaries, and brand storytelling.",
+    mainImg: sv_2,
+    thumb1: port_1,
+    thumb2: sv_1,
+    desc: "Professional Audio-Visual solutions for corporate presentations, documentaries, and immersive brand storytelling.",
+    features: ["Sound Design", "Voiceover", "Animation", "Editing"],
   },
   {
     id: 19,
     title: "STALL",
-    desc: "Custom exhibition stall designs that attract footfall and showcase your brand at international trade fairs.",
+    mainImg: port_1,
+    thumb1: sv_3,
+    thumb2: port_4,
+    desc: "Custom exhibition stall designs that attract footfall and showcase your brand at major international trade fairs.",
+    features: [
+      "3D Visualization",
+      "Fabrication",
+      "Lighting",
+      "Branding Elements",
+    ],
   },
   {
     id: 20,
     title: "OUT DOOR BRANDING",
-    desc: "Comprehensive outdoor visibility solutions from architectural signage to environmental branding.",
+    mainImg: port_4,
+    thumb1: sv_2,
+    thumb2: port_3,
+    desc: "Comprehensive outdoor visibility solutions from architectural signage to full-scale environmental branding.",
+    features: [
+      "Site Surveys",
+      "Signage Design",
+      "Installation",
+      "Material Testing",
+    ],
   },
   {
     id: 21,
     title: "PRESS AD",
-    desc: "Traditional print advertising redesigned for modern impact in high-circulation newspapers and magazines.",
+    mainImg: sv_3,
+    thumb1: port_2,
+    thumb2: sv_1,
+    desc: "Traditional print advertising redesigned for modern impact in high-circulation newspapers and niche magazines.",
+    features: [
+      "Ad Layouts",
+      "Copywriting",
+      "Placement Strategy",
+      "Response Tracking",
+    ],
   },
   {
     id: 22,
     title: "AI WORKS",
-    desc: "Leveraging cutting-edge AI tools for innovative design, automation, and futuristic creative production.",
+    mainImg: port_2,
+    thumb1: port_4,
+    thumb2: sv_1,
+    desc: "Leveraging cutting-edge AI tools for innovative design, workflow automation, and futuristic creative production.",
+    features: [
+      "AI Image Gen",
+      "Task Automation",
+      "Dynamic Content",
+      "Predictive Design",
+    ],
   },
   {
     id: 23,
     title: "BTL",
+    mainImg: port_3,
+    thumb1: sv_2,
+    thumb2: sv_3,
     desc: "Below-the-line marketing strategies focused on direct consumer interaction and point-of-sale conversion.",
+    features: [
+      "Point of Sale",
+      "Direct Mail",
+      "Retail Merchandising",
+      "Trade Shows",
+    ],
   },
   {
     id: 24,
     title: "ARM",
-    desc: "Advanced Relationship Management and strategic support to ensure long-term brand health and loyalty.",
+    mainImg: port_1,
+    thumb1: port_2,
+    thumb2: sv_2,
+    desc: "Advanced Relationship Management and strategic support to ensure long-term brand health and stakeholder loyalty.",
+    features: [
+      "Client Strategy",
+      "Loyalty Programs",
+      "Account Growth",
+      "Insight Data",
+    ],
   },
 ];
 
@@ -136,7 +331,7 @@ export default function ServiceDetailsArea() {
   const [activeService, setActiveService] = useState(servicesList[0]);
 
   const handleTabClick = (e: any, item: any) => {
-    e.preventDefault(); // Prevents page jump
+    e.preventDefault();
     setActiveService(item);
   };
 
@@ -164,9 +359,10 @@ export default function ServiceDetailsArea() {
               <div className="service-details__tab-thumb">
                 <Image
                   data-speed="0.4"
-                  src={sv_1}
-                  alt="service-img"
+                  src={activeService.mainImg}
+                  alt={activeService.title}
                   style={{ height: "auto" }}
+                  priority // Good for the main image
                 />
               </div>
             </div>
@@ -186,13 +382,23 @@ export default function ServiceDetailsArea() {
                   have to complete and evokes emotion without distracting them.
                 </p>
               </div>
+
+              {/* Dynamic Feature List */}
+              <div className="service-details__fea-list">
+                <ul>
+                  {activeService?.features?.map((feature, idx) => (
+                    <li key={idx}>{feature}</li>
+                  ))}
+                </ul>
+              </div>
+
               <div className="service-details__sm-thumb-wrap mb-60">
                 <div className="row">
                   <div className="col-xl-6 col-lg-6 col-md-6 mb-20">
                     <div className="service-details__sm-thumb">
                       <Image
-                        src={sv_2}
-                        alt="service-img"
+                        src={activeService?.thumb1}
+                        alt="service-thumb-1"
                         style={{ height: "auto" }}
                       />
                     </div>
@@ -200,8 +406,8 @@ export default function ServiceDetailsArea() {
                   <div className="col-xl-6 col-lg-6 col-md-6 mb-20">
                     <div className="service-details__sm-thumb">
                       <Image
-                        src={sv_3}
-                        alt="service-img"
+                        src={activeService?.thumb2}
+                        alt="service-thumb-2"
                         style={{ height: "auto" }}
                       />
                     </div>
@@ -219,14 +425,14 @@ export default function ServiceDetailsArea() {
               </div>
 
               <div className="service-details__right-category">
-                {servicesList.map((item) => (
+                {servicesList?.map((item) => (
                   <a
-                    key={item.id}
+                    key={item?.id}
                     href="#"
                     onClick={(e) => handleTabClick(e, item)}
                     className={activeService.id === item.id ? "active" : ""}
                   >
-                    {item.title}
+                    {item?.title}
                   </a>
                 ))}
               </div>
