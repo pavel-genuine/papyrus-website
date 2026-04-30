@@ -74,7 +74,7 @@ const ContactMain = () => {
                           className="cn-contactform-2-map "
                         >
                           <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d37866.42024631252!2d90.04636289871837!3d23.823039160865342!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1699251079678!5m2!1sen!2sbd"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.7964917676363!2d90.3984148751164!3d23.790260178643226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cd10afd56168c5f%3A0x4e6983e751046fac!2sPapyrus%20Integrated%20Marketing%20Communications!5e0!3m2!1sen!2sbd!4v1776831523289!5m2!1sen!2sbd"
                             style={{ border: 0 }}
                             allowFullScreen
                             loading="lazy"
