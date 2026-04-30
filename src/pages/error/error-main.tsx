@@ -13,6 +13,7 @@ import HeaderEleven from "@/layouts/headers/header-eleven";
 import FooterTwo from "@/layouts/footers/footer-two";
 import error from "@/assets/img/error/error.png";
 import HeaderOne from "@/layouts/headers/header-one";
+import FooterFour from "@/layouts/footers/footer-four";
 
 const ErrorMain = () => {
   useScrollSmooth();
@@ -57,7 +58,7 @@ const ErrorMain = () => {
           </main>
 
           {/* footer area */}
-          <FooterTwo topCls="" />
+          <FooterFour />
           {/* footer area */}
         </div>
       </div>
