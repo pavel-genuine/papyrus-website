@@ -151,7 +151,7 @@ export default function ServiceThree() {
                 </div>
                 <div className="tp-service-4-content">
                   <h4 className="tp-service-4-title-sm">
-                    <Link href="/service">{item.title}</Link>
+                    <Link href="#">{item.title}</Link>
                   </h4>
                   <p>{item.subtitle}</p>
                 </div>
