@@ -8,61 +8,9 @@ const menu_data: IMenuDT[] = [
   },
 
   {
-    id: 3,
+    id: 1,
     title: "Our Canvas",
-    link: "/portfolio-standard",
-    portfolio_mega_menus: {
-      first: {
-        title: "Our Canvas",
-        submenus: [
-          {
-            id: 1,
-            menu_lists: [
-              { title: "LOGO", link: "/" },
-              { title: "PR & Media Buying", link: "/" },
-              { title: "LAUNCHING", link: "/" },
-              { title: "ANNUAL REPORT", link: "/" },
-              { title: "PACKAGING", link: "/" },
-              { title: "Digital & Social Media Marketing", link: "/" },
-              { title: "EVENT", link: "/" },
-              { title: "CALENDAR", link: "/" },
-            ],
-          },
-        ],
-      },
-      second: {
-        submenus: [
-          {
-            id: 1,
-            title: "",
-            menu_lists: [
-              { title: "BROCHURE & CATALOGUE", link: "/" },
-              { title: "TVC", link: "/" },
-              { title: "CAMPAIGN", link: "/" },
-              { title: "SOCIAL", link: "/" },
-              { title: "LEAFLET", link: "/" },
-              { title: "OVC", link: "/" },
-              { title: "ACTIVATION", link: "/" },
-              { title: "MUSIC VIDEO", link: "/" },
-            ],
-          },
-          {
-            id: 2,
-            title: "",
-            menu_lists: [
-              { title: "BILL BOARD", link: "/" },
-              { title: "AV", link: "/" },
-              { title: "STALL", link: "/" },
-              { title: "OUT DOOR BRANDING", link: "/" },
-              { title: "PRESS AD", link: "/" },
-              { title: "AI WORKS", link: "/" },
-              { title: "BTL", link: "/" },
-              { title: "ARM", link: "/" },
-            ],
-          },
-        ],
-      },
-    },
+    link: "/",
   },
 
   {
