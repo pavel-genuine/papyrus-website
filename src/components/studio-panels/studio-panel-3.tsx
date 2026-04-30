@@ -70,7 +70,7 @@ export default function StudioPanelThree() {
             <div className="col-xl-4 col-lg-6">
               <div className="tp-studio-portfolio-title-box">
                 <h4 className="tp-studio-portfolio-title">
-                  Our Areas to serve :
+                  Areas we to serve :
                 </h4>
                 <p>
                   The list is far from exhaustive we all have our own
