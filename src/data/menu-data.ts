@@ -17,34 +17,34 @@ const menu_data: IMenuDT[] = [
     id: 3,
     title: "Our Areas",
     link: "/service",
-    pages_mega_menu: {
-      first: {
-        title: "SERVICES",
-        submenus: [
-          { title: "Strategic Planning", link: "/" },
-          { title: "Communication Planning", link: "/" },
-          { title: "Advertising", link: "/" },
-          { title: "Creative Designs", link: "/" },
-          { title: "Audio Visual & Print Production", link: "/" },
-          { title: "PR & Media planning and Buying", link: "/" },
-          { title: "Direct & Experimental Engagement", link: "/" },
-          { title: "  Event", link: "/" },
-          { title: "Digital & Social Media Marketing", link: "/" },
-        ],
-      },
-      second: {
-        title: "Shop Page",
-        submenus: [
-          { title: "Shop Page", link: "/shop" },
-          { title: "Shop Details One", link: "/shop-details" },
-          { title: "Shop Details Two", link: "/shop-details-2" },
-          { title: "my account", link: "/account" },
-          { title: "Cart", link: "/cart" },
-          { title: "Checkout", link: "/checkout" },
-          { title: "Wishlist", link: "/wishlist" },
-        ],
-      },
-    },
+    // pages_mega_menu: {
+    //   first: {
+    //     title: "SERVICES",
+    //     submenus: [
+    //       { title: "Strategic Planning", link: "/" },
+    //       { title: "Communication Planning", link: "/" },
+    //       { title: "Advertising", link: "/" },
+    //       { title: "Creative Designs", link: "/" },
+    //       { title: "Audio Visual & Print Production", link: "/" },
+    //       { title: "PR & Media planning and Buying", link: "/" },
+    //       { title: "Direct & Experimental Engagement", link: "/" },
+    //       { title: "  Event", link: "/" },
+    //       { title: "Digital & Social Media Marketing", link: "/" },
+    //     ],
+    //   },
+    //   second: {
+    //     title: "Shop Page",
+    //     submenus: [
+    //       { title: "Shop Page", link: "/shop" },
+    //       { title: "Shop Details One", link: "/shop-details" },
+    //       { title: "Shop Details Two", link: "/shop-details-2" },
+    //       { title: "my account", link: "/account" },
+    //       { title: "Cart", link: "/cart" },
+    //       { title: "Checkout", link: "/checkout" },
+    //       { title: "Wishlist", link: "/wishlist" },
+    //     ],
+    //   },
+    // },
   },
   {
     id: 4,
