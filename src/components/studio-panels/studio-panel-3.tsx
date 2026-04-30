@@ -91,7 +91,7 @@ export default function StudioPanelThree() {
                     >
                       <div className="tp-studio-portfolio-inner-title-box">
                         <h4 className="tp-studio-portfolio-inner-title">
-                          <Link href="/">{item.title}</Link>
+                          <Link href="/our-areas">{item.title}</Link>
                           <span>{item.id < 9 ? `0${item.id}` : item.id}</span>
                         </h4>
                       </div>

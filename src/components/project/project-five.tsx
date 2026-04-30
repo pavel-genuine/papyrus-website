@@ -83,7 +83,7 @@ export default function ProjectFive({ style_2 = false }: IProps) {
                 className="tp-project-5-2-thumb fix mb-140 p-relative not-hide-cursor"
                 data-cursor="View<br>Demo"
               >
-                <Link className="cursor-hide" href="/">
+                <Link className="cursor-hide" href="/our-canvas">
                   <span className="tp_img_reveal">
                     <div className="tp_img_reveal">
                       <Image

@@ -51,7 +51,7 @@ export default function AboutThree() {
                 clients stand out in a cluttered marketplace and improve brand
                 identity, image, and preference.
               </p>
-              <Link className="tp-btn-black-2 tp_fade_bottom" href="/">
+              <Link className="tp-btn-black-2 tp_fade_bottom" href="/about">
                 About Us
                 <span className="p-relative">
                   <RightArrowTwo />
