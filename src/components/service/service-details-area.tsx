@@ -215,7 +215,7 @@ export default function ServiceDetailsArea() {
           <div className="col-xl-5 col-lg-5">
             <div className="service-details__right-wrap fix p-relative">
               <div className="service-details__rotate-text">
-                <span>List of Canvas Elem</span>
+                <span>List of Canvas Elems</span>
               </div>
 
               <div className="service-details__right-category">

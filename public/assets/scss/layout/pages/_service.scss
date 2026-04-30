@@ -941,30 +941,44 @@
                 margin-top: 60px;
             }
         }
-        &-category{
-            margin-bottom: 70px;
-            & a{
-                font-weight: 500;
-                font-size: 14px;
-                letter-spacing: -0.02em;
-                text-transform: uppercase;
-                color: var(--tp-common-black);
-                border: 1px solid var(--tp-common-black);
-                padding: 0px 20px;
-                height: 40px;
-                line-height: 40px;
-                border-radius: 100px;
-                transition: .3s;
-                margin-bottom: 10px;
-                display: table;
-                &.active{
-                    background-color: var(--tp-common-black);
-                    border-color: var(--tp-common-black);
-                    color: var(--tp-common-white);
+                &-category {
+                    margin-bottom: 70px;
+                    // Add these three lines to the container
+                    display: flex;
+                    flex-wrap: wrap; // Allows items to move to the next line if they run out of space
+                    gap: 10px; // Adds spacing between the items
+        
+                    & a {
+                        font-weight: 500;
+                        font-size: 14px;
+                        letter-spacing: -0.02em;
+                        text-transform: uppercase;
+                        color: var(--tp-common-black);
+                        border: 1px solid var(--tp-common-black);
+                        padding: 0px 20px;
+                        height: 40px;
+                        line-height: 38px; // Adjusted slightly for border alignment
+                        border-radius: 100px;
+                        transition: .3s;
+        
+                        // Change display from 'table' to 'inline-flex' or 'block'
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        white-space: nowrap; // Prevents text inside the pill from breaking
+        
+                        &.active {
+                            background-color: var(--tp-common-black);
+                            border-color: var(--tp-common-black);
+                            color: var(--tp-common-white);
+                        }
+        
+                        &:hover {
+                            background-color: var(--tp-common-black);
+                            color: var(--tp-common-white);
+                        }
+                    }
                 }
-            }
-
-        }
         &-text-box{
             & h4{
                 font-weight: 600;
