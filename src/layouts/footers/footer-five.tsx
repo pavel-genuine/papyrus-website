@@ -10,14 +10,14 @@ export default function FooterFive() {
           <div className="row">
             <div className="col-xl-12">
               <div className="tp-footer-5-content-wrap">
-                <div className="tp-footer-5-title-box">
+                <Link href="/lets-connect" className="tp-footer-5-title-box">
                   <span className="tp-footer-5-subtitle">
                     Want to <br /> Start a Project?
                   </span>
                   <h4 className="tp-footer-5-title tp_reveal_anim-2 footer-big-text">
                     {"Let's"} Talk
                   </h4>
-                </div>
+                </Link>
                 <div className="tp-footer-5-info d-flex align-items-center justify-content-start justify-content-md-end">
                   <Link
                     className="tp-footer-5-mail"
@@ -25,7 +25,7 @@ export default function FooterFive() {
                   >
                     info@papyrus.agency
                   </Link>
-                  <Link className="tp-footer-5-link" href="#">
+                  <Link className="tp-footer-5-link" href="/lets-connect">
                     <UpArrow clr="#19191A" />
                   </Link>
                 </div>

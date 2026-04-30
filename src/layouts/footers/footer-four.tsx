@@ -17,19 +17,19 @@ export default function FooterFour() {
                   <div className="tp-footer-3-menu">
                     <ul>
                       <li>
-                        <Link href="#">Home</Link>
+                        <Link href="/">Home</Link>
                       </li>
                       <li>
-                        <Link href="#">Works</Link>
+                        <Link href="/our-canvas">Our Canvas</Link>
                       </li>
                       <li>
-                        <Link href="#">Services</Link>
+                        <Link href="/our-areas">Our Areas</Link>
                       </li>
                       <li>
-                        <Link href="#">About</Link>
+                        <Link href="/about">About</Link>
                       </li>
                       <li>
-                        <Link href="#">Contact</Link>
+                        <Link href="/lets-connect">Let's Connect</Link>
                       </li>
                     </ul>
                   </div>
@@ -83,13 +83,14 @@ export default function FooterFour() {
                   </div>
                   <div className="tp-footer-2-contact-item">
                     <span>
-                      P: <Link href="tel:+880 1313713201">+880 1313713201</Link>
+                      <Link href="tel:+880 1313713201">+880 1313713201</Link>
                     </span>
                     <span>
-                      P: <Link href="tel:+880 1313713190">+880 1313713190</Link>
+                      <Link href="tel:+880 1313713190">+880 1313713190</Link>
                     </span>
                     <span>
-                      E:{" "}
+                      {" "}
+                      <br />
                       <Link href="mailto:info@papyrus.agency">
                         info@papyrus.agency
                       </Link>
