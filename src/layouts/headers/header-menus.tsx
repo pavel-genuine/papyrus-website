@@ -45,7 +45,7 @@ const HeaderMenus = () => {
                 <div className="row gx-50">
                   <div className="col-xl-8">
                     <div className="tp-megamenu-list-box">
-                      <div className="row gx-50">
+                      <div className="">
                         <div className="">
                           <div className="tp-megamenu-list">
                             <h4 className="tp-megamenu-title">
@@ -64,24 +64,6 @@ const HeaderMenus = () => {
                             </div>
                           </div>
                         </div>
-                        {/* <div className="col-xl-4">
-                          <div className="tp-megamenu-list tp-megamenu-list-2">
-                            <h4 className="tp-megamenu-title">
-                              {menu.pages_mega_menu.second.title}
-                            </h4>
-                            <div className="tp-megamenu-list-wrap">
-                              <ul>
-                                {menu.pages_mega_menu.second.submenus.map(
-                                  (psm, i) => (
-                                    <li key={i}>
-                                      <Link href={psm.link}>{psm.title}</Link>
-                                    </li>
-                                  )
-                                )}
-                              </ul>
-                            </div>
-                          </div>
-                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -96,12 +78,10 @@ const HeaderMenus = () => {
                           />
                         </div>
                         <div className="tp-shop-banner-content">
-                          <h4 className="tp-shop-banner-title">
-                            Services We Offer
-                          </h4>
-                          <span>Get Out Of the Box</span>
-                          <Link className="tp-shop-btn" href="/contact">
-                            Get Wired
+                          <h4 className="tp-shop-banner-title">Sale</h4>
+                          <span>20% Off all Shoes</span>
+                          <Link className="tp-shop-btn" href="/shop">
+                            Shop Now
                           </Link>
                         </div>
                       </div>
@@ -158,9 +138,11 @@ const HeaderMenus = () => {
                             (portSm2, i) => (
                               <div key={i} className="col-xxl-3 col-xl-3">
                                 <div className="tp-megamenu-list tp-megamenu-list-2 ml-20">
-                                  <h4 className="tp-megamenu-title">
-                                    {portSm2.title}
-                                  </h4>
+                                  {portSm2.title && (
+                                    <h4 className="tp-megamenu-title">
+                                      {portSm2.title}
+                                    </h4>
+                                  )}
                                   <div className="tp-megamenu-list-wrap">
                                     <ul>
                                       {portSm2.menu_lists.map((psm) => (
@@ -181,8 +163,8 @@ const HeaderMenus = () => {
                     </div>
                     <div className="col-xxl-3 col-xl-3 d-none d-xxl-block">
                       <div className="tp-megamenu-portfolio-text">
-                        <h4>60+</h4>
-                        <span>Pre-built demo home page</span>
+                        <h4>30+</h4>
+                        <span>In house areas to serve</span>
                       </div>
                     </div>
                   </div>
