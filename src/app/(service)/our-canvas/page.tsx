@@ -7,9 +7,7 @@ export const metadata: Metadata = {
 };
 
 const ServiceDetailsPage = () => {
-  return (
-    <ServiceDetailsMain/>
-  );
+  return <ServiceDetailsMain />;
 };
 
 export default ServiceDetailsPage;

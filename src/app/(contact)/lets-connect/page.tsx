@@ -7,9 +7,7 @@ export const metadata: Metadata = {
 };
 
 const ContactPage = () => {
-  return (
-    <ContactMain/>
-  );
+  return <ContactMain />;
 };
 
 export default ContactPage;

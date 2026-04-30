@@ -10,13 +10,13 @@ const menu_data: IMenuDT[] = [
   {
     id: 1,
     title: "Our Canvas",
-    link: "/",
+    link: "/our-canvas",
   },
 
   {
     id: 3,
     title: "Our Areas",
-    link: "/service",
+    link: "/our-areas",
     // pages_mega_menu: {
     //   first: {
     //     title: "SERVICES",
@@ -55,7 +55,7 @@ const menu_data: IMenuDT[] = [
   {
     id: 6,
     title: "Let's Connect",
-    link: "/contact",
+    link: "/lets-connect",
   },
   // {
   //   id: 51,
