@@ -1,0 +1,67 @@
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+// internal imports
+import shape from "@/assets/img/home-02/service/sv-shape-1.png";
+import { ArrowBg, RightArrowTwo, FirstBracket, FirstBracketTwo } from "../svg";
+
+export default function AboutThree() {
+  return (
+    <div className="tp-about-3-area pt-120 pb-110">
+      <div className="container">
+        <div className="row">
+          <div className="col-xl-11">
+            <div className="tp-about-3-title-box">
+              <span className="tp-section-subtitle-2 tp_fade_bottom">
+                <span>
+                  <FirstBracket />
+                </span>
+                <span className="tp-subtitle-text tp_text_invert">
+                  Who we are
+                </span>
+                <span>
+                  <FirstBracketTwo />
+                </span>
+              </span>
+              <h4 className="tp-section-title-90 tp_text_invert tp_fade_bottom mb-20">
+                We tell visual stories through creativities.
+                <span>
+                  {" "}
+                  <br />
+                </span>
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div className="row align-items-center">
+          <div className="col-xl-6 col-lg-6 col-md-4">
+            <div className="tp-service-2-shape-img text-center text-lg-start">
+              <Image src={shape} alt="" />
+            </div>
+          </div>
+          <div className="col-xl-6 col-lg-6 col-md-8">
+            <div className="tp-about-3-content">
+              <p className="mb-30 tp_fade_bottom">
+                We are an advertising agency for 19 years, located in
+                Bangladesh, focusing on creating sustainable ideas and marketing
+                communication solutions.
+              </p>
+              <p className="mb-45 tp_fade_bottom">
+                Our approach is based on strategic insights, which help our
+                clients stand out in a cluttered marketplace and improve brand
+                identity, image, and preference.
+              </p>
+              <Link className="tp-btn-black-2 tp_fade_bottom" href="/">
+                About Us
+                <span className="p-relative">
+                  <RightArrowTwo />
+                  <ArrowBg />
+                </span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

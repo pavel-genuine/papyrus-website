@@ -1,0 +1,122 @@
+"use client";
+import { gsap } from "gsap";
+import React, { useEffect } from "react";
+import useScrollSmooth from "@/hooks/use-scroll-smooth";
+import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
+import { useGSAP } from "@gsap/react";
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
+
+// internal imports
+import Wrapper from "@/layouts/wrapper";
+import HeaderTwo from "@/layouts/headers/header-two";
+import HeroBannerTwo from "@/components/hero-banner/hero-banner-two";
+import AboutOne from "@/components/about/about-one";
+import VideoTwo from "@/components/video/video-two";
+import ServiceTwo from "@/components/service/service-two";
+import ProjectTwo from "@/components/project/project-two";
+import AwardTwo from "@/components/award/award-two";
+import LineText from "@/components/line-text/line-text";
+import InstagramArea from "@/components/instagram/instagram-area";
+import FooterTwo from "@/layouts/footers/footer-two";
+// animation
+import {
+  bounceAnimation,
+  heroBgAnimation,
+  heroTitleAnim,
+} from "@/utils/title-animation";
+import { videoAnimTwo } from "@/utils/video-anim";
+import { panelOneAnimation } from "@/utils/panel-animation";
+import { awardAnimOne } from "@/utils/award-anim";
+import { instagramAnim } from "@/utils/instagram-anim";
+import { hoverBtn } from "@/utils/hover-btn";
+import { aboutAnim } from "@/utils/about-anim";
+import PortfolioSliderHomeEleven from "@/components/portfolio/slider/portfolio-slider-home-eleven";
+import AboutThree from "@/components/about/about-three";
+import PortfolioStandardMain from "../portfolio/portfolio-standard-main";
+import CounterOne from "@/components/counter/counter-one";
+import StudioPanelThree from "@/components/studio-panels/studio-panel-3";
+import AwardOne from "@/components/award/award-one";
+import TeamOne from "@/components/team/team-one";
+import FooterFive from "@/layouts/footers/footer-five";
+import FooterFour from "@/layouts/footers/footer-four";
+
+const HomeTwoMain = () => {
+  useScrollSmooth();
+  useEffect(() => {
+    document.body.classList.add("tp-smooth-scroll");
+    return () => {
+      document.body.classList.remove("tp-smooth-scroll");
+    };
+  }, []);
+
+  useGSAP(() => {
+    const timer = setTimeout(() => {
+      // hero animation
+      heroTitleAnim();
+      heroBgAnimation();
+      // about animation
+      aboutAnim();
+      // bounce animation
+      bounceAnimation();
+      // video anim
+      videoAnimTwo();
+      // panel animation
+      panelOneAnimation();
+      // award animation
+      awardAnimOne();
+      // instagram animation
+      instagramAnim();
+      hoverBtn();
+    }, 100);
+    return () => clearTimeout(timer);
+  });
+
+  return (
+    <Wrapper>
+      {/* header area start */}
+      <HeaderTwo />
+      {/* header area end */}
+
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          <main>
+            <PortfolioSliderHomeEleven />
+
+            <AboutThree></AboutThree>
+
+            {/* testimonial area */}
+            <InstagramArea />
+
+            <PortfolioStandardMain />
+
+            {/* <PortfolioMasonryArea /> */}
+            <CounterOne />
+
+            <StudioPanelThree />
+
+            {/* service area */}
+            {/* <ServiceOne /> */}
+            {/* service area */}
+
+            {/* award area */}
+            <AwardOne />
+            {/* award area */}
+
+            {/* team area */}
+            <TeamOne />
+            {/* team area */}
+
+            {/* testimonial area */}
+            {/* <TestimonialOne /> */}
+          </main>
+
+          {/* footer area */}
+          <FooterFive />
+          <FooterFour />
+        </div>
+      </div>
+    </Wrapper>
+  );
+};
+
+export default HomeTwoMain;
