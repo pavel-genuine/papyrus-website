@@ -43,7 +43,7 @@ const ServiceDetailsMain = () => {
             {/* service details area */}
 
             {/* line image slider  */}
-            <LineImgSlider />
+            {/* <LineImgSlider /> */}
             {/* line image slider  */}
 
             {/* big text */}
