@@ -26,6 +26,7 @@ import {
 import { hoverBtn } from "@/utils/hover-btn";
 import { teamMarqueAnim } from "@/utils/scroll-marque";
 import FooterFour from "@/layouts/footers/footer-four";
+import HeaderOne from "@/layouts/headers/header-one";
 
 const AboutMeMain = () => {
   useScrollSmooth();
@@ -44,7 +45,7 @@ const AboutMeMain = () => {
   return (
     <Wrapper>
       {/* header area start */}
-      <HeaderEleven />
+      <HeaderOne />
       {/* header area end */}
 
       <div id="smooth-wrapper">

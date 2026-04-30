@@ -15,6 +15,7 @@ import ContactTwo from "@/components/contact/contact-two";
 // animation
 import { charAnimation } from "@/utils/title-animation";
 import FooterFour from "@/layouts/footers/footer-four";
+import HeaderOne from "@/layouts/headers/header-one";
 
 const ContactMain = () => {
   useScrollSmooth();
@@ -29,7 +30,7 @@ const ContactMain = () => {
   return (
     <Wrapper>
       {/* header area start */}
-      <HeaderEleven />
+      <HeaderOne />
       {/* header area end */}
 
       <div id="smooth-wrapper">
