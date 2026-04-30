@@ -24,8 +24,6 @@ const Wrapper = ({ children, showBackToTop = true }: WrapperProps) => {
 
   return (
     <>
-      {" "}
-      isLoading ? <Preloader /> :{" "}
       <React.Fragment>
         {children}
         {showBackToTop && <BackToTop />}
