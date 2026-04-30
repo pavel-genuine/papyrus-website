@@ -66,7 +66,7 @@ export default function PerspectivePortfolioSlider() {
                           </span>
                           <h1
                             className="tp-portfolio-9-title tp_reveal_anim not-hide-cursor"
-                            data-cursor="View<br>Demo"
+                            data-cursor="View<br>More"
                           >
                             <Link
                               className="cursor-hide"
@@ -92,14 +92,15 @@ export default function PerspectivePortfolioSlider() {
             <div className="col-xl-6 col-lg-6 col-md-6 col-6">
               <div className="tp-portfolio-9-social-info">
                 <span>
-                  Follow Us{" "}
-                  <Share />
+                  Follow Us <Share />
                 </span>
               </div>
             </div>
             <div className="col-xl-6 col-lg-6 col-md-6 col-6">
               <div className="tp-portfolio-9-scroll text-end">
-                <Link onClick={scrollTop} href="#">(Scroll)</Link>
+                <Link onClick={scrollTop} href="#">
+                  (Scroll)
+                </Link>
               </div>
             </div>
           </div>

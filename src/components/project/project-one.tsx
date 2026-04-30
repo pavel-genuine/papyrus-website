@@ -64,7 +64,7 @@ function ProjectItem({ item }: { item: IProject }) {
     <div className={`tp-project-item ${item.cls} mb-200`}>
       <div
         className={`tp-project-img ${item.cls_2} fix not-hide-cursor`}
-        data-cursor="View<br>Demo"
+        data-cursor="View<br>More"
       >
         <Link className="cursor-hide" href="/portfolio-details-3">
           <Image

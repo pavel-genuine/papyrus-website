@@ -54,7 +54,7 @@ export default function PortfolioSliderHomeTwelve() {
           {slider_data.map((item) => (
             <div
               className="parallax-item not-hide-cursor"
-              data-cursor="View<br>Demo"
+              data-cursor="View<br>More"
               key={item.id}
             >
               <Link className="cursor-hide" href="/portfolio-showcase-details">
