@@ -69,12 +69,14 @@ export default function StudioPanelThree() {
           <div className="row align-items-center counter-row">
             <div className="col-xl-4 col-lg-6">
               <div className="tp-studio-portfolio-title-box">
-                <h4 className="tp-studio-portfolio-title">Services :</h4>
+                <h4 className="tp-studio-portfolio-title">
+                  Our Areas to serve :
+                </h4>
                 <p>
                   The list is far from exhaustive we all have our own
                   predictions and predilections.
                 </p>
-                <Link className="tp-btn-black-sm" href="/">
+                <Link className="tp-btn-black-sm" href="/our-areas">
                   View More
                 </Link>
               </div>
