@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BackToTop from "@/components/back-to-top";
 import ThemeSetting from "@/components/theme-setting";
+import Preloader from "./preloader/Preloader";
 if (typeof window !== "undefined") {
   require("bootstrap/dist/js/bootstrap.bundle.min");
 }
@@ -12,12 +13,25 @@ interface WrapperProps {
 }
 
 const Wrapper = ({ children, showBackToTop = true }: WrapperProps) => {
+  //  Preloader
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1200);
+  }, []);
+
   return (
-    <React.Fragment>
-      {children}
-      {showBackToTop && <BackToTop />}
-      <ThemeSetting />
-    </React.Fragment>
+    <>
+      {" "}
+      isLoading ? <Preloader /> :{" "}
+      <React.Fragment>
+        {children}
+        {showBackToTop && <BackToTop />}
+        {/* <ThemeSetting /> */}
+      </React.Fragment>
+    </>
   );
 };
 
