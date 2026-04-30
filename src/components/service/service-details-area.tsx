@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,7 +9,137 @@ import sv_1 from "@/assets/img/inner-service/sercive-details/sv-details-1.jpg";
 import sv_2 from "@/assets/img/inner-service/sercive-details/sv-details-2.jpg";
 import sv_3 from "@/assets/img/inner-service/sercive-details/sv-details-3.jpg";
 
+const servicesList = [
+  {
+    id: 1,
+    title: "Logo Design",
+    desc: "Your logo is at the heart of your identity. An impactful design, tailor-made and in line with your activity will allow you to differentiate yourself and mark your audience.",
+  },
+  {
+    id: 2,
+    title: "PR & Media Buying",
+    desc: "Strategic media procurement and public relations management to maximize your brand's reach and authority.",
+  },
+  {
+    id: 3,
+    title: "LAUNCHING",
+    desc: "Crafting memorable brand launches that create immediate market impact and long-term consumer interest.",
+  },
+  {
+    id: 4,
+    title: "ANNUAL REPORT",
+    desc: "Professional layout and data visualization for corporate reports that communicate success and transparency.",
+  },
+  {
+    id: 5,
+    title: "PACKAGING",
+    desc: "Functional and aesthetic packaging solutions that stand out on the shelf while protecting your product identity.",
+  },
+  {
+    id: 6,
+    title: "Digital & Social Media Marketing",
+    desc: "Comprehensive management of your digital ecosystem, focusing on growth, engagement, and community building.",
+  },
+  {
+    id: 7,
+    title: "EVENT",
+    desc: "Managing large-scale corporate events and brand experiences with meticulous attention to detail and logistics.",
+  },
+  {
+    id: 8,
+    title: "CALENDAR",
+    desc: "Customized corporate calendars that keep your brand in front of clients consistently throughout the year.",
+  },
+  {
+    id: 9,
+    title: "BROCHURE & CATALOGUE",
+    desc: "Premium print materials designed to showcase your products and services with elegance and clarity.",
+  },
+  {
+    id: 10,
+    title: "TVC",
+    desc: "High-quality television commercial production that tells your brand story with cinematic impact.",
+  },
+  {
+    id: 11,
+    title: "CAMPAIGN",
+    desc: "Integrated marketing campaigns designed to achieve specific business goals across all strategic platforms.",
+  },
+  {
+    id: 12,
+    title: "SOCIAL",
+    desc: "Creating viral-worthy social content that builds genuine connection and loyalty with your followers.",
+  },
+  {
+    id: 13,
+    title: "LEAFLET",
+    desc: "Direct marketing materials that deliver your message straight to the hands of your target customers.",
+  },
+  {
+    id: 14,
+    title: "OVC",
+    desc: "Engaging online video content optimized for digital platforms, social media feeds, and mobile viewing.",
+  },
+  {
+    id: 15,
+    title: "ACTIVATION",
+    desc: "Driving direct consumer engagement through high-energy brand activations and field marketing.",
+  },
+  {
+    id: 16,
+    title: "MUSIC VIDEO",
+    desc: "Creative visual production for artists, blending cinematic storytelling with rhythmic brand integration.",
+  },
+  {
+    id: 17,
+    title: "BILL BOARD",
+    desc: "Large-scale outdoor visibility designed for maximum impact and instant brand recognition on the move.",
+  },
+  {
+    id: 18,
+    title: "AV",
+    desc: "Professional Audio-Visual solutions for corporate presentations, documentaries, and brand storytelling.",
+  },
+  {
+    id: 19,
+    title: "STALL",
+    desc: "Custom exhibition stall designs that attract footfall and showcase your brand at international trade fairs.",
+  },
+  {
+    id: 20,
+    title: "OUT DOOR BRANDING",
+    desc: "Comprehensive outdoor visibility solutions from architectural signage to environmental branding.",
+  },
+  {
+    id: 21,
+    title: "PRESS AD",
+    desc: "Traditional print advertising redesigned for modern impact in high-circulation newspapers and magazines.",
+  },
+  {
+    id: 22,
+    title: "AI WORKS",
+    desc: "Leveraging cutting-edge AI tools for innovative design, automation, and futuristic creative production.",
+  },
+  {
+    id: 23,
+    title: "BTL",
+    desc: "Below-the-line marketing strategies focused on direct consumer interaction and point-of-sale conversion.",
+  },
+  {
+    id: 24,
+    title: "ARM",
+    desc: "Advanced Relationship Management and strategic support to ensure long-term brand health and loyalty.",
+  },
+];
+
 export default function ServiceDetailsArea() {
+  const [activeService, setActiveService] = useState(servicesList[0]);
+
+  const handleTabClick = (e: any, item: any) => {
+    e.preventDefault(); // Prevents page jump
+    setActiveService(item);
+  };
+
   return (
     <div className="service-details__area service-details__space pt-200 pb-120">
       <div className="container">
@@ -18,28 +150,13 @@ export default function ServiceDetailsArea() {
                 Design Studio
               </span>
               <h4 className="sv-hero-title tp-char-animation">
-                Logo and branding
+                Vast Canvas of Wandering
               </h4>
-            </div>
-          </div>
-          <div className="row">
-            <div className="offset-xl-4 col-xl-5">
-              <div className="service-details__banner-text mb-80">
-                <p className="mb-30 tp_title_anim">
-                  Branding is essential to establish yourself in the market
-                  <br /> in a unique and permanent way. At Riveal, we attach{" "}
-                  <br /> great importance. We seek to understand your business
-                  to better convey your values ​​and your talent <br /> through
-                  your brand image.{" "}
-                </p>
-                <p className="tp_title_anim">
-                  Explore our achievements and let yourself be <br /> convinced!
-                </p>
-              </div>
             </div>
           </div>
         </div>
       </div>
+
       <div className="container-fluid">
         <div className="row">
           <div className="col-xl-12">
@@ -56,31 +173,18 @@ export default function ServiceDetailsArea() {
           </div>
         </div>
       </div>
+
       <div className="container">
         <div className="row">
+          {/* Left Side Content */}
           <div className="col-xl-7 col-lg-7">
             <div className="service-details__left-wrap">
               <div className="service-details__left-text pb-20">
-                <p className="text-1 tp_title_anim">
-                  Your logo is at the heart of your identity. An impactful
-                  design, tailor-made and in line with your activity will allow
-                  you to differentiate yourself and mark your audience.
-                </p>
+                <p className="text-1 tp_title_anim">{activeService.desc}</p>
                 <p>
                   Great user experience design lets users focus on the task they
-                  have to complete and evokes emotion without distracting them.!
+                  have to complete and evokes emotion without distracting them.
                 </p>
-              </div>
-              <div className="service-details__fea-list">
-                <ul>
-                  <li>Graphic research and production</li>
-                  <li>Presentation of your logo on different media</li>
-                  <li>
-                    Advice on the graphic orientation of your logo or its
-                    redesign
-                  </li>
-                  <li>Delivery of your logo in professional formats</li>
-                </ul>
               </div>
               <div className="service-details__sm-thumb-wrap mb-60">
                 <div className="row">
@@ -104,42 +208,41 @@ export default function ServiceDetailsArea() {
                   </div>
                 </div>
               </div>
-              <div className="service-details__left-text">
-                <p>
-                  Great user experience design lets users focus on the task they
-                  have to complete & evokes emotion without distracting them.
-                  Bonus points for when it also looks & feels aesthetically
-                  pleasing!{" "}
-                </p>
-              </div>
             </div>
           </div>
+
+          {/* Right Side Sidebar (Dynamic Tabs) */}
           <div className="col-xl-5 col-lg-5">
             <div className="service-details__right-wrap fix p-relative">
               <div className="service-details__rotate-text">
-                <span>Full list of services</span>
+                <span>List of Canvas Elem</span>
               </div>
+
               <div className="service-details__right-category">
-                <Link href="#">Strategy</Link>
-                <Link className="active" href="#">
-                  Logo Design
-                </Link>
-                <Link href="#">Graphic identity</Link>
-                <Link href="#">Web Design</Link>
-                <Link href="#">Development</Link>
+                {servicesList.map((item) => (
+                  <a
+                    key={item.id}
+                    href="#"
+                    onClick={(e) => handleTabClick(e, item)}
+                    className={activeService.id === item.id ? "active" : ""}
+                  >
+                    {item.title}
+                  </a>
+                ))}
               </div>
+
               <div className="service-details__right-text-box">
                 <h4>
-                  Logo <br /> Design
+                  {activeService.title.split(" ").map((word, i) => (
+                    <React.Fragment key={i}>
+                      {word} <br />
+                    </React.Fragment>
+                  ))}
                 </h4>
-                <p className="mb-20">
-                  Your logo is at the heart of your identity. An impactful
-                  design, tailor-made and in line with your activity will allow
-                  you to differentiate yourself and mark your audience.
-                </p>
+                <p className="mb-20">{activeService.desc}</p>
                 <Link
                   className="tp-btn-white background-black"
-                  href="/contact"
+                  href="/lets-connect"
                 >
                   Let’s Talk
                 </Link>
