@@ -33,11 +33,11 @@ const HeaderOne = () => {
                 <div className="tp-header-logo">
                   <Link className="logo-1" href="/">
                     <Image
-                      style={{ width: "auto", height: "auto" }}
+                      style={{ width: "200px", height: "auto" }}
                       src={logo}
                       alt="logo"
-                      width={85}
-                      height={26}
+                      width={185}
+                      height={126}
                     />
                   </Link>
                   <Link className="logo-2" href="/">
