@@ -1,7 +1,7 @@
 "use client";
 import { gsap } from "gsap";
 import React from "react";
-// import ReactCompareImage from 'react-compare-image';
+// import ReactCompareImage from "react-compare-image";
 
 import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
