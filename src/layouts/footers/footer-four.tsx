@@ -9,7 +9,7 @@ export default function FooterFour() {
     <footer>
       <div
         style={{ borderTop: "1px solid #414141a4" }}
-        className="tp-footer-3-area dark-bg pt-120"
+        className="tp-footer-3-area dark-bg pt-70"
       >
         <div className="container">
           <div className="row">
