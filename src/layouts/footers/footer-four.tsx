@@ -7,7 +7,10 @@ import Link from "next/link";
 export default function FooterFour() {
   return (
     <footer>
-      <div className="tp-footer-3-area dark-bg pt-120">
+      <div
+        style={{ borderTop: "1px solid #414141a4" }}
+        className="tp-footer-3-area dark-bg pt-120"
+      >
         <div className="container">
           <div className="row">
             <div className="col-xl-4 col-lg-6 col-md-6 mb-60">

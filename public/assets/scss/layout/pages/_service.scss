@@ -933,7 +933,7 @@
     }
     &__right{
         &-wrap{
-            padding: 100px 30px;
+            padding: 70px 30px;
             margin-left: 70px;
             background-color: var(--tp-common-white);
             @media #{$md,$xs}{
@@ -942,7 +942,7 @@
             }
         }
                 &-category {
-                    margin-bottom: 70px;
+                    margin-bottom: 50px;
                     // Add these three lines to the container
                     display: flex;
                     flex-wrap: wrap; // Allows items to move to the next line if they run out of space

@@ -370,7 +370,7 @@ export default function ServiceDetailsArea() {
         </div>
       </div>
 
-      <div className="container">
+      <div className="container-fuild px-md-5">
         <div className="row">
           {/* Left Side Content */}
           <div className="col-xl-7 col-lg-7">
