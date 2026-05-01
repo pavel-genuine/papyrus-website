@@ -18,7 +18,7 @@ const servicesList = [
     id: 1,
     title: "Logo Design",
     mainImg: sv_1,
-    thumbnails: [sv_2, sv_3, port_2, sv_1],
+    thumbnails: [sv_2, sv_3],
     desc: "Your logo is at the heart of your identity. An impactful design, tailor-made and in line with your activity will allow you to differentiate yourself and mark your audience.",
     subDesc:
       "We focus on creating versatile vector assets that maintain their integrity across digital screens and physical merchandise, ensuring your brand mark is timeless.",
