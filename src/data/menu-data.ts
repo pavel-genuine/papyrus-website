@@ -8,7 +8,7 @@ const menu_data: IMenuDT[] = [
   },
 
   {
-    id: 1,
+    id: 2,
     title: "Our Canvas",
     link: "/our-canvas",
   },
@@ -53,7 +53,7 @@ const menu_data: IMenuDT[] = [
   },
 
   {
-    id: 6,
+    id: 5,
     title: "Let's Connect",
     link: "/lets-connect",
   },

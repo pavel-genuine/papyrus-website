@@ -401,8 +401,8 @@ export default function ServiceDetailsArea() {
           <div className="col-xl-7 col-lg-7">
             <div className="service-details__left-wrap">
               <div className="service-details__left-text pb-20">
-                <p className="text-1 tp_title_anim">{activeService.desc}</p>
-                <p>{activeService.subDesc}</p>
+                <p className="text-1 tp_title_anim">{activeService.subDesc}</p>
+                {/* <p>{activeService.subDesc}</p> */}
               </div>
 
               {/* Dynamic Feature List */}
@@ -464,9 +464,9 @@ export default function ServiceDetailsArea() {
                     </React.Fragment>
                   ))}
                 </h4>
-                <p className="mb-20">{activeService.desc}</p>
+                <p className="">{activeService.desc}</p>
                 <Link
-                  className="tp-btn-white background-black"
+                  className="tp-btn-white background-black mt-20"
                   href="/lets-connect"
                 >
                   Let’s Talk
