@@ -365,9 +365,9 @@ export default function ServiceDetailsArea() {
         <div className="row">
           <div className="col-xl-12">
             <div className="service-details__title-box mb-40">
-              <span className="service-details__subtitle tp-char-animation">
+              {/* <span className="service-details__subtitle tp-char-animation">
                 Design Studio
-              </span>
+              </span> */}
               <h4 className="sv-hero-title tp-char-animation">
                 Vast Canvas of Wandering
               </h4>
@@ -381,12 +381,28 @@ export default function ServiceDetailsArea() {
         <div className="row">
           <div className="col-xl-12">
             <div className="service-details__tab-wrapper text-center mb-120">
-              <div className="service-details__tab-thumb">
+              <div className="service-details__tab-thumb p-relative">
+                <h3
+                  style={{
+                    position: "absolute",
+                    top: "30px",
+                    right: "50px",
+                    zIndex: "20",
+                    color: "white",
+                    backgroundColor: "black",
+                    paddingInline: "30px",
+                    paddingBlock: "10px",
+                    borderRadius: "50px",
+                  }}
+                  className=" "
+                >
+                  {activeService.title}
+                </h3>
                 <Image
                   data-speed="0.4"
                   src={activeService.mainImg}
                   alt={activeService.title}
-                  style={{ height: "90vh", width: "100vw" }}
+                  style={{ height: "90vh", width: "100vw", zIndex: "1" }}
                   priority
                 />
               </div>
