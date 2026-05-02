@@ -382,22 +382,24 @@ export default function ServiceDetailsArea() {
           <div className="col-xl-12">
             <div className="service-details__tab-wrapper text-center mb-120">
               <div className="service-details__tab-thumb p-relative">
-                <h3
-                  style={{
-                    position: "absolute",
-                    top: "30px",
-                    right: "50px",
-                    zIndex: "20",
-                    color: "white",
-                    backgroundColor: "black",
-                    paddingInline: "30px",
-                    paddingBlock: "10px",
-                    borderRadius: "50px",
-                  }}
-                  className=" "
-                >
-                  {activeService.title}
-                </h3>
+                <div>
+                  <h3
+                    style={{
+                      position: "absolute",
+                      top: "30px",
+                      right: "50px",
+                      zIndex: "20",
+                      color: "white",
+                      backgroundColor: "black",
+                      paddingInline: "30px",
+                      paddingBlock: "10px",
+                      borderRadius: "50px",
+                    }}
+                    className=" "
+                  >
+                    {activeService.title}
+                  </h3>
+                </div>
                 <Image
                   data-speed="0.4"
                   src={activeService.mainImg}
@@ -459,6 +461,17 @@ export default function ServiceDetailsArea() {
                 <span>List of Canvas Elems</span>
               </div>
 
+              <div className="service-details__right-text-box mb-40">
+                <h4>
+                  {activeService.title.split(" ").map((word, i) => (
+                    <React.Fragment key={i}>
+                      {word} <br />
+                    </React.Fragment>
+                  ))}
+                </h4>
+                <p className="">{activeService.desc}</p>
+              </div>
+
               <div className="service-details__right-category">
                 {servicesList.map((item) => (
                   <a
@@ -472,22 +485,12 @@ export default function ServiceDetailsArea() {
                 ))}
               </div>
 
-              <div className="service-details__right-text-box">
-                <h4>
-                  {activeService.title.split(" ").map((word, i) => (
-                    <React.Fragment key={i}>
-                      {word} <br />
-                    </React.Fragment>
-                  ))}
-                </h4>
-                <p className="">{activeService.desc}</p>
-                <Link
-                  className="tp-btn-white background-black mt-20"
-                  href="/lets-connect"
-                >
-                  Let’s Talk
-                </Link>
-              </div>
+              <Link
+                className="tp-btn-white background-black mt-20"
+                href="/lets-connect"
+              >
+                Let’s Talk
+              </Link>
             </div>
           </div>
         </div>
