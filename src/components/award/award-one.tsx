@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import award_img from "@/assets/img/home-02/award/award-1.png";
+
 // award images
 import a_1 from "@/assets/img/home-01/award/award-1.png";
 import a_2 from "@/assets/img/home-01/award/award-2.png";
@@ -105,28 +105,7 @@ const AwardOne = ({ cls = "pt-125 pb-125", abStyle = false }: IProps) => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="tp-award-2-area tpaward tp-award-2-space p-relative fix">
-        <div className="tp-award-2-shape">
-          <span className="tp-award-2-circle"></span>
-          <span className="tp-award-2-img">
-            <Image src={award_img} alt="award-img" />
-          </span>
-        </div>
-        <div className="container container-1650">
-          <div className="row">
-            <div className="col-xl-12">
-              <div className="tp-award-2-title-box p-relative">
-                <h2 className="tp-award-2-title tp-award-title-1">award</h2>
-                <h2 className="tp-award-2-title tp-award-title-2">
-                  <span>winning agency</span>
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </div>z
     </div>
   );
 };

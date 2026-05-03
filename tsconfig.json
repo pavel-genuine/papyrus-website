@@ -38,7 +38,7 @@
     ".next/types/**/*.ts",
     "src/utils/scroll-magic.js",
     ".next/dev/types/**/*.ts"
-  ],
+, "src/plugins/index.js", "src/plugins/index.js", "src/plugins/index.js", "src/plugins/index.js", "src/plugins/index.js"  ],
   "exclude": [
     "node_modules"
   ]

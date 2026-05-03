@@ -1,13 +1,13 @@
 import React from "react";
 import { Metadata } from "next";
-import ServiceDetailsMain from "@/pages/service/service-details";
+import SphereMain from "@/pages/service/sphere-details";
 
 export const metadata: Metadata = {
-  title: "Papyrus IMC - Our Canvas ",
+  title: "Liko - Service Details page",
 };
 
 const ServiceDetailsPage = () => {
-  return <ServiceDetailsMain />;
+  return <SphereMain />;
 };
 
 export default ServiceDetailsPage;

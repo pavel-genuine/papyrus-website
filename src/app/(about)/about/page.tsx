@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import AboutMeMain from "@/pages/about/about";
 
 export const metadata: Metadata = {
-  title: "Liko - About us page",
+  title: "Papyrus IMC - About ",
 };
 
 const AboutMePage = () => {
