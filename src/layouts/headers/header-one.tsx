@@ -42,11 +42,15 @@ const HeaderOne = () => {
                   </Link>
                   <Link className="logo-2" href="/">
                     <Image
-                      style={{ width: "auto", height: "auto" }}
+                      style={{
+                        width: "auto",
+                        height: "auto",
+                        paddingTop: "10px",
+                      }}
                       src={logoWhite}
                       alt="logo"
-                      width={85}
-                      height={26}
+                      width={140}
+                      height={90}
                     />
                   </Link>
                 </div>
