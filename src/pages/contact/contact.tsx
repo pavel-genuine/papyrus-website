@@ -106,7 +106,7 @@ const ContactMain = () => {
                           className="cn-contactform-support-text text-center"
                         >
                           <span>
-                            you can contact our location directly below. Or, We
+                            You can contact our location above directly . Or, We
                             aim to respond within 24 hours.
                           </span>
                         </div>

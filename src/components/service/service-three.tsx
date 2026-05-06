@@ -115,8 +115,10 @@ export default function ServiceThree() {
             <div className="col-xl-9 col-lg-9 col-md-9">
               <div className="tp-service-4-title-box tp_fade_bottom">
                 <h4 className="tp-service-4-title">
-                  We work with select service providers in the disability sector
-                  to develop inclusive products tailored to their needs.
+                  Welcome to our Service Offerings page, where we empower your
+                  success through our comprehensive range of solutions. Discover
+                  how our services can elevate your business to new heights and
+                  drive exceptional results.
                 </h4>
               </div>
             </div>
