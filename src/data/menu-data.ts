@@ -3,8 +3,13 @@ import { IMenuDT } from "@/types/menu-d-t";
 const menu_data: IMenuDT[] = [
   {
     id: 1,
-    title: "Home",
+    title: "Our Home",
     link: "/",
+  },
+  {
+    id: 4,
+    title: "Our Story",
+    link: "/about",
   },
 
   {
@@ -45,11 +50,6 @@ const menu_data: IMenuDT[] = [
     //     ],
     //   },
     // },
-  },
-  {
-    id: 4,
-    title: "About",
-    link: "/about",
   },
 
   {
