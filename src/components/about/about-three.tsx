@@ -12,19 +12,19 @@ export default function AboutThree() {
         <div className="row">
           <div className="col-xl-11">
             <div className="tp-about-3-title-box">
-              <span className="tp-section-subtitle-2 tp_fade_bottom">
+              {/* <span className="tp-section-subtitle-2 tp_fade_bottom">
                 <span>
                   <FirstBracket />
-                </span>
+                  </span>
                 <span className="tp-subtitle-text tp_text_invert">
                   Who we are
                 </span>
                 <span>
                   <FirstBracketTwo />
                 </span>
-              </span>
+              </span> */}
               <h4 className="tp-section-title-90 tp_text_invert tp_fade_bottom mb-20">
-                We tell visual stories through creativities.
+                Crafting Perceptions Empowering Brands
                 <span>
                   {" "}
                   <br />
@@ -42,17 +42,24 @@ export default function AboutThree() {
           <div className="col-xl-6 col-lg-6 col-md-8">
             <div className="tp-about-3-content">
               <p className="mb-30 tp_fade_bottom">
-                We are an advertising agency for 19 years, located in
+                PAPYRUS is an advertising agency for 19 years, located in
                 Bangladesh, focusing on creating sustainable ideas and marketing
-                communication solutions.
+                communication solutions. Our approach is based on strategic
+                insights, which help our clients stand out in a cluttered
+                marketplace and improve brand identity, image, and preference.
               </p>
               <p className="mb-45 tp_fade_bottom">
-                Our approach is based on strategic insights, which help our
-                clients stand out in a cluttered marketplace and improve brand
-                identity, image, and preference.
+                Starting our journey from 2007, we proudly showcase the feedback
+                and experiences of our valued clients. As a trusted and
+                innovative 360-degree marketing agency, we are dedicated to
+                delivering exceptional results and exceeding expectations.
+                <br />
+                <br />
+                Our diverse team of are young & experienced MARCOM professionals
+                delivers globally-renowned expertise.
               </p>
               <Link className="tp-btn-black-2 tp_fade_bottom" href="/about">
-                About Us
+                Our Story
                 <span className="p-relative">
                   <RightArrowTwo />
                   <ArrowBg />
