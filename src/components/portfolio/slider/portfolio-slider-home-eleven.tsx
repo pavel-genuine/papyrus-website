@@ -11,10 +11,6 @@ import showcase_1 from "@/assets/img/inner-project/showcase/showcase-1.jpg";
 import showcase_2 from "@/assets/img/inner-project/showcase/showcase-2.jpg";
 import showcase_3 from "@/assets/img/inner-project/showcase/showcase-3.jpg";
 import showcase_4 from "@/assets/img/inner-project/showcase/showcase-4.jpg";
-import { Dots } from "@/components/svg";
-
-import Link from "next/link";
-import Social from "@/components/social/social";
 
 const slider_data = [
   {
@@ -66,20 +62,16 @@ function getEmbedUrl(youtubeUrl: string): string {
     } else {
       videoId = url.searchParams.get("v") ?? "";
     }
-    // Use youtube-nocookie.com instead of youtube.com
-    // return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
     return youtubeUrl;
   } catch {
     return "";
   }
 }
 
-// Handles WebGL transition — called on every slide change
 function triggerWebGLTransition(webGL: any, realIndex: number) {
   if (!webGL || webGL.isRunning) return;
   webGL.isRunning = true;
 
-  // Update active class on slide-wrap divs so WebGL knows current slide
   const triggerSlides = document.getElementById("trigger-slides");
   if (triggerSlides) {
     const allSlideWraps = triggerSlides.querySelectorAll(".slide-wrap");
@@ -108,7 +100,6 @@ function triggerWebGLTransition(webGL: any, realIndex: number) {
 }
 
 export default function PortfolioSliderHomeEleven() {
-  // CORRECT — default to 0, update on client
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
@@ -156,6 +147,49 @@ export default function PortfolioSliderHomeEleven() {
 
   return (
     <>
+      <style jsx>{`
+        .video-play-overlay {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 5;
+          pointer-events: none; /* Allows clicks to pass to the parent container */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .play-icon-circle {
+          width: 70px;
+          height: 70px;
+          background-color: rgba(247, 148, 29, 0.85);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 30px;
+          transition: all 0.4s ease;
+          box-shadow: 0 0 0 0 rgba(247, 148, 29, 0.4);
+          animation: pulse-play 2s infinite;
+        }
+        #showcase-slider:hover .play-icon-circle {
+          transform: scale(1.1);
+          background-color: rgba(247, 148, 29, 1);
+        }
+        @keyframes pulse-play {
+          0% {
+            box-shadow: 0 0 0 0 rgba(247, 148, 29, 0.7);
+          }
+          70% {
+            box-shadow: 0 0 0 20px rgba(247, 148, 29, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(247, 148, 29, 0);
+          }
+        }
+      `}</style>
+
       <div id="port-showcase-slider-main">
         <div className="port-showcase-slider-spaces p-relative">
           <div
@@ -163,12 +197,6 @@ export default function PortfolioSliderHomeEleven() {
             id="showcase-slider-holder"
             data-pattern-img="/assets/img/webgl/1.jpg"
           >
-            {/* 
-              Click on this container:
-              - isTrusted false = programmatic/jQuery click → ignored for modal
-              - isTrusted true = real user click → open modal
-              - clicks on navigation/pagination → ignored via closest() check
-            */}
             <div
               className="swiper-container parallax-slider-active p-relative"
               id="showcase-slider"
@@ -188,6 +216,16 @@ export default function PortfolioSliderHomeEleven() {
                 if (slideItem) handleOpen(slideItem);
               }}
             >
+              {/* --- VIDEO PLAY ICON OVERLAY --- */}
+              <div className="video-play-overlay">
+                <div className="play-icon-circle">
+                  <i
+                    className="fa-solid fa-play"
+                    style={{ marginLeft: "5px" }}
+                  ></i>
+                </div>
+              </div>
+
               <Swiper
                 direction="horizontal"
                 slidesPerView="auto"
@@ -209,8 +247,6 @@ export default function PortfolioSliderHomeEleven() {
                   clickable: true,
                 }}
                 modules={[Navigation, Pagination, Autoplay]}
-                // Replaced slideNextTransitionStart/slidePrevTransitionStart
-                // with onSlideChange to directly drive WebGL — no jQuery needed
                 onSlideChange={(swiper) => {
                   triggerWebGLTransition(webGLRef.current, swiper.realIndex);
                 }}
@@ -219,25 +255,26 @@ export default function PortfolioSliderHomeEleven() {
               >
                 {slider_data.map((item, i) => (
                   <SwiperSlide key={item.id}>
-                    {/* 
-                      slide-wrap must stay — WebGL uses it to track active slide.
-                      No onClick here, parent container handles clicks.
-                    */}
                     <div
                       className={`slide-wrap${i === 0 ? " active" : ""}`}
                       data-slide={i}
                     />
-                    <div className="container">
+                    {/* <div className="container">
                       <div className="row">
                         <div className="col-xl-8">
                           <div className="port-showcase-slider-item">
                             <div className="port-showcase-slider-content">
-                              <span className="port-showcase-slider-subtitle" />
+                              <h2
+                                className="port-showcase-slider-title"
+                                style={{ color: "#fff", fontSize: "80px" }}
+                              >
+                                {item.title}
+                              </h2>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -284,7 +321,6 @@ export default function PortfolioSliderHomeEleven() {
             <div className="bg-dark">
               <div className="ratio ratio-16x9 " style={{ overflow: "hidden" }}>
                 <iframe
-                  // className="banner-video"
                   src={getEmbedUrl(activeSlide.youtubeUrl)}
                   title={activeSlide.title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -316,12 +352,6 @@ export default function PortfolioSliderHomeEleven() {
                             <span>Services</span>
                             <h4>{activeSlide?.subtitle}</h4>
                           </div>
-                          {/* <div className="project-details-1-info">
-                            <span>Share</span>
-                            <div className="project-details-2-social">
-                              <Social />
-                            </div>
-                          </div> */}
                         </div>
                       </div>
                       <div className="col-xl-12">
@@ -335,13 +365,7 @@ export default function PortfolioSliderHomeEleven() {
                           <p>
                             Lorem ipsum dolor sit amet consectetur. Ultrices
                             malesuada sed volutpat elit cum. Viverra dolor
-                            maecenas amet dui. Netus aliquet nunc netus cras eu
-                            eget erat risus. Ipsum ac imperdiet urna nunc.
-                            Rutrum lorem integer. Express the human touch and
-                            the artisanal approach that are central to the brand
-                            and ensure client project will be both totally
-                            unique and exceptionally well built. Present the
-                            huge selection of styles,{" "}
+                            maecenas amet dui.
                           </p>
                         </div>
                       </div>

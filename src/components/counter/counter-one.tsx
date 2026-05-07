@@ -86,7 +86,9 @@ export default function CounterOne() {
               </div>
               <div className="col-xl-8 col-lg-8 col-md-4 mb-30">
                 <div className="slide-funfact-item text-center">
-                  <h4>BRANDS WE SERVED</h4>
+                  <h4>
+                    BRANDS <br /> WE SERVED
+                  </h4>
                 </div>
               </div>
               <div className="col-xl-2 col-lg-2 col-md-4 mb-30">
