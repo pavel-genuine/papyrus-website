@@ -10,22 +10,27 @@ export default function AboutMeArea() {
         <div className="row">
           <div className="col-xl-12">
             <div className="ab-about-content p-relative tp_fade_bottom">
-              <span>
+              {/* <span>
                 <Hand />
                 Hi!
-              </span>
-              <p className="tp-dropcap">
-                We are an advertising agency for 19 years, located in
+              </span> */}
+              <p style={{ fontSize: "30px" }} className="">
+                PAPYRUS is an advertising agency for 19 years, located in
                 Bangladesh, focusing on creating sustainable ideas and marketing
                 communication solutions. Our approach is based on strategic
                 insights, which help our clients stand out in a cluttered
-                marketplace and improve brand identity, image, and
-                preference.{" "}
+                marketplace and improve brand identity, image, and preference.
+                Starting our journey from 2007, we proudly showcase the feedback
+                and experiences of our valued clients. As a trusted and
+                innovative 360-degree marketing agency, we are dedicated to
+                delivering exceptional results and exceeding expectations. Our
+                diverse team of are young & experienced MARCOM professionals
+                delivers globally-renowned expertise.
               </p>
             </div>
           </div>
         </div>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-xl-12">
             <div className="row">
               <div className="col-xl-5 col-lg-5 col-md-4 mb-40">
@@ -79,7 +84,7 @@ export default function AboutMeArea() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

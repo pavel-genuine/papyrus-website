@@ -182,7 +182,7 @@ export default function PortfolioHome() {
   };
 
   return (
-    <div className="tp-about-3-area pt-120 pb-110">
+    <div className="tp-about-3-area pt-120 pb-110 black-bg ">
       <div className="container">
         <div className="row">
           <div className="col-xl-11">

@@ -60,19 +60,19 @@ const AboutMeMain = () => {
             {/* about me area */}
 
             {/* about portfolio */}
-            <AboutPortfolio />
+            {/* <AboutPortfolio /> */}
             {/* about portfolio */}
 
             {/* about work */}
-            <AboutWork />
+            {/* <AboutWork /> */}
             {/* about work */}
 
             {/* line img slider */}
-            <LineImgSlider />
+            {/* <LineImgSlider /> */}
             {/* line img slider */}
 
             {/* brand area */}
-            <div className="tp-brand-4-area pt-120 pb-120">
+            <div className="tp-brand-4-area pt-20 pb-120">
               <div className="container">
                 <div className="row gx-0">
                   <BrandItems />

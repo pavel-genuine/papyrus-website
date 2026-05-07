@@ -11,7 +11,10 @@ import Link from "next/link";
 
 export default function AboutMeHero() {
   return (
-    <div className="ab-2-hero-area ab-2-hero-ptb  p-relative">
+    <div
+      style={{ marginBottom: "150px", paddingBottom: "0px" }}
+      className="ab-2-hero-area ab-2-hero-ptb  p-relative"
+    >
       <div className="ab-2-hero-social-wrap d-none d-lg-block">
         <div className="ab-2-hero-social">
           <Social />
@@ -23,35 +26,30 @@ export default function AboutMeHero() {
       <div className="container">
         <div className="ab-2-hero-main">
           <div className="row">
-            <div className="col-xl-7">
+            <div className="col-xl-10">
               <div className="ab-2-hero-title-box p-relative">
-                <span
-                  className="ab-2-hero-subtitle"
-                  data-stagger="0.05"
-                  data-on-scroll="0"
-                  data-delay="0.6"
-                >
-                  {"What's"} up
-                </span>
-                <h4
+                <h6
+                  style={{ fontSize: "100px" }}
                   className="ab-2-hero-title tp-char-animation"
-                  data-stagger="0.05"
+                  // data-stagger="0.05"
                   data-on-scroll="0"
                   data-delay="0.6"
                 >
-                  Get to know us
-                </h4>
-
-                <div className="ab-2-hero-shape-1">
-                  <Image src={shape_1} alt="shape" />
-                </div>
-                <div className="ab-2-hero-shape-2">
-                  <Image className="tp-zoom-in-out" src={shape_2} alt="shape" />
-                </div>
+                  Crafting Perceptions
+                </h6>
+                <h6
+                  style={{ fontSize: "100px" }}
+                  className="ab-2-hero-title tp-char-animation"
+                  // data-stagger="0.05"
+                  data-on-scroll="0"
+                  data-delay="0.6"
+                >
+                  Empowering Brands
+                </h6>
               </div>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-xl-10 offset-xl-2">
               <div className="ab-2-hero-thumb-wrap p-relative">
                 <Image
@@ -60,17 +58,18 @@ export default function AboutMeHero() {
                   data-speed="0.9"
                   style={{ height: "auto" }}
                 />
-                <h4
+                <h6
+                  style={{ fontSize: "100px" }}
                   className="ab-2-hero-title tp-char-animation"
                   // data-stagger="0.05"
                   data-on-scroll="0"
                   data-delay="0.6"
                 >
-                  — a little <br /> better
-                </h4>
+                  Empowering Brands
+                </h6>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
