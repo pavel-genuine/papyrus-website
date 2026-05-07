@@ -96,7 +96,7 @@ function DescTooltip({
       const rect = anchorEl.getBoundingClientRect();
       setPos({
         top: rect.bottom + window.scrollY + 6,
-        left: rect.left + window.scrollX,
+        left: rect.left + window.scrollX + 300,
       });
     }
   }, [visible, anchorEl]);
@@ -110,7 +110,8 @@ function DescTooltip({
       style={{
         position: "absolute",
         top: pos.top,
-        left: pos.left,
+        // left: pos.left,
+        right: "200px",
         zIndex: 99999,
         maxWidth: "350px",
         background: "#1a1a1a",
