@@ -23,14 +23,15 @@ export default function FooterFour() {
                         <Link href="/">Home</Link>
                       </li>
                       <li>
+                        <Link href="/about">Our Story</Link>
+                      </li>
+                      <li>
                         <Link href="/our-canvas">Our Canvas</Link>
                       </li>
                       <li>
                         <Link href="/our-areas">Our Areas</Link>
                       </li>
-                      <li>
-                        <Link href="/about">About</Link>
-                      </li>
+
                       <li>
                         <Link href="/lets-connect">Let's Connect</Link>
                       </li>
