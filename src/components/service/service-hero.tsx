@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 // image
-import ser_hero from "@/assets/img/inner-service/hero/hero-1.jpg";
+import ser_hero from "@/assets/img/inner-service/hero/hero-2.png";
 import ser_hero_shape from "@/assets/img/inner-service/hero/hero-shape-1.jpg";
 
 export default function ServiceHero() {
@@ -40,7 +40,7 @@ export default function ServiceHero() {
                   data-speed=".7"
                   src={ser_hero}
                   alt="ser_hero-img"
-                  style={{ height: "auto" }}
+                  style={{ height: "auto", width: "100vw" }}
                 />
               </div>
               <Image

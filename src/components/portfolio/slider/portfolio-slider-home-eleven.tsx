@@ -321,7 +321,7 @@ export default function PortfolioSliderHomeEleven() {
             <div className="bg-dark">
               <div className="ratio ratio-16x9 " style={{ overflow: "hidden" }}>
                 <iframe
-                  src={getEmbedUrl(activeSlide.youtubeUrl)}
+                  src={activeSlide.youtubeUrl}
                   title={activeSlide.title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
