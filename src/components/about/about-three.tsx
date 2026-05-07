@@ -7,7 +7,7 @@ import { ArrowBg, RightArrowTwo, FirstBracket, FirstBracketTwo } from "../svg";
 
 export default function AboutThree() {
   return (
-    <div className="tp-about-3-area pt-120 pb-110">
+    <div className="tp-about-3-area pt-120 pb-110 ">
       <div className="container">
         <div className="row">
           <div className="col-xl-11">
@@ -33,7 +33,10 @@ export default function AboutThree() {
             </div>
           </div>
         </div>
-        <div className="row align-items-center">
+        <div
+          // style={{ textAlign: "justify" }}
+          className="row align-items-center "
+        >
           <div className="col-xl-6 col-lg-6 col-md-4">
             <div className="tp-service-2-shape-img text-center text-lg-start">
               <Image src={shape} alt="" />

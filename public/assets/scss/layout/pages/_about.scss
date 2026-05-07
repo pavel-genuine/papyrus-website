@@ -101,9 +101,13 @@
         }
     }
 }
+
+
+
+
 .tp-about-3{
     &-content{
-        padding-right: 230px;
+        padding-right: 50px;
         @media #{$lg,$md,$xs}{
             padding-right: 0;
         }

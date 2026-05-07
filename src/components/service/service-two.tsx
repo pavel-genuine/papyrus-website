@@ -34,6 +34,42 @@ const service_accordion = [
     title: "Marketing",
     desc: "Creating a strong brand identity is essential for fashion brands to establish themselves in the market. Our services are dedicated to helping fashion brands define their unique identity through strategic branding initiatives.",
   },
+  {
+    id: 4,
+    icon: ser_4,
+    title: "Marketing",
+    desc: "Creating a strong brand identity is essential for fashion brands to establish themselves in the market. Our services are dedicated to helping fashion brands define their unique identity through strategic branding initiatives.",
+  },
+  {
+    id: 4,
+    icon: ser_4,
+    title: "Marketing",
+    desc: "Creating a strong brand identity is essential for fashion brands to establish themselves in the market. Our services are dedicated to helping fashion brands define their unique identity through strategic branding initiatives.",
+  },
+  {
+    id: 4,
+    icon: ser_4,
+    title: "Marketing",
+    desc: "Creating a strong brand identity is essential for fashion brands to establish themselves in the market. Our services are dedicated to helping fashion brands define their unique identity through strategic branding initiatives.",
+  },
+  {
+    id: 4,
+    icon: ser_4,
+    title: "Marketing",
+    desc: "Creating a strong brand identity is essential for fashion brands to establish themselves in the market. Our services are dedicated to helping fashion brands define their unique identity through strategic branding initiatives.",
+  },
+  {
+    id: 4,
+    icon: ser_4,
+    title: "Marketing",
+    desc: "Creating a strong brand identity is essential for fashion brands to establish themselves in the market. Our services are dedicated to helping fashion brands define their unique identity through strategic branding initiatives.",
+  },
+  {
+    id: 4,
+    icon: ser_4,
+    title: "Marketing",
+    desc: "Creating a strong brand identity is essential for fashion brands to establish themselves in the market. Our services are dedicated to helping fashion brands define their unique identity through strategic branding initiatives.",
+  },
 ];
 export default function ServiceTwo() {
   return (

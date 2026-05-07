@@ -31,21 +31,13 @@ const HeaderOne = () => {
             <div className="row align-items-center">
               <div className="col-xl-2 col-lg-2 col-6">
                 <div className="tp-header-logo">
-                  <Link className="logo-1" href="/">
-                    <Image
-                      style={{ width: "200px", height: "auto" }}
-                      src={logo}
-                      alt="logo"
-                      width={185}
-                      height={126}
-                    />
-                  </Link>
                   <Link className="logo-2" href="/">
                     <Image
                       style={{
                         width: "auto",
                         height: "auto",
                         paddingTop: "10px",
+                        paddingBottom: "5px",
                       }}
                       src={logoWhite}
                       alt="logo"

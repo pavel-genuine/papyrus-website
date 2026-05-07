@@ -37,7 +37,7 @@ export default function FooterFour() {
                     </ul>
                   </div>
                 </div>
-                <div className="tp-footer-3-widget">
+                {/* <div className="tp-footer-3-widget">
                   <h4 className="tp-footer-3-title">Newsletter</h4>
                   <div className="tp-footer-3-input-box d-flex align-items-center">
                     <input type="text" placeholder="Enter Address..." />
@@ -50,17 +50,28 @@ export default function FooterFour() {
                       </span>
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
-            <div className="col-xl-4 col-lg-6 col-md-6 mb-60">
-              <div className="tp-footer-3-widget text-md-center footer-col-3-2">
+            <div
+              style={{
+                borderLeft: "1px solid #414141a4",
+                borderRight: "1px solid #414141a4",
+                paddingRight: "50px",
+              }}
+              className="col-xl-4 col-lg-6 col-md-6 mb-60"
+            >
+              <div className="tp-footer-3-widget text-md-center footer-col-2-2">
                 <div className="tp-footer-3-logo-box">
-                  <p className="mb-100">
+                  {/* <p className="mb-100">
                     Award Winning <br />
                     IMC
-                  </p>
-                  <Link className="tp-footer-3-logo p-relative" href="/">
+                  </p> */}
+                  <Link
+                    style={{ scale: "2" }}
+                    className="tp-footer-3-logo p-relative mt-100"
+                    href="/"
+                  >
                     <Image src={logo} alt="logo" />
                   </Link>
                   <p className="tp-footer-3-copyright">
@@ -71,7 +82,7 @@ export default function FooterFour() {
               </div>
             </div>
             <div className="col-xl-4 col-lg-6 col-md-6 mb-60">
-              <div className="tp-footer-3-widget-wrapper footer-col-3-3">
+              <div className="tp-footer-3-widget-wrapper footer-col-2-2">
                 <div className="tp-footer-3-widget mb-30">
                   <h4 className="tp-footer-3-title">Contact</h4>
                   <div className="tp-footer-2-contact-item">
@@ -87,13 +98,14 @@ export default function FooterFour() {
                   <div className="tp-footer-2-contact-item">
                     <span>
                       <Link href="tel:+880 1313713201">+880 1313713201</Link>
-                    </span>
+                    </span>{" "}
+                    <br />
                     <span>
                       <Link href="tel:+880 1313713190">+880 1313713190</Link>
                     </span>
+                    <br />
                     <span>
                       {" "}
-                      <br />
                       <Link href="mailto:info@papyrus.agency">
                         info@papyrus.agency
                       </Link>

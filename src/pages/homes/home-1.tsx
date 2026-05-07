@@ -30,7 +30,7 @@ import {
 } from "@/utils/title-animation";
 import PortfolioSliderHomeEleven from "@/components/portfolio/slider/portfolio-slider-home-eleven";
 import AboutThree from "@/components/about/about-three";
-import PortfolioStandardMain from "../portfolio/portfolio-standard-main";
+import PortfolioStandardMain from "../portfolio/portfolio-home-papyrus";
 import CounterOne from "@/components/counter/counter-one";
 import LineImgSlider from "@/components/line-text/line-img-slider";
 import StudioPanelThree from "@/components/studio-panels/studio-panel-3";
@@ -38,6 +38,8 @@ import FooterFive from "@/layouts/footers/footer-five";
 import FooterFour from "@/layouts/footers/footer-four";
 import AwardTwo from "@/components/award/award-two";
 import { awardAnimOne } from "@/utils/award-anim";
+import PortfolioHome from "../portfolio/portfolio-home-papyrus";
+import ServiceHome from "@/components/service/service-home-papyrus";
 
 const HomeMain = () => {
   useScrollSmooth();
@@ -110,10 +112,12 @@ const HomeMain = () => {
           <main>
             <PortfolioSliderHomeEleven />
             <AboutThree />
-            <PortfolioStandardMain />
+            <PortfolioHome></PortfolioHome>
+            <ServiceHome></ServiceHome>
+            {/* <PortfolioStandardMain /> */}
             <CounterOne />
-            <StudioPanelThree />
-            <AwardTwo />
+            {/* <StudioPanelThree /> */}
+            {/* <AwardTwo /> */}
           </main>
           <FooterFive />
           <FooterFour />

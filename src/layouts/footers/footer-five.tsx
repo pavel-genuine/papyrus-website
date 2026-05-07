@@ -11,20 +11,29 @@ export default function FooterFive() {
             <div className="col-xl-12">
               <div className="tp-footer-5-content-wrap">
                 <Link href="/lets-connect" className="tp-footer-5-title-box">
-                  <span className="tp-footer-5-subtitle">
-                    Want to <br /> Start a Project?
-                  </span>
-                  <h4 className="tp-footer-5-title tp_reveal_anim-2 footer-big-text">
-                    {"Let's"} Talk
-                  </h4>
+                  <span className="tp-footer-5-subtitle">Let’s Connect</span>
+                  <h6 className="tp-footer-5-title tp_reveal_anim-2 footer-big-text">
+                    Speak. We Spark.
+                  </h6>
                 </Link>
-                <div className="tp-footer-5-info d-flex align-items-center justify-content-start justify-content-md-end">
-                  <Link
-                    className="tp-footer-5-mail"
-                    href="mailto:info@papyrus.agency"
-                  >
-                    info@papyrus.agency
-                  </Link>
+                <div className="mt-20 tp-footer-5-info d-flex align-items-center justify-content-start justify-content-md-end">
+                  <div>
+                    <Link
+                      className="tp-footer-5-mail"
+                      href="mailto:info@papyrus.agency"
+                    >
+                      info@papyrus.agency
+                    </Link>{" "}
+                    <br />
+                    <br />
+                    <Link
+                      className="tp-footer-5-mail"
+                      href="tel:+880 1313713201"
+                    >
+                      +880 1313713201
+                    </Link>{" "}
+                  </div>
+
                   <Link className="tp-footer-5-link" href="/lets-connect">
                     <UpArrow clr="#19191A" />
                   </Link>

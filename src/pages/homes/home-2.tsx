@@ -32,7 +32,7 @@ import { hoverBtn } from "@/utils/hover-btn";
 import { aboutAnim } from "@/utils/about-anim";
 import PortfolioSliderHomeEleven from "@/components/portfolio/slider/portfolio-slider-home-eleven";
 import AboutThree from "@/components/about/about-three";
-import PortfolioStandardMain from "../portfolio/portfolio-standard-main";
+import PortfolioStandardMain from "../portfolio/portfolio-home-papyrus";
 import CounterOne from "@/components/counter/counter-one";
 import StudioPanelThree from "@/components/studio-panels/studio-panel-3";
 import AwardOne from "@/components/award/award-one";

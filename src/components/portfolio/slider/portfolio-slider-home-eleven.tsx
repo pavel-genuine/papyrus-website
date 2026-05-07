@@ -21,7 +21,7 @@ const slider_data = [
     id: 1,
     subtitle: " Branding & Marketing ",
     title: "Top Paddock",
-    youtubeUrl: "https://www.youtube.com/watch?v=Nhvi0TvxS6E",
+    youtubeUrl: "https://www.youtube.com/embed/Nhvi0TvxS6E?si=RqIYHqo9olg0TYwl",
     description: "A beautiful UI and web design project.",
     client: "Akij Dairy",
     year: "2024",
@@ -30,7 +30,7 @@ const slider_data = [
     id: 2,
     subtitle: " Branding & Marketing ",
     title: "Band Some",
-    youtubeUrl: "https://www.youtube.com/watch?v=F2S30xmksIw",
+    youtubeUrl: "https://www.youtube.com/embed/F2S30xmksIw?si=AvvLMPz47Yx1wT78",
     description: "Modern branding and web experience.",
     client: "Mr. White",
     year: "2024",
@@ -39,7 +39,7 @@ const slider_data = [
     id: 3,
     subtitle: " Branding & Marketing ",
     title: "Lune Lab",
-    youtubeUrl: "https://www.youtube.com/watch?v=_PUuZs4LXXM",
+    youtubeUrl: "https://www.youtube.com/embed/_PUuZs4LXXM?si=NRJqLv7tjuEOz69e",
     description: "Creative lab portfolio showcase.",
     client: "Bashundhara Spice",
     year: "2023",
@@ -48,7 +48,7 @@ const slider_data = [
     id: 4,
     subtitle: " Branding & Marketing ",
     title: "Park 108 Nyc",
-    youtubeUrl: "https://www.youtube.com/watch?v=KDuOZZTydNI",
+    youtubeUrl: "https://www.youtube.com/embed/KDuOZZTydNI?si=PRZselveXcwwXWG_",
     description: "Luxury real estate digital experience.",
     client: "Bashundhara LPG",
     year: "2023",
@@ -67,7 +67,8 @@ function getEmbedUrl(youtubeUrl: string): string {
       videoId = url.searchParams.get("v") ?? "";
     }
     // Use youtube-nocookie.com instead of youtube.com
-    return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+    // return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+    return youtubeUrl;
   } catch {
     return "";
   }
