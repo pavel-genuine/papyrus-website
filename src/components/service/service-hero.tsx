@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 // image
@@ -6,6 +7,11 @@ import ser_hero from "@/assets/img/inner-service/hero/hero-1.jpg";
 import ser_hero_shape from "@/assets/img/inner-service/hero/hero-shape-1.jpg";
 
 export default function ServiceHero() {
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
   return (
     <div className="sv-hero-area sv-hero-ptb">
       <div className="container container-1530">
@@ -13,7 +19,7 @@ export default function ServiceHero() {
           <div className="col-xl-11">
             <div className="sv-hero-title-box">
               <h6
-                style={{ fontSize: window?.innerWidth > 768 ? "75px" : "45px" }}
+                style={{ fontSize: width > 768 ? "75px" : "45px" }}
                 className="sv-hero-title tp-char-animation"
               >
                 We are all about adaptable approaches, implementing creative

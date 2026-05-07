@@ -357,6 +357,12 @@ function ServiceDetailsContent() {
   const searchParams = useSearchParams();
   const [activeService, setActiveService] = useState(servicesList[0]);
 
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
+
   useEffect(() => {
     const serviceQuery = searchParams?.get("service");
     if (serviceQuery) {
@@ -390,7 +396,7 @@ function ServiceDetailsContent() {
           <div className="col-xl-12">
             <div className="service-details__title-box mb-80">
               <h6
-                style={{ fontSize: window?.innerWidth > 768 ? "75px" : "45px" }}
+                style={{ fontSize: width > 768 ? "75px" : "45px" }}
                 className="sv-hero-title tp-char-animation"
               >
                 Our expertise lies in crafting perceptions that empower brands,
