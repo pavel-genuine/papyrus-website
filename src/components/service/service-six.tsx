@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 
 // images
@@ -112,6 +112,18 @@ const service_data = [
   },
 ];
 export default function ServiceSix() {
+  // Add this inside your ServiceSix component
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const element = document.querySelector(hash);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100); // Small delay to allow content to paint
+      }
+    }
+  }, []);
   return (
     <div className="sv-service-area project-panel-area-2">
       <div className="container-fluid p-0">
