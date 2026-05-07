@@ -16,9 +16,10 @@ export default function FooterFive() {
                     Speak. We Spark.
                   </h6>
                 </Link>
-                <div className="mt-20 tp-footer-5-info d-flex align-items-center justify-content-start justify-content-md-end">
+                <div className="mt-40 tp-footer-5-info d-flex align-items-center justify-content-start justify-content-md-end">
                   <div>
                     <Link
+                      style={{ fontSize: "30px" }}
                       className="tp-footer-5-mail"
                       href="mailto:info@papyrus.agency"
                     >
@@ -27,7 +28,8 @@ export default function FooterFive() {
                     <br />
                     <br />
                     <Link
-                      className="tp-footer-5-mail"
+                      style={{ fontSize: "30px" }}
+                      className="tp-footer-5-mail "
                       href="tel:+880 1313713201"
                     >
                       +880 1313713201
