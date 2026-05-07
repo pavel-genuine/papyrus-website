@@ -26,13 +26,13 @@ const service_data = [
       { title: "Leaflet / Flyer", link: "/our-canvas?service=leaflet" },
       {
         title: "Brochure / Catalogue",
-        link: "/our-canvas?service=brochure-&-catalogue",
+        link: "/our-canvas?service=brochure-catalogue",
       },
       { title: "Calendar", link: "/our-canvas?service=calendar" },
       { title: "Annual Report", link: "/our-canvas?service=annual-report" },
       { title: "TVC", link: "/our-canvas?service=tvc" },
       { title: "AV", link: "/our-canvas?service=av" },
-      { title: "PR", link: "/our-canvas?service=pr-&-media-buying" },
+      { title: "PR", link: "/our-canvas?service=pr-media-buying" },
       { title: "Others", link: "/our-canvas?service=campaign" }, // Mapping "Others" to "Campaign"
     ],
     icon: s_1,
@@ -51,16 +51,16 @@ const service_data = [
     id: 3,
     title: "Digital",
     subItems: [
-      { title: "Static", link: "/our-canvas?service=social" }, // Mapping static social posts
+      { title: "Static", link: "/our-canvas?service=static" }, // Mapping static social posts
       {
         title: "Motion",
-        link: "/our-canvas?service=digital-&-social-media-marketing",
+        link: "/our-canvas?service=motion",
       },
       { title: "OVC", link: "/our-canvas?service=ovc" },
       { title: "Music Video", link: "/our-canvas?service=music-video" },
       {
         title: "Digital Campaign",
-        link: "/our-canvas?service=digital-&-social-media-marketing",
+        link: "/our-canvas?service=digital-social-media-marketing",
       },
     ],
     icon: s_3,

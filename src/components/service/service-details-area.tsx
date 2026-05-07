@@ -202,6 +202,36 @@ const servicesList = [
   },
   {
     id: 14,
+    title: "Motion",
+    mainImg: port_4,
+    thumbnails: [port_1, sv_3],
+    desc: "Motion content optimized for digital platforms, social media feeds, and high-performance mobile viewing.",
+    subDesc:
+      "Optimized for 'sound-off' viewing, our OVCs use compelling captions and fast-paced editing to capture attention in seconds.",
+    features: [
+      "Format Optimization",
+      "Subtitles",
+      "Fast-paced Editing",
+      "Hook Creation",
+    ],
+  },
+  {
+    id: 141,
+    title: "Static",
+    mainImg: port_4,
+    thumbnails: [port_1, sv_3],
+    desc: "Static optimized for digital platforms, social media feeds, and high-performance mobile viewing.",
+    subDesc:
+      "Optimized for 'sound-off' viewing, our OVCs use compelling captions and fast-paced editing to capture attention in seconds.",
+    features: [
+      "Format Optimization",
+      "Subtitles",
+      "Fast-paced Editing",
+      "Hook Creation",
+    ],
+  },
+  {
+    id: 142,
     title: "OVC",
     mainImg: port_4,
     thumbnails: [port_1, sv_3],
@@ -365,17 +395,27 @@ function ServiceDetailsContent() {
 
   useEffect(() => {
     const serviceQuery = searchParams?.get("service");
+
     if (serviceQuery) {
-      // Find matching item by transforming the query (e.g., "press-ad" -> "press ad")
-      const found = servicesList.find(
-        (s) =>
-          s.title.toLowerCase().trim() ===
-          serviceQuery.replace(/-/g, " ").toLowerCase().trim(),
-      );
+      // 1. Decode URL characters (like %26 for &)
+      // 2. Replace dashes with spaces
+      // 3. Remove all non-alphanumeric characters for a "fuzzy" match
+      const cleanQuery = decodeURIComponent(serviceQuery)
+        .replace(/-/g, " ")
+        .replace(/[^a-zA-Z0-9]/g, "")
+        .toLowerCase()
+        .trim();
+
+      const found = servicesList.find((s) => {
+        const cleanTitle = s.title
+          .replace(/[^a-zA-Z0-9]/g, "")
+          .toLowerCase()
+          .trim();
+        return cleanTitle === cleanQuery;
+      });
 
       if (found) {
         setActiveService(found);
-        // Scroll to the main feature image if a query is present
         const section = document.getElementById("canvas-display");
         if (section) {
           section.scrollIntoView({ behavior: "smooth" });
@@ -383,7 +423,6 @@ function ServiceDetailsContent() {
       }
     }
   }, [searchParams]);
-
   const handleTabClick = (e: any, item: any) => {
     e.preventDefault();
     setActiveService(item);
