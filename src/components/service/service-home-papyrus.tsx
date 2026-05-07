@@ -164,6 +164,15 @@ export default function ServiceHome() {
                   <br />
                 </span>
               </h5>
+              <div className="tp-about-3-content mt-10">
+                <p className="mb-30 tp_fade_bottom">
+                  Welcome to our Service Offerings page, where we empower your
+                  success through our comprehensive range of solutions. Discover
+                  how our services can elevate your business to new heights and
+                  drive exceptional results. We provide diversified MARCOM
+                  services.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -181,19 +190,22 @@ export default function ServiceHome() {
                 {service_accordion.map((s) => (
                   <div key={s.id} className="accordion-items">
                     <h2 className="accordion-header">
-                      <button
-                        ref={(el: any) => (titleRefs.current[s.id] = el)}
-                        className={`accordion-buttons ${s.id !== 1 ? "collapsed" : ""}`}
-                        type="button"
-                        onMouseEnter={() => handleEnter(s.id)}
-                        onMouseLeave={handleLeave}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <span>
-                          <Image src={s.icon} alt="icon" />
-                        </span>
-                        {s.title}
-                      </button>
+                      <Link href={`/our-areas#service-${s.id}`}>
+                        {" "}
+                        <button
+                          ref={(el: any) => (titleRefs.current[s.id] = el)}
+                          className={`accordion-buttons ${s.id !== 1 ? "collapsed" : ""}`}
+                          type="button"
+                          onMouseEnter={() => handleEnter(s.id)}
+                          onMouseLeave={handleLeave}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <span>
+                            <Image src={s.icon} alt="icon" />
+                          </span>
+                          {s.title}
+                        </button>
+                      </Link>
                     </h2>
 
                     <DescTooltip

@@ -23,13 +23,13 @@ export default function AboutThree() {
                   <FirstBracketTwo />
                 </span>
               </span> */}
-              <h4 className="tp-section-title-90 tp_text_invert tp_fade_bottom mb-20">
+              <h5 className="sv-service-title tp_fade_bottom mb-40 mt-60">
                 Crafting Perceptions Empowering Brands
                 <span>
                   {" "}
                   <br />
                 </span>
-              </h4>
+              </h5>
             </div>
           </div>
         </div>

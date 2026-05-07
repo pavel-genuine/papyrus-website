@@ -18,21 +18,21 @@ const service_data = [
     id: 1,
     title: "ATL",
     subItems: [
-      { title: "Logo", link: "/service/atl/logo" },
-      { title: "Packaging", link: "/service/atl/packaging" },
-      { title: "Press Ad", link: "/service/atl/press-ad" },
-      { title: "Billboard / Out-door", link: "/service/atl/billboard-outdoor" },
-      { title: "Leaflet / Flyer", link: "/service/atl/leaflet-flyer" },
+      { title: "Logo", link: "/our-canvas?service=logo" },
+      { title: "Packaging", link: "/our-canvas?service=packaging" },
+      { title: "Press Ad", link: "/our-canvas?service=press-ad" },
+      { title: "Billboard / Out-door", link: "/our-canvas?service=bill-board" },
+      { title: "Leaflet / Flyer", link: "/our-canvas?service=leaflet" },
       {
         title: "Brochure / Catalogue",
-        link: "/service/atl/brochure-catalogue",
+        link: "/our-canvas?service=brochure-&-catalogue",
       },
-      { title: "Calendar", link: "/service/atl/calendar" },
-      { title: "Annual Report", link: "/service/atl/annual-report" },
-      { title: "Others", link: "/service/atl/others" },
-      { title: "TVC", link: "/service/atl/tvc" },
-      { title: "AV", link: "/service/atl/av" },
-      { title: "PR", link: "/service/atl/pr" },
+      { title: "Calendar", link: "/our-canvas?service=calendar" },
+      { title: "Annual Report", link: "/our-canvas?service=annual-report" },
+      { title: "TVC", link: "/our-canvas?service=tvc" },
+      { title: "AV", link: "/our-canvas?service=av" },
+      { title: "PR", link: "/our-canvas?service=pr-&-media-buying" },
+      { title: "Others", link: "/our-canvas?service=campaign" }, // Mapping "Others" to "Campaign"
     ],
     icon: s_1,
   },
@@ -40,9 +40,9 @@ const service_data = [
     id: 2,
     title: "BTL",
     subItems: [
-      { title: "Events", link: "/service/btl/events" },
-      { title: "Activations", link: "/service/btl/activations" },
-      { title: "Stall", link: "/service/btl/stall" },
+      { title: "Events", link: "/our-canvas?service=event" },
+      { title: "Activations", link: "/our-canvas?service=activation" },
+      { title: "Stall", link: "/our-canvas?service=stall" },
     ],
     icon: s_2,
   },
@@ -50,16 +50,21 @@ const service_data = [
     id: 3,
     title: "Digital",
     subItems: [
-      { title: "Static", link: "/service/digital/static" },
-      { title: "Motion", link: "/service/digital/motion" },
-      { title: "OVC", link: "/service/digital/ovc" },
-      { title: "Music Video", link: "/service/digital/music-video" },
-      { title: "Digital Campaign", link: "/service/digital/digital-campaign" },
+      { title: "Static", link: "/our-canvas?service=social" }, // Mapping static social posts
+      {
+        title: "Motion",
+        link: "/our-canvas?service=digital-&-social-media-marketing",
+      },
+      { title: "OVC", link: "/our-canvas?service=ovc" },
+      { title: "Music Video", link: "/our-canvas?service=music-video" },
+      {
+        title: "Digital Campaign",
+        link: "/our-canvas?service=digital-&-social-media-marketing",
+      },
     ],
     icon: s_3,
   },
 ];
-
 // ── Portal Dropdown ──────────────────────────────────────────────────────────
 function SubMenu({
   items,

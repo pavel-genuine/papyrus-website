@@ -5,6 +5,11 @@ import { SwiperOptions } from "swiper/types";
 import Link from "next/link";
 import Image from "next/image";
 
+import shape from "@/assets/img/inner-about/about/shape-1.png";
+import ab_1 from "@/assets/img/inner-about/about/about-1.jpg";
+import ab_2 from "@/assets/img/inner-about/about/about-3.jpg";
+import ab_3 from "@/assets/img/inner-about/about/about-2.jpg";
+
 // internal imports
 import star_icon from "@/assets/img/home-04/service/sv-star-1.png";
 import sv_1 from "@/assets/img/home-04/service/sv-icon-1.png";
@@ -104,63 +109,68 @@ const service_data = [
 ];
 export default function ServiceThree() {
   return (
-    <div
-      className="tp-service-4-area pt-120 pb-170 fix"
-      data-background="assets/img/home-04/brand/overly.png"
-      style={{ backgroundImage: "url(/assets/img/home-04/brand/overly.png)" }}
-    >
-      <div className="container">
-        <div className="tp-service-4-title-wrap">
-          <div className="row align-items-end">
-            <div className="col-xl-9 col-lg-9 col-md-9">
-              <div className="tp-service-4-title-box tp_fade_bottom">
-                <h4 className="tp-service-4-title">
-                  Welcome to our Service Offerings page, where we empower your
-                  success through our comprehensive range of solutions. Discover
-                  how our services can elevate your business to new heights and
-                  drive exceptional results.
-                </h4>
-              </div>
+    <div className="ab-about-area ab-about-mt pb-90 z-index-5">
+      <div className="container container-1480">
+        <div id="about-info" className="row">
+          <div className="col-xxl-12 mt-40 mb-40">
+            <div className="ab-about-content p-relative">
+              <p className=" tp_fade_bottom">
+                We are a creative studio that specializes in providing
+                high-quality design and branding solutions to businesses and
+                individuals. Our team is composed of talented designers,
+                developers, and marketers.!
+              </p>
             </div>
-            <div className="col-xl-3 col-lg-3 col-md-3">
-              <div className="tp-service-4-shape-1 text-start text-md-end ">
-                <Image className="tp-zoom-in-out" src={star_icon} alt="star" />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-xl-9">
+            <div className="row">
+              <div className="col-xl-5 col-lg-5 col-md-4 mb-40">
+                <div className="ab-about-category-title-box p-relative">
+                  <h4 className="ab-about-category-title"></h4>
+                  <Image
+                    className="ab-about-shape-1 d-none d-md-block"
+                    src={shape}
+                    alt="shape"
+                  />
+                </div>
+              </div>
+              <div className="col-xl-7 col-lg-7 col-md-8">
+                <div className="row">
+                  <div className="col-xl-6 col-lg-6 col-md-6 mb-40">
+                    <div className="ab-about-category-list category-space-1 tp_fade_bottom">
+                      <ul>
+                        {service_data?.slice(0, 5)?.map((ser) => (
+                          <Link
+                            key={ser?.id}
+                            href={`/our-areas#service-${ser.id}`}
+                          >
+                            <li>{ser?.title}</li>
+                          </Link>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="col-xl-6 col-lg-6 col-md-6 mb-40">
+                    <div className="ab-about-category-list category-space-2 tp_fade_bottom">
+                      <ul>
+                        {service_data?.slice(5, 9)?.map((ser) => (
+                          <Link
+                            key={ser?.id}
+                            href={`/our-areas#service-${ser.id}`}
+                          >
+                            <li>{ser?.title}</li>
+                          </Link>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="tp-service-4-wrap">
-        <Swiper
-          {...slider_setting}
-          className="swiper-container tp-service-4-slider-active"
-        >
-          {service_data.map((item) => (
-            <SwiperSlide key={item.id}>
-              <div
-                className="tp-service-4-item"
-                style={{
-                  height: "300px",
-                  backgroundImage: "url(/assets/img/home-04/hero/overly.png)",
-                }}
-              >
-                <div className="tp-service-4-icon">
-                  <Image
-                    style={{ width: "auto", height: "auto" }}
-                    src={item.icon}
-                    alt="icon"
-                  />
-                </div>
-                <div className="tp-service-4-content">
-                  <h4 className="tp-service-4-title-sm">
-                    <Link href="#">{item.title}</Link>
-                  </h4>
-                  <p>{item.subtitle}</p>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
       </div>
     </div>
   );

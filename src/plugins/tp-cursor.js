@@ -101,8 +101,8 @@ export default function cursorAnimation() {
                         gsap.to($ball, {
                             duration: 0.3,
                             yPercent: -75,
-                            width: 75,
-                            height: 75,
+                            width: 50,
+                            height: 50,
                             opacity: 1,
                             borderWidth: 0,
                             zIndex: 1,

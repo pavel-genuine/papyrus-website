@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 // images
 import sv_1 from "@/assets/img/inner-service/sercive-details/sv-details-1.jpg";
@@ -16,7 +17,7 @@ import port_4 from "@/assets/img/inner-project/showcase/showcase-4.jpg";
 const servicesList = [
   {
     id: 1,
-    title: "Logo Design",
+    title: "Logo ",
     mainImg: sv_1,
     thumbnails: [sv_2, sv_3],
     desc: "Your logo is at the heart of your identity. An impactful design, tailor-made and in line with your activity will allow you to differentiate yourself and mark your audience.",
@@ -351,8 +352,31 @@ const servicesList = [
   },
 ];
 
-export default function ServiceDetailsArea() {
+// Inner component to safely use search params
+function ServiceDetailsContent() {
+  const searchParams = useSearchParams();
   const [activeService, setActiveService] = useState(servicesList[0]);
+
+  useEffect(() => {
+    const serviceQuery = searchParams?.get("service");
+    if (serviceQuery) {
+      // Find matching item by transforming the query (e.g., "press-ad" -> "press ad")
+      const found = servicesList.find(
+        (s) =>
+          s.title.toLowerCase().trim() ===
+          serviceQuery.replace(/-/g, " ").toLowerCase().trim(),
+      );
+
+      if (found) {
+        setActiveService(found);
+        // Scroll to the main feature image if a query is present
+        const section = document.getElementById("canvas-display");
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }
+  }, [searchParams]);
 
   const handleTabClick = (e: any, item: any) => {
     e.preventDefault();
@@ -364,20 +388,22 @@ export default function ServiceDetailsArea() {
       <div className="container">
         <div className="row">
           <div className="col-xl-12">
-            <div className="service-details__title-box mb-40">
-              {/* <span className="service-details__subtitle tp-char-animation">
-                Design Studio
-              </span> */}
-              <h4 className="sv-hero-title tp-char-animation">
-                Vast Canvas of Wandering
-              </h4>
+            <div className="service-details__title-box mb-80">
+              <h6
+                style={{ fontSize: window?.innerWidth > 768 ? "75px" : "45px" }}
+                className="sv-hero-title tp-char-animation"
+              >
+                Our expertise lies in crafting perceptions that empower brands,
+                making them exceptional and significant in the minds of
+                consumers.
+              </h6>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Feature Image */}
-      <div className="container-fluid">
+      {/* Main Feature Image - Added ID for scrolling */}
+      <div className="container-fluid" id="canvas-display">
         <div className="row">
           <div className="col-xl-12">
             <div className="service-details__tab-wrapper text-center mb-120">
@@ -386,8 +412,8 @@ export default function ServiceDetailsArea() {
                   <h3
                     style={{
                       position: "absolute",
-                      top: "30px",
-                      right: "50px",
+                      top: "50px",
+                      left: "50px",
                       zIndex: "20",
                       color: "white",
                       backgroundColor: "black",
@@ -395,7 +421,6 @@ export default function ServiceDetailsArea() {
                       paddingBlock: "10px",
                       borderRadius: "50px",
                     }}
-                    className=" "
                   >
                     {activeService.title}
                   </h3>
@@ -420,7 +445,6 @@ export default function ServiceDetailsArea() {
             <div className="service-details__left-wrap">
               <div className="service-details__left-text pb-20">
                 <p className="text-1 tp_title_anim">{activeService.subDesc}</p>
-                {/* <p>{activeService.subDesc}</p> */}
               </div>
 
               {/* Dynamic Feature List */}
@@ -469,7 +493,7 @@ export default function ServiceDetailsArea() {
                     </React.Fragment>
                   ))}
                 </h4>
-                <p className="">{activeService.desc}</p>
+                <p>{activeService.desc}</p>
               </div>
 
               <div className="service-details__right-category">
@@ -496,5 +520,14 @@ export default function ServiceDetailsArea() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Wrapping in Suspense is mandatory for useSearchParams in Next.js App Router
+export default function ServiceDetailsArea() {
+  return (
+    <Suspense fallback={<div>Loading Canvas...</div>}>
+      <ServiceDetailsContent />
+    </Suspense>
   );
 }

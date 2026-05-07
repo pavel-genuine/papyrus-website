@@ -172,7 +172,7 @@ export default function PortfolioSliderHomeEleven() {
             <div
               className="swiper-container parallax-slider-active p-relative"
               id="showcase-slider"
-              data-cursor={`<img style='scale:2; filter: grayscale(100%);' src="/assets/img/inner-project/showcase/play-video.jpg" alt="inst-img"/>`}
+              data-cursor={`<div style="background-color: #f7941d; width: 50px; height: 50px;" ></div>`}
               style={{ cursor: "pointer" }}
               onClick={(e) => {
                 if (!e.isTrusted) return;

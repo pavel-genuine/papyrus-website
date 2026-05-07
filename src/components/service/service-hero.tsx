@@ -10,14 +10,19 @@ export default function ServiceHero() {
     <div className="sv-hero-area sv-hero-ptb">
       <div className="container container-1530">
         <div className="row">
-          <div className="col-xl-10">
+          <div className="col-xl-11">
             <div className="sv-hero-title-box">
-              <h4 className="sv-hero-title tp-char-animation">
-                Experience <br /> the best services.
-              </h4>
-              <p className="tp_fade_bottom">
+              <h6
+                style={{ fontSize: window?.innerWidth > 768 ? "75px" : "45px" }}
+                className="sv-hero-title tp-char-animation"
+              >
+                We are all about adaptable approaches, implementing creative
+                thinking, and driving long-lasting effective strategies that
+                ensure a brand’s success.
+              </h6>
+              {/* <p className="tp_fade_bottom">
                 We provide powerful marketing services .
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
