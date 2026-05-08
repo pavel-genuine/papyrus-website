@@ -23,8 +23,8 @@ export default function AboutThree() {
                   <FirstBracketTwo />
                 </span>
               </span> */}
-              <h5 className="sv-service-title tp_fade_bottom mb-40 mt-60">
-                Crafting Perceptions Empowering Brands
+              <h5 className="tp-section-title-90 tp_fade_bottom mb-40 mt-60">
+                Crafting Perceptions <br /> Empowering Brands
                 <span>
                   {" "}
                   <br />
