@@ -17,7 +17,7 @@ const slider_data = [
     id: 1,
     subtitle: " Branding & Marketing ",
     title: "Top Paddock",
-    youtubeUrl: "https://www.youtube.com/embed/Nhvi0TvxS6E?si=RqIYHqo9olg0TYwl",
+    youtubeUrl: "https://www.youtube.com/embed/Nhvi0TvxS6E",
     description: "A beautiful UI and web design project.",
     client: "Akij Dairy",
     year: "2024",
@@ -26,7 +26,7 @@ const slider_data = [
     id: 2,
     subtitle: " Branding & Marketing ",
     title: "Band Some",
-    youtubeUrl: "https://www.youtube.com/embed/F2S30xmksIw?si=AvvLMPz47Yx1wT78",
+    youtubeUrl: "https://www.youtube.com/embed/F2S30xmksIw",
     description: "Modern branding and web experience.",
     client: "Mr. White",
     year: "2024",
@@ -35,7 +35,7 @@ const slider_data = [
     id: 3,
     subtitle: " Branding & Marketing ",
     title: "Lune Lab",
-    youtubeUrl: "https://www.youtube.com/embed/_PUuZs4LXXM?si=NRJqLv7tjuEOz69e",
+    youtubeUrl: "https://www.youtube.com/embed/_PUuZs4LXXM",
     description: "Creative lab portfolio showcase.",
     client: "Bashundhara Spice",
     year: "2023",
@@ -44,7 +44,7 @@ const slider_data = [
     id: 4,
     subtitle: " Branding & Marketing ",
     title: "Park 108 Nyc",
-    youtubeUrl: "https://www.youtube.com/embed/KDuOZZTydNI?si=PRZselveXcwwXWG_",
+    youtubeUrl: "https://www.youtube.com/embed/_PUuZs4LXXM",
     description: "Luxury real estate digital experience.",
     client: "Bashundhara LPG",
     year: "2023",
@@ -52,21 +52,6 @@ const slider_data = [
 ];
 
 const slider_images = [showcase_1, showcase_2, showcase_3, showcase_4];
-
-function getEmbedUrl(youtubeUrl: string): string {
-  try {
-    const url = new URL(youtubeUrl);
-    let videoId = "";
-    if (url.hostname.includes("youtu.be")) {
-      videoId = url.pathname.slice(1);
-    } else {
-      videoId = url.searchParams.get("v") ?? "";
-    }
-    return youtubeUrl;
-  } catch {
-    return "";
-  }
-}
 
 function triggerWebGLTransition(webGL: any, realIndex: number) {
   if (!webGL || webGL.isRunning) return;
