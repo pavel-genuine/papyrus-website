@@ -1,6 +1,6 @@
 "use client";
 import { gsap } from "gsap";
-import React from "react";
+import React, { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
@@ -27,9 +27,17 @@ import { hoverBtn } from "@/utils/hover-btn";
 import { teamMarqueAnim } from "@/utils/scroll-marque";
 import FooterFour from "@/layouts/footers/footer-four";
 import HeaderOne from "@/layouts/headers/header-one";
+import InstagramArea from "@/components/instagram/instagram-area";
+import { instagramAnim } from "@/utils/instagram-anim";
 
 const AboutMeMain = () => {
   useScrollSmooth();
+  useEffect(() => {
+    document.body.classList.add("tp-smooth-scroll");
+    return () => {
+      document.body.classList.remove("tp-smooth-scroll");
+    };
+  }, []);
 
   useGSAP(() => {
     const timer = setTimeout(() => {
@@ -38,6 +46,7 @@ const AboutMeMain = () => {
       teamMarqueAnim();
       fadeAnimation();
       hoverBtn();
+      instagramAnim();
     }, 100);
     return () => clearTimeout(timer);
   });
@@ -71,12 +80,12 @@ const AboutMeMain = () => {
             {/* <LineImgSlider /> */}
             {/* line img slider */}
 
+            <InstagramArea />
+
             {/* brand area */}
             <div className="tp-brand-4-area pt-20 pb-120">
               <div className="container">
-                <div className="row gx-0">
-                  <BrandItems />
-                </div>
+                <div className="row gx-0">{/* <BrandItems /> */}</div>
               </div>
             </div>
             {/* brand area */}

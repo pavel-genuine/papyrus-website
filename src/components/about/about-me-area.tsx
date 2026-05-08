@@ -10,10 +10,6 @@ export default function AboutMeArea() {
         <div className="row">
           <div className="col-xl-12">
             <div className="ab-about-content p-relative tp_fade_bottom">
-              {/* <span>
-                <Hand />
-                Hi!
-              </span> */}
               <p style={{ fontSize: "30px" }} className="">
                 PAPYRUS is an advertising agency for 19 years, located in
                 Bangladesh, focusing on creating sustainable ideas and marketing
@@ -30,15 +26,14 @@ export default function AboutMeArea() {
             </div>
           </div>
         </div>
-        {/* <div className="row">
+        <div className="row">
           <div className="col-xl-12">
             <div className="row">
               <div className="col-xl-5 col-lg-5 col-md-4 mb-40">
                 <div className="ab-about-category-title-box tp_fade_bottom ab-2-about-title-style p-relative">
-                  <h4 className="ab-about-category-title">
-                    Something <br />
-                    <span>About Us</span>
-                  </h4>
+                  <h4 className="ab-about-category-title">Team</h4>
+                  <br />
+                  <br />
                   <Image
                     className="ab-about-shape-1 d-none d-md-block"
                     src={shape}
@@ -46,7 +41,7 @@ export default function AboutMeArea() {
                   />
                 </div>
               </div>
-              <div className="col-xl-7 col-lg-7 col-md-8">
+              {/* <div className="col-xl-7 col-lg-7 col-md-8">
                 <div className="row">
                   <div className="col-xl-6 col-lg-6 col-md-6 mb-40 tp_fade_bottom">
                     <div className="ab-about-category-list category-space-1">
@@ -81,10 +76,10 @@ export default function AboutMeArea() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

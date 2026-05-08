@@ -40,9 +40,18 @@ import AwardTwo from "@/components/award/award-two";
 import { awardAnimOne } from "@/utils/award-anim";
 import PortfolioHome from "../portfolio/portfolio-home-papyrus";
 import ServiceHome from "@/components/service/service-home-papyrus";
+import InstagramArea from "@/components/instagram/instagram-area";
+import { instagramAnim } from "@/utils/instagram-anim";
 
 const HomeMain = () => {
   useScrollSmooth();
+
+  useEffect(() => {
+    document.body.classList.add("tp-smooth-scroll");
+    return () => {
+      document.body.classList.remove("tp-smooth-scroll");
+    };
+  }, []);
 
   useEffect(() => {
     document.body.classList.add("tp-magic-cursor");
@@ -91,6 +100,7 @@ const HomeMain = () => {
         charAnimation();
         bounceAnimation();
         awardAnimOne();
+        instagramAnim();
       }, 100);
 
       return () => clearTimeout(timer);
@@ -118,6 +128,7 @@ const HomeMain = () => {
             <CounterOne />
             {/* <StudioPanelThree /> */}
             {/* <AwardTwo /> */}
+            <InstagramArea />
           </main>
           <FooterFive />
           <FooterFour />

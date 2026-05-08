@@ -4,8 +4,8 @@ import React from "react";
 import Image from "next/image";
 import { Leaf } from "../svg";
 // instagram images
-import inst_1 from "@/assets/img/home-02/instagram/insta-inner-1.jpg";
-import inst_2 from "@/assets/img/home-02/instagram/insta-inner-2.jpg";
+import inst_1 from "@/assets/img/home-02/instagram/team (1).png";
+import inst_2 from "@/assets/img/home-02/instagram/team (2).png";
 import inst_3 from "@/assets/img/home-02/instagram/insta-inner-3.jpg";
 import inst_4 from "@/assets/img/home-02/instagram/insta-inner-4.jpg";
 import inst_5 from "@/assets/img/home-02/instagram/insta-inner-5.jpg";
@@ -26,25 +26,25 @@ export default function InstagramArea() {
   ];
 
   return (
-    <div className="tp-instagram-area tp-instagram-ptb text-center">
-      <div className="tp-instagram-thumb-wrap p-relative">
-        {instagram_images.map((item) => (
-          <div
-            key={item.id}
-            className={`tp-instagram-thumb-inner-${item.id} d-none d-xl-block`}
-          >
-            <Image src={item.img} alt="inst-img" />
+    <div style={{ position: "relative", height: "220vh", paddingTop: "550px" }}>
+      <div className="tp-instagram-area tp-instagram-ptb text-center">
+        <div className="tp-instagram-thumb-wrap p-relative">
+          {instagram_images.map((item) => (
+            <div
+              key={item.id}
+              className={`tp-instagram-thumb-inner-${item.id} d-none d-xl-block`}
+            >
+              <Image src={item.img} alt="inst-img" />
+            </div>
+          ))}
+
+          <div className="tp-instagram-thumb">
+            <img
+              src="/assets/img/home-02/instagram/team (11).png"
+              alt="inst-img"
+            />
           </div>
-        ))}
-        <div className="tp-instagram-thumb-inner-8 d-none d-xl-block">
-          <Link href="#">
-            <i className="fa-brands fa-instagram"></i>
-          </Link>
-        </div>
-        <div className="tp-instagram-thumb">
-          <img src="/assets/img/home-02/instagram/insta-1.jpg" alt="inst-img" />
-        </div>
-        <div className="tp-instagram-content-wrap text-start">
+          {/* <div className="tp-instagram-content-wrap text-start">
           <div className="tp-instagram-title-box">
             <span className="tp-instagram-subtitle">INSTAGRAM</span>
             <h4 className="tp-instagram-title">@likoagency</h4>
@@ -60,6 +60,7 @@ export default function InstagramArea() {
               </span>
             </Link>
           </div>
+        </div> */}
         </div>
       </div>
     </div>

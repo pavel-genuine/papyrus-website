@@ -82,12 +82,12 @@ const HomeTwoMain = () => {
           <main>
             <PortfolioSliderHomeEleven />
 
-            <AboutThree></AboutThree>
+            {/* <AboutThree></AboutThree> */}
 
             {/* testimonial area */}
             <InstagramArea />
 
-            <PortfolioStandardMain />
+            {/* <PortfolioStandardMain /> */}
 
             {/* <PortfolioMasonryArea /> */}
             <CounterOne />
@@ -99,7 +99,7 @@ const HomeTwoMain = () => {
             {/* service area */}
 
             {/* award area */}
-            <AwardOne />
+            {/* <AwardOne /> */}
             {/* award area */}
 
             {/* team area */}
