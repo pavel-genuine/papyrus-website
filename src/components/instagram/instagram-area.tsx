@@ -6,11 +6,11 @@ import { Leaf } from "../svg";
 // instagram images
 import inst_1 from "@/assets/img/home-02/instagram/team (1).png";
 import inst_2 from "@/assets/img/home-02/instagram/team (2).png";
-import inst_3 from "@/assets/img/home-02/instagram/insta-inner-3.jpg";
-import inst_4 from "@/assets/img/home-02/instagram/insta-inner-4.jpg";
-import inst_5 from "@/assets/img/home-02/instagram/insta-inner-5.jpg";
-import inst_6 from "@/assets/img/home-02/instagram/insta-inner-6.jpg";
-import inst_7 from "@/assets/img/home-02/instagram/insta-inner-7.jpg";
+import inst_3 from "@/assets/img/home-02/instagram/team (3).png";
+import inst_4 from "@/assets/img/home-02/instagram/team (4).png";
+import inst_5 from "@/assets/img/home-02/instagram/team (5).png";
+import inst_6 from "@/assets/img/home-02/instagram/team (6).png";
+import inst_7 from "@/assets/img/home-02/instagram/team (7).png";
 import Link from "next/link";
 
 export default function InstagramArea() {
@@ -26,7 +26,7 @@ export default function InstagramArea() {
   ];
 
   return (
-    <div style={{ position: "relative", height: "220vh", paddingTop: "550px" }}>
+    <div style={{ position: "relative", height: "250vh", paddingTop: "550px" }}>
       <div className="tp-instagram-area tp-instagram-ptb text-center">
         <div className="tp-instagram-thumb-wrap p-relative">
           {instagram_images.map((item) => (
