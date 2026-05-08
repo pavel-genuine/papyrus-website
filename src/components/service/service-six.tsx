@@ -131,7 +131,8 @@ export default function ServiceSix() {
           <div
             key={item.id}
             id={`service-${item.id}`}
-            className="sv-service-item project-panel-2"
+            style={{}}
+            className={`sv-service-item project-panel-2 ${item?.id % 2 == 0 ? "bg-dark" : "black-bg"}`}
           >
             <div className="row g-0">
               {/* <div className="col-xl-6 col-lg-6">

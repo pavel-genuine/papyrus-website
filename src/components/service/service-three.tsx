@@ -109,10 +109,10 @@ const service_data = [
 ];
 export default function ServiceThree() {
   return (
-    <div className="ab-about-area ab-about-mt pb-90 z-index-5">
+    <div className="ab-about-area ab-about-mt pt-60 pb-90 z-index-5">
       <div className="container container-1480">
         <div id="about-info" className="row">
-          <div className="col-xxl-12 mt-40 mb-40">
+          <div className="col-xxl-12 ">
             <div className="ab-about-content p-relative">
               <p className=" tp_fade_bottom">
                 We are a creative studio that specializes in providing
@@ -126,7 +126,7 @@ export default function ServiceThree() {
         <div className="row">
           <div className="col-xl-9">
             <div className="row">
-              <div className="col-xl-5 col-lg-5 col-md-4 mb-40">
+              <div className="col-xl-4 col-lg-4 col-md-4 mb-40">
                 <div className="ab-about-category-title-box p-relative">
                   <h4 className="ab-about-category-title"></h4>
                   <Image
@@ -136,7 +136,7 @@ export default function ServiceThree() {
                   />
                 </div>
               </div>
-              <div className="col-xl-7 col-lg-7 col-md-8">
+              <div className="col-xl-8 col-lg-8 col-md-8">
                 <div className="row">
                   <div className="col-xl-6 col-lg-6 col-md-6 mb-40">
                     <div className="ab-about-category-list category-space-1 tp_fade_bottom">
@@ -146,7 +146,7 @@ export default function ServiceThree() {
                             key={ser?.id}
                             href={`/our-areas#service-${ser.id}`}
                           >
-                            <li>{ser?.title}</li>
+                            <li style={{ fontSize: "25px" }}>{ser?.title}</li>
                           </Link>
                         ))}
                       </ul>
@@ -160,7 +160,7 @@ export default function ServiceThree() {
                             key={ser?.id}
                             href={`/our-areas#service-${ser.id}`}
                           >
-                            <li>{ser?.title}</li>
+                            <li style={{ fontSize: "25px" }}>{ser?.title}</li>
                           </Link>
                         ))}
                       </ul>

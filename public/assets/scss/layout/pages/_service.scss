@@ -619,22 +619,22 @@
         right: 165px;
     }
     &-thumb-box{
-        height: 700px;
+        height: 100%;
         overflow: hidden;
         @media #{$xl}{
-            height: 550px;
+            height: 100%
         }
         @media #{$lg}{
-            height: 400px;
+            height: 100%;
         }
         @media #{$md}{
-            height: 200px;
+            height: 100%;
         }
         @media #{$xs}{
-            height: 200px;
+            height: 100%;
         }
         & img{
-            margin-top: -250px;
+            // margin-top: -250px;
             @media #{$xs}{
                 height: 400px;
             }
@@ -646,7 +646,7 @@
         height: 100%;
         width: 100%;
         padding: 110px;
-        background-color: var(--tp-common-black-2);
+        // background-color: var(--tp-common-black-2);
         @media #{$lg}{
             padding: 80px;
         }

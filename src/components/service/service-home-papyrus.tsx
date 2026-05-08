@@ -95,8 +95,8 @@ function DescTooltip({
     if (anchorEl && visible) {
       const rect = anchorEl.getBoundingClientRect();
       setPos({
-        top: rect.bottom + window.scrollY + 6,
-        left: rect.left + window.scrollX + 300,
+        top: rect.bottom + window.scrollY - 15,
+        left: rect.left + window.scrollX,
       });
     }
   }, [visible, anchorEl]);
@@ -192,7 +192,7 @@ export default function ServiceHome() {
                 {service_accordion.map((s) => (
                   <div key={s.id} className="accordion-items">
                     <h2 className="accordion-header">
-                      <Link href={`/our-areas#service-${s.id}`}>
+                      <Link href={`/our-areas#service-${s.id}`} target="_blank">
                         {" "}
                         <button
                           ref={(el: any) => (titleRefs.current[s.id] = el)}
