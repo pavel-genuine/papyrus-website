@@ -144,6 +144,7 @@ export default function ServiceThree() {
                         {service_data?.slice(0, 5)?.map((ser) => (
                           <Link
                             key={ser?.id}
+                            target="_blank"
                             href={`/our-areas#service-${ser.id}`}
                           >
                             <li style={{ fontSize: "25px" }}>{ser?.title}</li>
@@ -158,6 +159,7 @@ export default function ServiceThree() {
                         {service_data?.slice(5, 9)?.map((ser) => (
                           <Link
                             key={ser?.id}
+                            target="_blank"
                             href={`/our-areas#service-${ser.id}`}
                           >
                             <li style={{ fontSize: "25px" }}>{ser?.title}</li>

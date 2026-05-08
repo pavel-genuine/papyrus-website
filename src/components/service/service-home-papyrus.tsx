@@ -192,7 +192,7 @@ export default function ServiceHome() {
                 {service_accordion.map((s) => (
                   <div key={s.id} className="accordion-items">
                     <h2 className="accordion-header">
-                      <Link href={`/our-areas#service-${s.id}`} target="_blank">
+                      <Link href={`/our-areas#service-${s.id}`}>
                         {" "}
                         <button
                           ref={(el: any) => (titleRefs.current[s.id] = el)}
