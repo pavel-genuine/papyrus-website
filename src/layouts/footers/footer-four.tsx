@@ -106,9 +106,20 @@ export default function FooterFour() {
                     </span>
                     <br />
                     <span>
+                      <Link href="tel:+880 1986-661166">+880 1986-661166</Link>
+                    </span>
+                    <br />
+                    <span>
                       {" "}
                       <Link href="mailto:info@papyrus.agency">
                         info@papyrus.agency
+                      </Link>
+                    </span>
+                    <br />
+                    <span>
+                      {" "}
+                      <Link href="mailto:musfiqurpapyrusimc@gmail.com">
+                        musfiqurpapyrusimc@gmail.com
                       </Link>
                     </span>
                   </div>

@@ -75,10 +75,19 @@ export default function MobileOffcanvas({
                   <span>
                     <Link href="tel:+880 1313713190">+880 1313713190</Link>
                   </span>
+                  <br />
+                  <span>
+                    <Link href="tel:+880 1986-661166">+880 1986-661166</Link>
+                  </span>
                 </li>
                 <li>
                   <Link href="mailto:info@papyrus.agency">
                     info@papyrus.agency
+                  </Link>
+                </li>
+                <li>
+                  <Link href="mailto:musfiqurpapyrusimc@gmail.com">
+                    musfiqurpapyrusimc@gmail.com
                   </Link>
                 </li>
                 <li>
