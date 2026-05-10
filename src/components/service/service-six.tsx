@@ -1,16 +1,16 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, Suspense } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import shape from "@/assets/img/inner-about/about/shape-1.png";
+import { createPortal } from "react-dom";
+import Link from "next/link";
 
+// Assets
+import shape from "@/assets/img/inner-about/about/shape-1.png";
 import ser_img_1 from "@/assets/img/inner-service/service/service-1.jpg";
 import ser_img_2 from "@/assets/img/inner-service/service/service-2.jpg";
 import ser_img_3 from "@/assets/img/inner-service/service/service-3.jpg";
 import ser_img_4 from "@/assets/img/inner-service/service/service-4.jpg";
-import { RightArrow, ShapeTwo } from "../svg";
-import Link from "next/link";
-import { createPortal } from "react-dom";
 
 const service_data = [
   {
@@ -154,7 +154,7 @@ function DescTooltip({
     }
   }, [visible, anchorEl]);
 
-  if (!mounted) return null;
+  if (!mounted || !visible) return null;
 
   return createPortal(
     <div
@@ -171,15 +171,10 @@ function DescTooltip({
         borderRadius: "6px",
         padding: "20px",
         boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
-        opacity: visible ? 1 : 0,
-        visibility: visible ? "visible" : "hidden",
-        transform: visible ? "translateY(0px)" : "translateY(-6px)",
-        transition:
-          "opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease",
-        pointerEvents: visible ? "auto" : "none",
         color: "#cccccc",
         fontSize: "18px",
         lineHeight: "1.6",
+        pointerEvents: "auto",
       }}
     >
       {desc}
@@ -188,17 +183,17 @@ function DescTooltip({
   );
 }
 
-export default function ServiceSix() {
-  // ✅ Read ?service=id from URL on mount
+// --- Main Component Internal Logic ---
+function ServiceContent() {
   const searchParams = useSearchParams();
-
   const [activeId, setActiveId] = useState<number | null>(null);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
   const titleRefs = useRef<{ [key: number]: HTMLButtonElement | null }>({});
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ✅ Set activeId from query param when page loads
   useEffect(() => {
+    setMounted(true);
     const param = searchParams?.get("service");
     if (param) {
       const id = parseInt(param, 10);
@@ -215,34 +210,67 @@ export default function ServiceSix() {
     leaveTimer.current = setTimeout(() => setHoveredId(null), 120);
   };
 
-  // ✅ Which services to show in the detail section
+  if (!mounted) return null; // Prevent hydration mismatch
+
   const visibleServices = activeId
     ? service_data.filter((s) => s.id === activeId)
     : service_data;
+
+  const renderServiceList = (data: typeof service_data) => (
+    <ul style={{ listStyle: "none", padding: 0 }}>
+      {data.map((ser) => (
+        <li key={ser.id} style={{ marginBottom: "10px" }}>
+          <button
+            ref={(el) => {
+              titleRefs.current[ser.id] = el;
+            }}
+            className={`accordion-buttons ${activeId === ser.id ? "" : "collapsed"}`}
+            type="button"
+            style={{ all: "unset", cursor: "pointer", width: "100%" }}
+            onClick={() =>
+              setActiveId((prev) => (prev === ser.id ? null : ser.id))
+            }
+            onMouseEnter={() => handleEnter(ser.id)}
+            onMouseLeave={handleLeave}
+          >
+            <span
+              style={{ fontSize: "25px", display: "block", textAlign: "left" }}
+            >
+              {ser.title}
+            </span>
+          </button>
+          <DescTooltip
+            desc={ser.desc}
+            anchorEl={titleRefs.current[ser.id] || null}
+            visible={hoveredId === ser.id}
+            onMouseEnter={() => handleEnter(ser.id)}
+            onMouseLeave={handleLeave}
+          />
+        </li>
+      ))}
+    </ul>
+  );
 
   return (
     <div className="sv-service-area project-panel-area-2">
       <div className="ab-about-area ab-about-mt pt-60 pb-90 z-index-5">
         <div className="container container-1480">
-          <div id="about-info" className="row">
+          <div className="row">
             <div className="col-xxl-12">
               <div className="ab-about-content p-relative">
                 <p className="tp_fade_bottom">
                   We are a creative studio that specializes in providing
-                  high-quality design and branding solutions to businesses and
-                  individuals. Our team is composed of talented designers,
-                  developers, and marketers.!
+                  high-quality design and branding solutions.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="row">
+          <div className="row mt-40">
             <div className="col-xl-9">
               <div className="row">
                 <div className="col-xl-4 col-lg-4 col-md-4 mb-40">
                   <div className="ab-about-category-title-box p-relative">
-                    <h4 className="ab-about-category-title"></h4>
                     <Image
                       className="ab-about-shape-1 d-none d-md-block"
                       src={shape}
@@ -250,94 +278,13 @@ export default function ServiceSix() {
                     />
                   </div>
                 </div>
-
                 <div className="col-xl-8 col-lg-8 col-md-8">
                   <div className="row">
-                    {/* Left list: services 1–5 */}
                     <div className="col-xl-6 col-lg-6 col-md-6 mb-40">
-                      <div className="ab-about-category-list category-space-1 tp_fade_bottom">
-                        <ul>
-                          {service_data.slice(0, 5).map((ser) => (
-                            <div key={ser.id}>
-                              {/* ✅ Toggle activeId on click */}
-                              <button
-                                ref={(el: any) =>
-                                  (titleRefs.current[ser.id] = el)
-                                }
-                                className={`accordion-buttons ${activeId === ser.id ? "" : "collapsed"}`}
-                                type="button"
-                                onClick={() =>
-                                  setActiveId((prev) =>
-                                    prev === ser.id ? null : ser.id,
-                                  )
-                                }
-                                onMouseEnter={() => handleEnter(ser.id)}
-                                onMouseLeave={handleLeave}
-                              >
-                                <li
-                                  style={{
-                                    fontSize: "25px",
-                                    textAlign: "left",
-                                  }}
-                                >
-                                  {ser.title}
-                                </li>
-                              </button>
-                              <DescTooltip
-                                desc={ser.desc}
-                                anchorEl={titleRefs.current[ser.id] ?? null}
-                                visible={hoveredId === ser.id}
-                                onMouseEnter={() => handleEnter(ser.id)}
-                                onMouseLeave={handleLeave}
-                              />
-                            </div>
-                          ))}
-                        </ul>
-                      </div>
+                      {renderServiceList(service_data.slice(0, 5))}
                     </div>
-
-                    {/* Right list: services 6–9 */}
                     <div className="col-xl-6 col-lg-6 col-md-6 mb-40">
-                      <div className="ab-about-category-list category-space-2 tp_fade_bottom">
-                        <ul>
-                          {service_data.slice(5, 9).map((ser) => (
-                            <div key={ser.id}>
-                              {/* ✅ Toggle activeId on click */}
-
-                              <button
-                                ref={(el: any) =>
-                                  (titleRefs.current[ser.id] = el)
-                                }
-                                className={`accordion-buttons ${activeId === ser.id ? "" : "collapsed"}`}
-                                type="button"
-                                onClick={() =>
-                                  setActiveId((prev) =>
-                                    prev === ser.id ? null : ser.id,
-                                  )
-                                }
-                                onMouseEnter={() => handleEnter(ser.id)}
-                                onMouseLeave={handleLeave}
-                              >
-                                <li
-                                  style={{
-                                    fontSize: "25px",
-                                    textAlign: "left",
-                                  }}
-                                >
-                                  {ser.title}
-                                </li>
-                              </button>
-                              <DescTooltip
-                                desc={ser.desc}
-                                anchorEl={titleRefs.current[ser.id] ?? null}
-                                visible={hoveredId === ser.id}
-                                onMouseEnter={() => handleEnter(ser.id)}
-                                onMouseLeave={handleLeave}
-                              />
-                            </div>
-                          ))}
-                        </ul>
-                      </div>
+                      {renderServiceList(service_data.slice(5, 9))}
                     </div>
                   </div>
                 </div>
@@ -346,73 +293,68 @@ export default function ServiceSix() {
           </div>
         </div>
 
-        {/* ✅ "All Areas Details" resets to show everything */}
-        <div className="row">
-          <div className="col-xl-8 col-lg-8 col-md-8"></div>
-          <Link
-            href={""}
+        <div className="row justify-content-end container container-1480">
+          <button
             className="col-xl-2 col-lg-2 col-md-2 tp-btn-project-sm"
             onClick={() => setActiveId(null)}
-            // style={{ cursor: "pointer", background: "none", border: "none" }}
+            style={{
+              cursor: "pointer",
+              background: "none",
+              border: "1px solid #333",
+              color: "#fff",
+              padding: "10px",
+            }}
           >
             All Areas details
-          </Link>
+          </button>
         </div>
       </div>
 
-      {/* ✅ Details section — only shows filtered or all */}
       <div className="container-fluid p-0">
         {visibleServices.map((item) => (
           <div
             key={item.id}
             id={`service-${item.id}`}
             className={`sv-service-item project-panel-2 ${item.id % 2 === 0 ? "bg-dark" : "black-bg"}`}
+            style={{ padding: "80px 0", borderTop: "1px solid #222" }}
           >
-            <div className="row g-0">
-              <div className="col-xl-12 col-lg-12">
-                <div className="sv-service-content-wrap d-flex align-items-center">
-                  <div className="sv-service-content">
-                    <div className="sv-service-title-box">
-                      <h4 className="sv-service-title">{item.title}</h4>
-                    </div>
-                    <div className="sv-service-space-wrap">
-                      <div className="sv-service-text">
-                        <p>{item.text}</p>
-                        <p style={{ marginBottom: "0px", fontWeight: "bold" }}>
-                          Why We?
+            <div className="container">
+              <div className="row">
+                <div className="col-xl-12">
+                  <h4
+                    className="sv-service-title"
+                    style={{ fontSize: "40px", marginBottom: "30px" }}
+                  >
+                    {item.title}
+                  </h4>
+                  <div
+                    className="sv-service-text"
+                    style={{ maxWidth: "800px" }}
+                  >
+                    <p style={{ fontSize: "18px", color: "#aaa" }}>
+                      {item.text}
+                    </p>
+                    <p style={{ marginTop: "20px", fontWeight: "bold" }}>
+                      Why We?
+                    </p>
+                    <p>{item.why_we}</p>
+                    {item.support && (
+                      <>
+                        <p style={{ marginTop: "20px", fontWeight: "bold" }}>
+                          Support
                         </p>
-                        <p>{item.why_we}</p>
-                        {item.expert && (
-                          <div>
-                            <p
-                              style={{
-                                marginBottom: "0px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Expert Team
-                            </p>
-                            <p>{item.expert}</p>
-                          </div>
-                        )}
-                        {item.support && (
-                          <div>
-                            <p
-                              style={{
-                                marginBottom: "0px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Support
-                            </p>
-                            <p>{item.support}</p>
-                          </div>
-                        )}
-                        <div>
-                          <p>{item.extra_info}</p>
-                        </div>
-                      </div>
-                    </div>
+                        <p>{item.support}</p>
+                      </>
+                    )}
+                    <p
+                      style={{
+                        marginTop: "20px",
+                        fontStyle: "italic",
+                        color: "#888",
+                      }}
+                    >
+                      {item.extra_info}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -421,5 +363,16 @@ export default function ServiceSix() {
         ))}
       </div>
     </div>
+  );
+}
+
+// --- Final Export wrapped in Suspense ---
+export default function ServiceSix() {
+  return (
+    <Suspense
+      fallback={<div className="loading-state">Loading Services...</div>}
+    >
+      <ServiceContent />
+    </Suspense>
   );
 }
