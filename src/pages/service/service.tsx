@@ -50,7 +50,7 @@ const ServiceMain = () => {
             {/* service hero */}
 
             {/* service area */}
-            <ServiceThree />
+            {/* <ServiceThree /> */}
             {/* service area */}
 
             {/* service area */}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import HeaderMenus from "./header-menus";
@@ -11,7 +11,13 @@ import useStickyHeader from "@/hooks/use-sticky-header";
 
 const HeaderOne = () => {
   const { isSticky, headerRef, headerFullWidth } = useStickyHeader(20);
-  const [openOffCanvas, setOpenOffCanvas] = React.useState(false);
+  const [openOffCanvas, setOpenOffCanvas] = useState(false);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
+
   useEffect(() => {
     headerFullWidth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -23,6 +29,8 @@ const HeaderOne = () => {
         <div
           style={{
             backgroundImage: `url(${logobg.src})`,
+            height: width > 768 ? "90px" : "80px",
+            paddingTop: width < 768 ? "15px" : "0px",
           }}
           id="header-sticky"
           className={`tp-header-area tp-header-mob-space tp-transparent pl-60 pr-60 z-index-9 ${isSticky ? "header-sticky" : ""}`}
@@ -36,13 +44,13 @@ const HeaderOne = () => {
                       style={{
                         width: "auto",
                         height: "auto",
-                        paddingTop: "10px",
+                        paddingTop: "5px",
                         paddingBottom: "5px",
                       }}
                       src={logoWhite}
                       alt="logo"
-                      width={140}
-                      height={90}
+                      width={width > 768 ? 140 : 90}
+                      height={width > 768 ? 90 : 60}
                     />
                   </Link>
                 </div>

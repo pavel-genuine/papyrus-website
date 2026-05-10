@@ -4,10 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { createPortal } from "react-dom";
 
-// internal imports
 import shape from "@/assets/img/home-02/service/sv-shape-1.png";
 import { ArrowBg, RightArrowTwo } from "@/components/svg";
-
 import ser_1 from "@/assets/img/home-02/service/sv-icon-1.png";
 import ser_2 from "@/assets/img/home-02/service/sv-icon-2.png";
 import ser_3 from "@/assets/img/home-02/service/sv-icon-3.png";
@@ -70,7 +68,6 @@ const service_accordion = [
   },
 ];
 
-// ── Portal Desc Tooltip ──────────────────────────────────────────────────────
 function DescTooltip({
   desc,
   anchorEl,
@@ -110,7 +107,6 @@ function DescTooltip({
       style={{
         position: "absolute",
         top: pos.top,
-        // left: pos.left,
         right: "200px",
         zIndex: 99999,
         maxWidth: "350px",
@@ -136,7 +132,6 @@ function DescTooltip({
   );
 }
 
-// ── Main Component ───────────────────────────────────────────────────────────
 export default function ServiceHome() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const titleRefs = useRef<{ [key: number]: HTMLButtonElement | null }>({});
@@ -192,8 +187,8 @@ export default function ServiceHome() {
                 {service_accordion.map((s) => (
                   <div key={s.id} className="accordion-items">
                     <h2 className="accordion-header">
-                      <Link href={`/our-areas#service-${s.id}`}>
-                        {" "}
+                      {/* ✅ Changed: use ?service=id query param instead of hash */}
+                      <Link href={`/our-areas?service=${s.id}`}>
                         <button
                           ref={(el: any) => (titleRefs.current[s.id] = el)}
                           className={`accordion-buttons ${s.id !== 1 ? "collapsed" : ""}`}
@@ -221,6 +216,7 @@ export default function ServiceHome() {
                 ))}
               </div>
             </div>
+
             <Link
               className="tp-btn-black-2 tp_fade_bottom mt-100"
               href="/our-areas"

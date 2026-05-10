@@ -1144,13 +1144,14 @@
         background: rgba(23, 23, 23, 0.14);
     }
     & .sv-service-title {
-        font-size: 40px;
+        // font-size: 40px;
         font-weight: 600;
         line-height: 1;
         letter-spacing: -1.6px;
         color: var(--tp-common-black-2);
         @media #{$xs}{
-            font-size: 30px;
+            // font-size: 20px;
+            //     font-weight: 400;
         }
     }
     & .sv-service-text p {

@@ -50,13 +50,13 @@
         color: var(--tp-common-black);
         font-family: var(--tp-ff-marcellus);
         @media #{$lg}{
-            font-size: 80px;
+            font-size: 70px;
         }
         @media #{$md}{
             font-size: 60px;
         }
         @media #{$xs}{
-            font-size: 45px;
+            font-size: 35px;
         }
         & span{
             font-size: 36px;

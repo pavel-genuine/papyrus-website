@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 // internal imports
@@ -6,6 +6,11 @@ import shape from "@/assets/img/home-02/service/sv-shape-1.png";
 import { ArrowBg, RightArrowTwo, FirstBracket, FirstBracketTwo } from "../svg";
 
 export default function AboutThree() {
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
   return (
     <div className="tp-about-3-area pt-120 pb-110 ">
       <div className="container">
@@ -23,7 +28,10 @@ export default function AboutThree() {
                   <FirstBracketTwo />
                 </span>
               </span> */}
-              <h5 className="tp-section-title-90 tp_fade_bottom mb-40 mt-60">
+              <h5
+                // style={{ fontWeight: "200px" }}
+                className="tp-section-title-90 tp_fade_bottom mb-40 mt-60"
+              >
                 Crafting Perceptions <br /> Empowering Brands
                 <span>
                   {" "}
