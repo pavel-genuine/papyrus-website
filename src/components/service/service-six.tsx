@@ -394,22 +394,50 @@ function ServiceContent() {
                     {item.title}
                   </h2>
                   <p
-                    style={{ fontSize: "20px", color: "#888", lineHeight: 1.6 }}
+                    style={{
+                      fontSize: "20px",
+                      color: "#9e9d9d",
+                      lineHeight: 1.6,
+                    }}
                   >
                     {item.text}
                   </p>
                   <div style={{ marginTop: "30px" }}>
                     <h5 style={{ color: "#fff" }}>Why We?</h5>
-                    <p>{item.why_we}</p>
+                    <p
+                      style={{
+                        fontSize: "20px",
+                        color: "#9e9d9d",
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      {item.why_we}
+                    </p>
                   </div>
                   <div style={{ marginTop: "30px" }}>
                     <h5 style={{ color: "#fff" }}>
                       {item?.support ? "Support" : "Expert Team"}
                     </h5>
-                    <p>{item?.support ? item.support : item?.expert}</p>
+                    <p
+                      style={{
+                        fontSize: "20px",
+                        color: "#9e9d9d",
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      {item?.support ? item.support : item?.expert}
+                    </p>
                   </div>
                   <div style={{ marginTop: "20px" }}>
-                    <p>{item?.extra_info}</p>
+                    <p
+                      style={{
+                        fontSize: "20px",
+                        color: "#9e9d9d",
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      {item?.extra_info}
+                    </p>
                   </div>
                 </div>
               </div>
