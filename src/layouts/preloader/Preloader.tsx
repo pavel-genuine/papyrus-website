@@ -15,14 +15,20 @@ const Preloader = () => {
 
       const tl = gsap.timeline({
         onComplete: () => setIsDone(true),
-        delay: 2,
+        delay: 1.5,
       });
 
+      // Animation for the split
       tl.to([leftHalf.current, rightHalf.current], {
-        xPercent: (i) => (i === 0 ? -100 : 100),
-        duration: 1.8,
+        duration: 1.6,
         ease: "expo.inOut",
+        // We use function-based values to move them in opposite directions
+        xPercent: (index) => (index === 0 ? -100 : 100),
       });
+
+      // OPTIONAL: Smoothly fade out the container at the very end
+      // to ensure no "flicker" when the component is unmounted
+      tl.to(container.current, { opacity: 0, duration: 0.4 }, "-=0.4");
     },
     { scope: container },
   );
@@ -34,10 +40,9 @@ const Preloader = () => {
     top: 0,
     width: "100vw",
     height: "100vh",
-    // Ensure the video background is black so it looks solid
-    backgroundColor: "black",
+    backgroundColor: "black", // Keep this black so the video area looks solid
     overflow: "hidden",
-    willChange: "transform",
+    willChange: "transform", // Optimizes performance for the slide
   };
 
   return (
@@ -47,9 +52,8 @@ const Preloader = () => {
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        // CRITICAL: The wrapper must be transparent
-        backgroundColor: "transparent",
-        pointerEvents: "none",
+        pointerEvents: "none", // Allows clicking "through" to the site during animation
+        backgroundColor: "transparent", // Ensure the main container is clear
       }}
     >
       {/* Left Half */}
@@ -58,12 +62,7 @@ const Preloader = () => {
         style={{ ...halfStyle, left: 0, clipPath: "inset(0 50% 0 0)" }}
       >
         <video
-          style={{
-            width: "100vw",
-            height: "100vh",
-            objectFit: "cover",
-            transform: "scale(1.01)",
-          }}
+          style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
           autoPlay
           muted
           loop
@@ -79,12 +78,7 @@ const Preloader = () => {
         style={{ ...halfStyle, left: 0, clipPath: "inset(0 0 0 50%)" }}
       >
         <video
-          style={{
-            width: "100vw",
-            height: "100vh",
-            objectFit: "cover",
-            transform: "scale(1.01)",
-          }}
+          style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
           autoPlay
           muted
           loop
