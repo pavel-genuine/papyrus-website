@@ -330,18 +330,22 @@ function ServiceContent() {
 
           <div className="row mt-4">
             <div className="col-12 text-end">
-              <button
-                className="tp-btn-project-sm"
-                onClick={() => setActiveId(null)}
-                style={{
-                  background: "transparent",
-                  color: "#fff",
-                  border: "1px solid #444",
-                  // padding: "10px 20px",
-                }}
-              >
-                All Areas details
-              </button>
+              {activeId ? (
+                <button
+                  className="tp-btn-project-sm"
+                  onClick={() => setActiveId(null)}
+                  style={{
+                    background: "transparent",
+                    color: "#fff",
+                    border: "1px solid #444",
+                    // padding: "10px 20px",
+                  }}
+                >
+                  All Areas details
+                </button>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
