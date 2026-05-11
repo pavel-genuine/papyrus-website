@@ -3,36 +3,26 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 const Preloader = () => {
-  // Define types for the refs to satisfy TypeScript
   const container = useRef<HTMLDivElement>(null);
-  const topHalf = useRef<HTMLDivElement>(null);
-  const bottomHalf = useRef<HTMLDivElement>(null);
+  const leftHalf = useRef<HTMLDivElement>(null);
+  const rightHalf = useRef<HTMLDivElement>(null);
 
   const [isDone, setIsDone] = useState(false);
 
   useGSAP(
     () => {
-      // Safety check to ensure refs are attached
-      if (!topHalf.current || !bottomHalf.current) return;
+      if (!leftHalf.current || !rightHalf.current) return;
 
       const tl = gsap.timeline({
         onComplete: () => setIsDone(true),
         delay: 2,
       });
 
-      tl.to(topHalf.current, {
-        yPercent: -100,
-        duration: 1.2,
-        ease: "power4.inOut",
-      }).to(
-        bottomHalf.current,
-        {
-          yPercent: 100,
-          duration: 1.2,
-          ease: "power4.inOut",
-        },
-        "<",
-      );
+      tl.to([leftHalf.current, rightHalf.current], {
+        xPercent: (i) => (i === 0 ? -100 : 100),
+        duration: 1.8,
+        ease: "expo.inOut",
+      });
     },
     { scope: container },
   );
@@ -41,19 +31,39 @@ const Preloader = () => {
 
   const halfStyle: React.CSSProperties = {
     position: "fixed",
-    left: 0,
+    top: 0,
     width: "100vw",
     height: "100vh",
+    // Ensure the video background is black so it looks solid
     backgroundColor: "black",
     overflow: "hidden",
+    willChange: "transform",
   };
 
   return (
-    <div ref={container} style={{ position: "fixed", inset: 0, zIndex: 9999 }}>
-      {/* Top Half */}
-      <div ref={topHalf} style={{ ...halfStyle, clipPath: "inset(0 0 50% 0)" }}>
+    <div
+      ref={container}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 9999,
+        // CRITICAL: The wrapper must be transparent
+        backgroundColor: "transparent",
+        pointerEvents: "none",
+      }}
+    >
+      {/* Left Half */}
+      <div
+        ref={leftHalf}
+        style={{ ...halfStyle, left: 0, clipPath: "inset(0 50% 0 0)" }}
+      >
         <video
-          style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
+          style={{
+            width: "100vw",
+            height: "100vh",
+            objectFit: "cover",
+            transform: "scale(1.01)",
+          }}
           autoPlay
           muted
           loop
@@ -63,13 +73,18 @@ const Preloader = () => {
         </video>
       </div>
 
-      {/* Bottom Half */}
+      {/* Right Half */}
       <div
-        ref={bottomHalf}
-        style={{ ...halfStyle, clipPath: "inset(50% 0 0 0)" }}
+        ref={rightHalf}
+        style={{ ...halfStyle, left: 0, clipPath: "inset(0 0 0 50%)" }}
       >
         <video
-          style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
+          style={{
+            width: "100vw",
+            height: "100vh",
+            objectFit: "cover",
+            transform: "scale(1.01)",
+          }}
           autoPlay
           muted
           loop

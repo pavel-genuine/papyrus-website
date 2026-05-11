@@ -1,68 +1,160 @@
-/* eslint-disable @next/next/no-img-element */
-"use client";
-import React from "react";
+import React, { useRef, useMemo } from "react";
 import Image from "next/image";
-import { Leaf } from "../svg";
-// instagram images
-import inst_1 from "@/assets/img/home-02/instagram/team (1).png";
-import inst_2 from "@/assets/img/home-02/instagram/team (2).png";
-import inst_3 from "@/assets/img/home-02/instagram/team (3).png";
-import inst_4 from "@/assets/img/home-02/instagram/team (4).png";
-import inst_5 from "@/assets/img/home-02/instagram/team (5).png";
-import inst_6 from "@/assets/img/home-02/instagram/team (6).png";
-import inst_7 from "@/assets/img/home-02/instagram/team (7).png";
-import Link from "next/link";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
-export default function InstagramArea() {
-  // instagram images
-  const instagram_images = [
-    { id: 1, img: inst_1 },
-    { id: 2, img: inst_2 },
-    { id: 3, img: inst_3 },
-    { id: 4, img: inst_4 },
-    { id: 5, img: inst_5 },
-    { id: 6, img: inst_6 },
-    { id: 7, img: inst_7 },
-  ];
+const TeamSection = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Generate 21 members with fixed, non-overlapping coordinates
+  const members = useMemo(() => {
+    // 1. Grid Partitioning to ensure ZERO overlap (7 columns, 3 rows)
+    const rows = 3;
+    const cols = 7;
+    const memberData = [];
+
+    // Calculate strict grid cell boundaries (percentages)
+    const cellWidth = 100 / cols;
+    const cellHeight = 100 / rows;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const index = r * cols + c;
+        if (index >= 21) break;
+
+        // Base cell coordinates (top-left of the cell)
+        const cellX = c * cellWidth;
+        const cellY = r * cellHeight;
+
+        // Scattered offset within the cell (ensures they don't look rigid)
+        const leftOffset = Math.random() * (cellWidth - 10) + 1; // max 10% offset, min 1% margin
+        const topOffset = Math.random() * (cellHeight - 12) + 2; // max 12% offset, min 2% margin
+
+        const left = cellX + leftOffset;
+        const top = cellY + topOffset;
+
+        memberData.push({
+          id: index,
+          // Placeholder URL. IN PRODUCTION: Use your `/assets/team/member${index}.png`
+          image: `https://i.pravatar.cc/200?u=${index + 99}`,
+          size: Math.floor(Math.random() * (160 - 120) + 120), // Vary sizes between 120px and 160px
+          top: `${top}%`,
+          left: `${left}%`,
+          initialRotation: Math.random() * 20 - 10, // Random initial tilt (-10 to +10 degrees)
+        });
+      }
+    }
+    return memberData;
+  }, []);
+
+  useGSAP(
+    () => {
+      // Target all transparent image wrappers
+      const cards = gsap.utils.toArray(".floating-head");
+
+      cards.forEach((card: any) => {
+        // 1. Gentle floating drift (sine wave movement on x/y)
+        gsap.to(card, {
+          x: "random(-15, 15)",
+          y: "random(-15, 15)",
+          duration: "random(4, 7)", // each moves at a different speed
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+
+        // 2. High-frequency 'shaking' vibration (rotation jitter)
+        gsap.to(card, {
+          rotation: "+=1.8", // jitter amount
+          duration: 0.1, // frequency
+          repeat: -1,
+          yoyo: true,
+          ease: "none",
+          delay: Math.random(), // desynchronizes the shaking
+        });
+      });
+    },
+    { scope: containerRef },
+  );
 
   return (
-    <div style={{ position: "relative", height: "250vh", paddingTop: "550px" }}>
-      <div className="tp-instagram-area tp-instagram-ptb text-center">
-        <div className="tp-instagram-thumb-wrap p-relative">
-          {instagram_images.map((item) => (
-            <div
-              key={item.id}
-              className={`tp-instagram-thumb-inner-${item.id} d-none d-xl-block`}
-            >
-              <Image src={item.img} alt="inst-img" />
-            </div>
-          ))}
+    <>
+      {/* Scope container */}
+      <section ref={containerRef} className="team-container">
+        <h2 className="bg-watermark">THE SQUAD</h2>
 
-          <div className="tp-instagram-thumb">
-            <img
-              src="/assets/img/home-02/instagram/team (11).png"
-              alt="inst-img"
+        {members.map((m) => (
+          <div
+            key={m.id}
+            className="floating-head absolute z-10 transition-transform duration-300 hover:scale-125"
+            style={{
+              width: m.size,
+              height: m.size,
+              top: m.top,
+              left: m.left,
+              // rotation is controlled by GSAP
+              rotate: `${m.initialRotation}deg`,
+            }}
+          >
+            <Image
+              src={m.image}
+              alt={`Team member ${m.id + 1}`}
+              fill
+              // Ensure the image keeps its internal aspect ratio but fills the space
+              className="object-contain grayscale hover:grayscale-0 transition-all duration-300"
+              priority={m.id < 5} // Load first 5 images quickly
             />
           </div>
-          {/* <div className="tp-instagram-content-wrap text-start">
-          <div className="tp-instagram-title-box">
-            <span className="tp-instagram-subtitle">INSTAGRAM</span>
-            <h4 className="tp-instagram-title">@likoagency</h4>
-          </div>
-          <div className="tp-instagram-content">
-            <p>
-              Become a part of our stories! <br /> Join the adventure.
-            </p>
-            <Link className="tp-btn-white background-black" href="#">
-              Follow Us
-              <span>
-                <Leaf />
-              </span>
-            </Link>
-          </div>
-        </div> */}
-        </div>
-      </div>
-    </div>
+        ))}
+
+        <style jsx global>{`
+          /* Global scope required for next/image classes and position forcing */
+
+          .team-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: #ffffff; /* White background */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .bg-watermark {
+            position: absolute;
+            font-size: 20vw;
+            font-weight: 900;
+            color: #f7f7f7; /* Very subtle text on white */
+            z-index: 0;
+            pointer-events: none;
+            letter-spacing: -2rem;
+            opacity: 0.8;
+          }
+
+          /* next/image wrapper must have backface-visibility hidden to stop blurry text during GSAP */
+          .floating-head {
+            position: absolute;
+            backface-visibility: hidden;
+            will-change: transform;
+            cursor: pointer;
+          }
+
+          /* Bring hovered head to the very front */
+          .floating-head:hover {
+            z-index: 100 !important;
+          }
+
+          .floating-head .grayscale {
+            filter: grayscale(100%);
+          }
+          .floating-head:hover .grayscale {
+            filter: grayscale(0%);
+          }
+        `}</style>
+      </section>
+    </>
   );
-}
+};
+
+export default TeamSection;

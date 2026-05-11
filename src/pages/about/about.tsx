@@ -27,7 +27,7 @@ import { hoverBtn } from "@/utils/hover-btn";
 import { teamMarqueAnim } from "@/utils/scroll-marque";
 import FooterFour from "@/layouts/footers/footer-four";
 import HeaderOne from "@/layouts/headers/header-one";
-import InstagramArea from "@/components/instagram/instagram-area";
+import TeamSection from "@/components/instagram/instagram-area";
 import { instagramAnim } from "@/utils/instagram-anim";
 
 const AboutMeMain = () => {
@@ -80,7 +80,7 @@ const AboutMeMain = () => {
             {/* <LineImgSlider /> */}
             {/* line img slider */}
 
-            <InstagramArea />
+            <TeamSection />
 
             {/* brand area */}
             <div className="tp-brand-4-area pt-20 pb-120">
