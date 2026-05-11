@@ -218,6 +218,28 @@ function ServiceContent() {
     }
   }, [searchParams]);
 
+  useEffect(() => {
+    if (isMounted && activeId !== null) {
+      // Use requestAnimationFrame to wait for the next paint cycle
+      // ensuring the filtered list is actually in the DOM
+      requestAnimationFrame(() => {
+        const element = document.getElementById(`service-${activeId}`);
+        if (element) {
+          const offset = 80; // Adjust if you have a sticky header
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = element.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      });
+    }
+  }, [activeId, isMounted]);
+
   // Prevent ANY rendering until client-side mount is confirmed
   if (!isMounted)
     return <div className="sv-service-area" style={{ minHeight: "100vh" }} />;
@@ -354,8 +376,9 @@ function ServiceContent() {
       <div className="container-fluid p-0">
         {visibleServices.map((item) => (
           <div
+            id={`service-${item.id}`}
             key={item.id}
-            className={`sv-service-item ${item.id % 2 === 0 ? "bg-dark" : "black-bg"}`}
+            className={`sv-service-item  ${item.id % 2 === 0 ? "bg-dark" : "black-bg"}`}
             style={{ padding: "100px 0", borderTop: "1px solid #222" }}
           >
             <div className="container">
