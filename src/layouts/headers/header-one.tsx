@@ -44,7 +44,7 @@ const HeaderOne = () => {
                       style={{
                         width: "auto",
                         height: "auto",
-                        paddingTop: "5px",
+                        paddingTop: width > 768 ? "12px" : "5px",
                         paddingBottom: "5px",
                       }}
                       src={logoWhite}
