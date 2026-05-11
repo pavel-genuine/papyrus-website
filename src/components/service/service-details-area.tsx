@@ -389,6 +389,37 @@ function ServiceDetailsContent() {
 
   const [width, setWidth] = useState(0);
 
+  const [activeId, setActiveId] = useState<number | null>(null);
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const param = searchParams?.get("service");
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (isMounted) {
+      // Use requestAnimationFrame to wait for the next paint cycle
+      // ensuring the filtered list is actually in the DOM
+      requestAnimationFrame(() => {
+        const element = document.getElementById(`service`);
+        if (element) {
+          const offset = 200; // Adjust if you have a sticky header
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = element.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      });
+    }
+  }, [activeId, isMounted]);
+
   useEffect(() => {
     setWidth(window.innerWidth);
   }, []);
@@ -416,10 +447,10 @@ function ServiceDetailsContent() {
 
       if (found) {
         setActiveService(found);
-        const section = document.getElementById("canvas-display");
-        if (section) {
-          section.scrollIntoView({ behavior: "smooth" });
-        }
+        // const section = document.getElementById("canvas-display");
+        // if (section) {
+        //   section.scrollIntoView({ behavior: "smooth" });
+        // }
       }
     }
   }, [searchParams]);
@@ -448,7 +479,7 @@ function ServiceDetailsContent() {
       </div>
 
       {/* Main Feature Image - Added ID for scrolling */}
-      <div className="container-fluid" id="canvas-display">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-xl-12">
             <div className="service-details__tab-wrapper text-center mb-120">
@@ -483,7 +514,7 @@ function ServiceDetailsContent() {
         </div>
       </div>
 
-      <div className="container-fuild px-md-5">
+      <div id="service" className="container-fuild px-md-5">
         <div className="row">
           {/* Left Side Content */}
           <div className="col-xl-7 col-lg-7">
