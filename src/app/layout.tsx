@@ -1,3 +1,4 @@
+"use client";
 import type { Metadata } from "next";
 import { Syne, Aladin, Marcellus } from "next/font/google";
 import { VideoProvider } from "@/provider/VideoProvider";
@@ -5,6 +6,8 @@ import localFont from "next/font/local";
 import { ThemeProvider } from "next-themes";
 import "swiper/css/bundle";
 import "./globals.scss";
+import Preloader from "@/layouts/preloader/Preloader";
+import { useEffect, useState } from "react";
 
 const gellery = localFont({
   src: [
@@ -63,16 +66,21 @@ const marcellus = Marcellus({
   variable: "--tp-ff-marcellus",
 });
 
-export const metadata: Metadata = {
-  title: "Papyrus - IMC",
-  description: "",
-};
+// export const metadata: Metadata = {
+//   title: "Papyrus - IMC",
+//   description: "",
+// };
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 3000);
+  }, []);
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <head>
@@ -102,7 +110,12 @@ export default function RootLayout({
           disableTransitionOnChange
           enableSystem={false}
         >
-          <VideoProvider>{children}</VideoProvider>
+          {" "}
+          {loading ? (
+            <Preloader></Preloader>
+          ) : (
+            <VideoProvider>{children}</VideoProvider>
+          )}
         </ThemeProvider>
       </body>
     </html>
