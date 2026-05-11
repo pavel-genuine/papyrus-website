@@ -29,7 +29,7 @@ const HeaderOne = () => {
         <div
           style={{
             backgroundImage: `url(${logobg.src})`,
-            height: width > 768 ? "90px" : "80px",
+            height: width > 768 ? "89px" : "80px",
             paddingTop: width < 768 ? "15px" : "0px",
           }}
           id="header-sticky"
