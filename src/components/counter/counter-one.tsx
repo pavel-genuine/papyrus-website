@@ -86,7 +86,7 @@ export default function CounterOne() {
               </div>
               <div className="col-xl-8 col-lg-8 col-md-4 mb-30">
                 <div className="slide-funfact-item text-center">
-                  <h4>
+                  <h4 style={{ fontWeight: "500", fontSize: "80px" }}>
                     BRANDS <br /> WE SERVED
                   </h4>
                 </div>
