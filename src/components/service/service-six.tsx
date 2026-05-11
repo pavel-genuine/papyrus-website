@@ -371,9 +371,18 @@ function ServiceContent() {
                   >
                     {item.text}
                   </p>
-                  <div style={{ marginTop: "40px" }}>
+                  <div style={{ marginTop: "30px" }}>
                     <h5 style={{ color: "#fff" }}>Why We?</h5>
                     <p>{item.why_we}</p>
+                  </div>
+                  <div style={{ marginTop: "30px" }}>
+                    <h5 style={{ color: "#fff" }}>
+                      {item?.support ? "Support" : "Expert Team"}
+                    </h5>
+                    <p>{item?.support ? item.support : item?.expert}</p>
+                  </div>
+                  <div style={{ marginTop: "20px" }}>
+                    <p>{item?.extra_info}</p>
                   </div>
                 </div>
               </div>
