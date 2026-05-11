@@ -447,10 +447,6 @@ function ServiceDetailsContent() {
 
       if (found) {
         setActiveService(found);
-        const section = document.getElementById("service");
-        if (section) {
-          section.scrollIntoView({ behavior: "smooth" });
-        }
       }
     }
   }, [searchParams]);
