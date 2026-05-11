@@ -111,11 +111,10 @@ export default function RootLayout({
           enableSystem={false}
         >
           {" "}
-          {loading ? (
+          {/* {loading ? (
             <Preloader></Preloader>
-          ) : (
-            <VideoProvider>{children}</VideoProvider>
-          )}
+          ) : */}
+          (<VideoProvider>{children}</VideoProvider>){/* } */}
         </ThemeProvider>
       </body>
     </html>

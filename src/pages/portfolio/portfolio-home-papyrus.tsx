@@ -5,7 +5,7 @@ import Link from "next/link";
 import { createPortal } from "react-dom";
 
 // internal imports
-import shape from "@/assets/img/home-02/service/sv-shape-1.png";
+import shape from "@/assets/img/home-01/portfolio/shape1.jpg";
 
 // service images
 import s_1 from "@/assets/img/home-01/service/service-icon-1.png";
@@ -167,6 +167,11 @@ function SubMenu({
 }
 // ── Main Component ───────────────────────────────────────────────────────────
 export default function PortfolioHome() {
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const titleRefs = useRef<{ [key: number]: HTMLHeadingElement | null }>({});
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -202,12 +207,27 @@ export default function PortfolioHome() {
 
         <div className="row align-items-center mt-50">
           <div className="col-xl-6 col-lg-6 col-md-4">
-            <div className="tp-service-2-shape-img text-center text-lg-start">
-              <Image src={shape} alt="" />
+            <div className="">
+              <Image
+                style={{
+                  height: width > 768 ? "450px" : "auto",
+                  // paddingRight: width > 768 ? "70px" : "0px",
+                  // paddingTop: width > 768 ? "0px" : "50px",
+                  borderRadius: "10px",
+                }}
+                src={shape}
+                alt=""
+              />
             </div>
           </div>
 
-          <div className="col-xl-6 col-lg-6 col-md-8">
+          <div
+            style={{
+              paddingLeft: width > 768 ? "70px" : "0px",
+              paddingBottom: width > 768 ? "0px" : "50px",
+            }}
+            className="col-xl-6 col-lg-6 col-md-8"
+          >
             <div className="tp-service-right-wrap">
               {service_data.map((s) => (
                 <div
