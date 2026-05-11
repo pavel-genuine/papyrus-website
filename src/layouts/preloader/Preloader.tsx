@@ -3,16 +3,21 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 const Preloader = () => {
-  const container = useRef();
-  const topHalf = useRef();
-  const bottomHalf = useRef();
+  // Define types for the refs to satisfy TypeScript
+  const container = useRef<HTMLDivElement>(null);
+  const topHalf = useRef<HTMLDivElement>(null);
+  const bottomHalf = useRef<HTMLDivElement>(null);
+
   const [isDone, setIsDone] = useState(false);
 
   useGSAP(
     () => {
+      // Safety check to ensure refs are attached
+      if (!topHalf.current || !bottomHalf.current) return;
+
       const tl = gsap.timeline({
-        onComplete: () => setIsDone(true), // Removes from DOM after animation
-        delay: 2, // Wait 2 seconds before opening (or trigger based on your app logic)
+        onComplete: () => setIsDone(true),
+        delay: 2,
       });
 
       tl.to(topHalf.current, {
@@ -27,20 +32,19 @@ const Preloader = () => {
           ease: "power4.inOut",
         },
         "<",
-      ); // "<" makes them start at the same time
+      );
     },
     { scope: container },
   );
 
   if (isDone) return null;
 
-  // Shared styles for the two halves
-  const halfStyle = {
+  const halfStyle: React.CSSProperties = {
     position: "fixed",
     left: 0,
     width: "100vw",
     height: "100vh",
-    backgroundColor: "#0303032b",
+    backgroundColor: "black",
     overflow: "hidden",
   };
 
