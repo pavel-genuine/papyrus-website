@@ -223,8 +223,8 @@ export default function PortfolioHome() {
 
           <div
             style={{
-              paddingLeft: width > 768 ? "70px" : "0px",
-              paddingBottom: width > 768 ? "0px" : "50px",
+              paddingLeft: width > 768 ? "70px" : "20px",
+              paddingTop: width > 768 ? "0px" : "50px",
             }}
             className="col-xl-6 col-lg-6 col-md-8"
           >
@@ -235,7 +235,14 @@ export default function PortfolioHome() {
                   className="tp-service-item d-flex align-items-start mb-75 tp_fade_bottom"
                 >
                   <div className="tp-service-icon">
-                    <Image src={s.icon} alt="icon" style={{ height: "auto" }} />
+                    <Image
+                      src={s.icon}
+                      alt="icon"
+                      style={{
+                        height: "auto",
+                        paddingRight: width > 768 ? "0px" : "20px",
+                      }}
+                    />
                   </div>
 
                   <div className="tp-service-content">
