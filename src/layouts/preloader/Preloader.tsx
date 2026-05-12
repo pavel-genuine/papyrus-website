@@ -4,46 +4,36 @@ import { useGSAP } from "@gsap/react";
 
 const Preloader = () => {
   const container = useRef<HTMLDivElement>(null);
-  const leftHalf = useRef<HTMLDivElement>(null);
-  const rightHalf = useRef<HTMLDivElement>(null);
-
+  const leftSide = useRef<HTMLDivElement>(null);
+  const rightSide = useRef<HTMLDivElement>(null);
   const [isDone, setIsDone] = useState(false);
 
   useGSAP(
     () => {
-      if (!leftHalf.current || !rightHalf.current) return;
-
-      const tl = gsap.timeline({
-        onComplete: () => setIsDone(true),
-        delay: 1.5,
-      });
-
-      // Animation for the split
-      tl.to([leftHalf.current, rightHalf.current], {
-        duration: 1.6,
+      const tl = gsap.timeline({ onComplete: () => setIsDone(true), delay: 2 });
+      tl.to([leftSide.current, rightSide.current], {
+        xPercent: (i) => (i === 0 ? -100 : 100),
+        duration: 1.8,
         ease: "expo.inOut",
-        // We use function-based values to move them in opposite directions
-        xPercent: (index) => (index === 0 ? -100 : 100),
       });
-
-      // OPTIONAL: Smoothly fade out the container at the very end
-      // to ensure no "flicker" when the component is unmounted
-      tl.to(container.current, { opacity: 0, duration: 0.4 }, "-=0.4");
     },
     { scope: container },
   );
 
   if (isDone) return null;
 
-  const halfStyle: React.CSSProperties = {
-    position: "fixed",
-    top: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundColor: "black", // Keep this black so the video area looks solid
-    overflow: "hidden",
-    willChange: "transform", // Optimizes performance for the slide
-  };
+  const videoElement = (
+    <video
+      style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
+      autoPlay
+      muted
+      loop
+      playsInline
+      onCanPlayThrough={(e) => e.currentTarget.play()} // Forces play as soon as cached
+    >
+      <source src="/assets/video/loader.mp4" type="video/mp4" />
+    </video>
+  );
 
   return (
     <div
@@ -52,40 +42,36 @@ const Preloader = () => {
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        pointerEvents: "none", // Allows clicking "through" to the site during animation
-        backgroundColor: "transparent", // Ensure the main container is clear
+        pointerEvents: "none",
       }}
     >
-      {/* Left Half */}
       <div
-        ref={leftHalf}
-        style={{ ...halfStyle, left: 0, clipPath: "inset(0 50% 0 0)" }}
+        ref={leftSide}
+        style={{
+          position: "absolute",
+          left: 0,
+          width: "100%",
+          height: "100%",
+          overflow: "hidden",
+          clipPath: "inset(0 50% 0 0)",
+          backgroundColor: "black",
+        }}
       >
-        <video
-          style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="/assets/video/loader.mp4" type="video/mp4" />
-        </video>
+        {videoElement}
       </div>
-
-      {/* Right Half */}
       <div
-        ref={rightHalf}
-        style={{ ...halfStyle, left: 0, clipPath: "inset(0 0 0 50%)" }}
+        ref={rightSide}
+        style={{
+          position: "absolute",
+          left: 0,
+          width: "100%",
+          height: "100%",
+          overflow: "hidden",
+          clipPath: "inset(0 0 0 50%)",
+          backgroundColor: "black",
+        }}
       >
-        <video
-          style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="/assets/video/loader.mp4" type="video/mp4" />
-        </video>
+        {videoElement}
       </div>
     </div>
   );
