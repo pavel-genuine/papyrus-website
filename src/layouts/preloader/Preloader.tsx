@@ -4,45 +4,36 @@ import { useGSAP } from "@gsap/react";
 
 const Preloader = () => {
   const container = useRef<HTMLDivElement>(null);
-  const leftHalf = useRef<HTMLDivElement>(null);
-  const rightHalf = useRef<HTMLDivElement>(null);
+  const leftSide = useRef<HTMLDivElement>(null);
+  const rightSide = useRef<HTMLDivElement>(null);
 
   const [isDone, setIsDone] = useState(false);
 
   useGSAP(
     () => {
-      if (!leftHalf.current || !rightHalf.current) return;
-
       const tl = gsap.timeline({
         onComplete: () => setIsDone(true),
-        delay: 1.5,
+        delay: 2, // How long the video plays before splitting
       });
 
-      // Animation for the split
-      tl.to([leftHalf.current, rightHalf.current], {
+      tl.to([leftSide.current, rightSide.current], {
+        xPercent: (i) => (i === 0 ? -100 : 100),
         duration: 1.6,
         ease: "expo.inOut",
-        // We use function-based values to move them in opposite directions
-        xPercent: (index) => (index === 0 ? -100 : 100),
       });
-
-      // OPTIONAL: Smoothly fade out the container at the very end
-      // to ensure no "flicker" when the component is unmounted
-      tl.to(container.current, { opacity: 0, duration: 0.4 }, "-=0.4");
     },
     { scope: container },
   );
 
   if (isDone) return null;
 
-  const halfStyle: React.CSSProperties = {
-    position: "fixed",
+  const panelStyle: React.CSSProperties = {
+    position: "absolute",
     top: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundColor: "black", // Keep this black so the video area looks solid
+    width: "100%",
+    height: "100%",
     overflow: "hidden",
-    willChange: "transform", // Optimizes performance for the slide
+    backgroundColor: "black", // Ensures no gaps
   };
 
   return (
@@ -52,14 +43,14 @@ const Preloader = () => {
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        pointerEvents: "none", // Allows clicking "through" to the site during animation
-        backgroundColor: "transparent", // Ensure the main container is clear
+        backgroundColor: "transparent", // THIS MUST BE TRANSPARENT
+        pointerEvents: "none",
       }}
     >
-      {/* Left Half */}
+      {/* LEFT HALF CONTAINER */}
       <div
-        ref={leftHalf}
-        style={{ ...halfStyle, left: 0, clipPath: "inset(0 50% 0 0)" }}
+        ref={leftSide}
+        style={{ ...panelStyle, clipPath: "inset(0 50% 0 0)" }}
       >
         <video
           style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
@@ -72,10 +63,10 @@ const Preloader = () => {
         </video>
       </div>
 
-      {/* Right Half */}
+      {/* RIGHT HALF CONTAINER */}
       <div
-        ref={rightHalf}
-        style={{ ...halfStyle, left: 0, clipPath: "inset(0 0 0 50%)" }}
+        ref={rightSide}
+        style={{ ...panelStyle, clipPath: "inset(0 0 0 50%)" }}
       >
         <video
           style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
