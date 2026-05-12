@@ -80,7 +80,7 @@ const AboutMeMain = () => {
             {/* <LineImgSlider /> */}
             {/* line img slider */}
 
-            {/* <TeamSection /> */}
+            <TeamSection />
 
             {/* brand area */}
             <div className="tp-brand-4-area pt-20 pb-120">

@@ -9,12 +9,12 @@ const TeamSection = () => {
   // Generate 21 members with fixed, non-overlapping coordinates
   const members = useMemo(() => {
     // 1. Grid Sampling to ensure zero overlap
-    const rows = 3;
-    const cols = 7; // 3x7 = 21 cells
+    const rows = 5;
+    const cols = 5; // 3x7 = 21 cells
     const memberData = [];
 
-    const cellWidth = 100 / cols;
-    const cellHeight = 100 / rows;
+    const cellWidth = 92 / cols;
+    const cellHeight = 92 / rows;
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
@@ -34,17 +34,10 @@ const TeamSection = () => {
 
         memberData.push({
           id: index,
-          image: `https://i.pravatar.cc/150?u=${index + 900}`, // Using Pravatar for full-color placeholders
+          image: `/assets/img/home-01/papyrus-team/team%20(${index + 1}).png`, // Using Pravatar for full-color placeholders
           // Mapping only the specific text/burst shapes from your reference
-          shape:
-            index % 4 === 0
-              ? "shape-pow"
-              : index % 4 === 1
-                ? "shape-wow"
-                : index % 4 === 2
-                  ? "shape-bam"
-                  : "shape-omg",
-          size: Math.floor(Math.random() * (165 - 135) + 135), // Fixed size range for better scattered feel
+          shape: "",
+          size: Math.floor(Math.random() * (165 - 135) + 270), // Fixed size range for better scattered feel
           top: `${top}%`,
           left: `${left}%`,
           initialRotation: Math.random() * 20 - 10,
@@ -85,8 +78,6 @@ const TeamSection = () => {
   return (
     <>
       <section ref={containerRef} className="team-container">
-        <h2 className="watermark">TEAM DOODLE</h2>
-
         {members.map((m) => (
           <div
             key={m.id}
@@ -104,8 +95,6 @@ const TeamSection = () => {
                 {/* Images are square, borderless, and full color */}
                 <Image src={m.image} alt="member" fill className="photo" />
               </div>
-              {/* Optional dynamic nametag with brute aesthetic */}
-              <div className="tag">DLR_{m.id + 1}</div>
             </div>
           </div>
         ))}
@@ -114,22 +103,12 @@ const TeamSection = () => {
           .team-container {
             position: relative;
             width: 100vw;
-            height: 100vh;
+            height: 170vh;
             background: #000000; /* Solid Black Background */
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-          }
-
-          .watermark {
-            position: absolute;
-            font-size: 15vw;
-            font-weight: 950;
-            color: #111; /* Subtle dark color on black */
-            z-index: 0;
-            pointer-events: none;
-            letter-spacing: -1rem;
           }
 
           .team-card {
@@ -153,18 +132,13 @@ const TeamSection = () => {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #ffffff; /* White background for all doodle shapes */
-            /* Add drop shadow for that hand-inked vector look */
-            filter: drop-shadow(6px 6px 0px rgba(255, 255, 255, 0.05));
           }
 
           .img-container {
             position: relative;
-            width: 85%;
-            height: 85%;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
-            background: #111;
-            /* Images have NO border */
           }
 
           .photo {
