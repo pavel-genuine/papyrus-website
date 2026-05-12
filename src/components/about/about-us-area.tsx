@@ -9,7 +9,7 @@ import ab_2 from "@/assets/img/inner-about/about/about-3.jpg";
 import ab_3 from "@/assets/img/inner-about/about/about-2.jpg";
 
 export default function AboutUsArea() {
-  return (
+return (
     <div className="ab-about-area ab-about-mt pb-90 z-index-5">
       <div className="container container-1480">
         <div className="ab-about-thumb-wrap mb-180">

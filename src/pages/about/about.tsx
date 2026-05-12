@@ -27,8 +27,8 @@ import { hoverBtn } from "@/utils/hover-btn";
 import { teamMarqueAnim } from "@/utils/scroll-marque";
 import FooterFour from "@/layouts/footers/footer-four";
 import HeaderOne from "@/layouts/headers/header-one";
-import TeamSection from "@/components/instagram/instagram-area";
 import { instagramAnim } from "@/utils/instagram-anim";
+import PapyrusTeam from "../team/payrus-team";
 
 const AboutMeMain = () => {
   useScrollSmooth();
@@ -80,7 +80,7 @@ const AboutMeMain = () => {
             {/* <LineImgSlider /> */}
             {/* line img slider */}
 
-            <TeamSection />
+            <PapyrusTeam />
 
             {/* brand area */}
             <div className="tp-brand-4-area pt-20 pb-120">

@@ -136,6 +136,11 @@ export default function ServiceHome() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const titleRefs = useRef<{ [key: number]: HTMLButtonElement | null }>({});
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [width, setWidth] = useState(0);
+  
+    useEffect(() => {
+      setWidth(window.innerWidth);
+    }, []);
 
   const handleEnter = (id: number) => {
     if (leaveTimer.current) clearTimeout(leaveTimer.current);
