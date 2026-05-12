@@ -37,7 +37,7 @@ const PapyrusTeam = () => {
           image: `/assets/img/home-01/papyrus-team/team%20(${index + 1}).png`, // Using Pravatar for full-color placeholders
           // Mapping only the specific text/burst shapes from your reference
           shape: "",
-          size: Math.floor(Math.random() * (165 - 135) + 330), // Fixed size range for better scattered feel
+          size: Math.floor(Math.random() * (165 - 135) + 320), // Fixed size range for better scattered feel
           top: `${top}%`,
           left: `${left}%`,
           initialRotation: Math.random() * 20 - 10,
