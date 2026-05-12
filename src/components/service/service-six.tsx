@@ -206,6 +206,7 @@ const service_data = [
 function ServiceContent() {
   const searchParams = useSearchParams();
   const [activeId, setActiveId] = useState<number | null>(null);
+  const [showAll, setShowAll] = useState(false);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -219,11 +220,11 @@ function ServiceContent() {
   }, [searchParams]);
 
   useEffect(() => {
-    if (isMounted && activeId !== null) {
+    if ((isMounted && activeId !== null) || showAll) {
       // Use requestAnimationFrame to wait for the next paint cycle
       // ensuring the filtered list is actually in the DOM
       requestAnimationFrame(() => {
-        const element = document.getElementById(`service-${activeId}`);
+        const element = document.getElementById(`service`);
         if (element) {
           const offset = 80; // Adjust if you have a sticky header
           const bodyRect = document.body.getBoundingClientRect().top;
@@ -352,10 +353,13 @@ function ServiceContent() {
 
           <div className="row mt-4">
             <div className="col-12 text-end">
-              {activeId ? (
+              {activeId || showAll ? (
                 <button
                   className="tp-btn-project-sm"
-                  onClick={() => setActiveId(null)}
+                  onClick={() => {
+                    setActiveId(null);
+                    setShowAll(true);
+                  }}
                   style={{
                     background: "transparent",
                     color: "#fff",
@@ -376,7 +380,7 @@ function ServiceContent() {
       <div className="container-fluid p-0">
         {visibleServices.map((item) => (
           <div
-            id={`service-${item.id}`}
+            id={`service`}
             key={item.id}
             className={`sv-service-item  ${item.id % 2 === 0 ? "bg-dark" : "black-bg"}`}
             style={{ padding: "100px 0", borderTop: "1px solid #222" }}
