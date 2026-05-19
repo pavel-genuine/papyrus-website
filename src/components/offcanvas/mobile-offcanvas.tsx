@@ -102,29 +102,25 @@ export default function MobileOffcanvas({
             </div>
             <div className="tp-offcanvas-social">
               <h3 className="tp-offcanvas-title sm">Follow Us</h3>
-              <ul>
-                <li>
-                  <Link href="#">
-                    <InstagramTwo />
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#">
-                    <Dribble />
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#">
-                    {" "}
-                    <Behance />
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#">
-                    <Youtube />
-                  </Link>
-                </li>
-              </ul>
+              <div className="tp-footer-3-social">
+                <Link href="https://www.facebook.com/papyrusbd" target="_blank">
+                  <i className="fa-brands fa-facebook-f"></i>
+                </Link>
+
+                <Link
+                  href=" https://www.youtube.com/@PapyrusIMC "
+                  target="_blank"
+                >
+                  <i className="fa-brands fa-youtube"></i>
+                </Link>
+
+                <Link
+                  href="https://www.linkedin.com/company/papyrus-imc/"
+                  target="_blank"
+                >
+                  <i className="fa-brands fa-linkedin-in"></i>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
