@@ -13,8 +13,6 @@ import showcase_3 from "@/assets/img/inner-project/showcase/showcase-3.jpg";
 import showcase_4 from "@/assets/img/inner-project/showcase/showcase-4.jpg";
 
 // ─── Slider Data ─────────────────────────────────────────────────────────────
-// NOTE: ?si= tracking params removed to prevent YouTube embed rejections.
-// Clean /embed/ URLs are more reliable across all browsers & security contexts.
 const slider_data = [
   {
     id: 1,
@@ -100,14 +98,19 @@ export default function PortfolioSliderHomeEleven() {
     (typeof slider_data)[0] | null
   >(null);
 
-  // FIX: iframeReady delays iframe mount until modal animation finishes.
-  // This prevents the intermittent YouTube CORS/frame rejection caused by
-  // the iframe mounting before the modal is fully visible/stable.
   const [iframeReady, setIframeReady] = useState(false);
 
   useEffect(() => {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
+
+    // Handle viewport changes dynamically
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // ── Modal Open ──────────────────────────────────────────────────────────────
@@ -115,10 +118,6 @@ export default function PortfolioSliderHomeEleven() {
     activeSlideRef.current = item;
     setActiveSlide(item);
     swiperRef.current?.autoplay?.stop();
-
-    // Wait for Bootstrap modal fade-in animation (~300ms) to complete
-    // before mounting the iframe. This eliminates the race condition that
-    // causes YouTube to intermittently reject the embed request.
     setTimeout(() => setIframeReady(true), 400);
   };
 
@@ -126,8 +125,6 @@ export default function PortfolioSliderHomeEleven() {
   const handleClose = () => {
     activeSlideRef.current = null;
     setActiveSlide(null);
-    // Reset iframeReady so next open starts fresh (also stops video playback
-    // by unmounting the iframe element entirely)
     setIframeReady(false);
     swiperRef.current?.autoplay?.start();
   };
@@ -150,9 +147,6 @@ export default function PortfolioSliderHomeEleven() {
     };
   }, []);
 
-  // ── Build iframe src with autoplay + origin ─────────────────────────────────
-  // The `origin` param tells YouTube which domain is embedding the video,
-  // which resolves the CORS / unsafe-frame-load console error.
   const buildIframeSrc = (baseUrl: string) => {
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     return `${baseUrl}?autoplay=1&origin=${origin}`;
@@ -161,6 +155,33 @@ export default function PortfolioSliderHomeEleven() {
   return (
     <>
       <style jsx>{`
+        /* ── Core Layout Dimensions ── */
+        #port-showcase-slider-main {
+          position: relative;
+          width: 100%;
+          height: 100vh;
+          margin-top: 90px;
+        }
+
+        /* ── Mobile Layout Fixes ── */
+        @media (max-width: 768px) {
+          #port-showcase-slider-main,
+          .port-showcase-slider-spaces,
+          #showcase-slider-holder,
+          #showcase-slider {
+            /* Force an exact aspect ratio box layout on vertical screens */
+            height: 40vh !important;
+            min-height: 250px !important;
+          }
+
+          /* Force WebGL canvas element to fit inside the landscape mobile box */
+          #canvas-slider canvas {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+          }
+        }
+
         .video-play-overlay {
           position: absolute;
           top: 50%;
@@ -202,7 +223,6 @@ export default function PortfolioSliderHomeEleven() {
           }
         }
 
-        /* ── Loading spinner shown while iframe is not yet ready ── */
         .iframe-loading-placeholder {
           display: flex;
           align-items: center;
@@ -289,7 +309,13 @@ export default function PortfolioSliderHomeEleven() {
               </Swiper>
 
               <div
-                style={{ backgroundColor: "#00000096", borderRadius: "30px" }}
+                style={{
+                  backgroundColor: "#00000096",
+                  borderRadius: "30px",
+                  position: "absolute",
+                  left: "50%",
+                  bottom: width > 786 ? "100px" : "20px",
+                }}
                 className="tp-showcase-arrow-box"
               >
                 <button className="tp-showcase__button-next swiper-next">
@@ -304,15 +330,34 @@ export default function PortfolioSliderHomeEleven() {
           </div>
         </div>
 
-        {/* WebGL canvas */}
+        {/* WebGL canvas container */}
         <div
           id="canvas-slider"
           className="canvas-slider"
           ref={webGLContainerRef}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 1,
+            pointerEvents: "none",
+          }}
         >
           {slider_images.map((imgSrc, index) => (
-            <div key={index} className="slider-img" data-slide={index}>
-              <Image className="slide-img" src={imgSrc} alt="showcase-img" />
+            <div
+              key={index}
+              className="slider-img"
+              data-slide={index}
+              style={{ display: "none" }}
+            >
+              <Image
+                className="slide-img"
+                src={imgSrc}
+                alt="showcase-img"
+                priority
+              />
             </div>
           ))}
         </div>
@@ -332,12 +377,6 @@ export default function PortfolioSliderHomeEleven() {
             <div className="bg-dark">
               <div className="ratio ratio-16x9" style={{ overflow: "hidden" }}>
                 {iframeReady ? (
-                  // FIX: iframe only mounts after 400ms delay (see handleOpen).
-                  // - No ?si= param: cleaner URL, avoids YouTube tracking rejections.
-                  // - autoplay=1: starts video immediately when modal opens.
-                  // - origin=...: tells YouTube the embedding domain, fixes CORS error.
-                  // - web-share in allow: required for newer YouTube embed policy.
-                  // - Unmounting on close (iframeReady=false) also stops audio/video.
                   <iframe
                     src={buildIframeSrc(activeSlide.youtubeUrl)}
                     title={activeSlide.title}
@@ -352,7 +391,6 @@ export default function PortfolioSliderHomeEleven() {
                     }}
                   />
                 ) : (
-                  // Shown for the 400ms while we wait for the modal to settle
                   <div className="iframe-loading-placeholder">
                     <div
                       className="spinner-border text-light"
