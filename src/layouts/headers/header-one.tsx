@@ -43,14 +43,14 @@ const HeaderOne = () => {
                     <Image
                       style={{
                         width: "auto",
-                        height: "auto",
-                        paddingTop: width > 768 ? "12px" : "5px",
-                        paddingBottom: "5px",
+                        height: width > 768 ? "90px" : "60px",
+                        paddingTop: width > 768 ? "10px" : "5px",
+                        paddingBottom: width > 768 ? "10px" : "5px",
                       }}
                       src={logoWhite}
                       alt="logo"
-                      width={width > 768 ? 140 : 90}
-                      height={width > 768 ? 90 : 60}
+                      width={140}
+                      height={90}
                     />
                   </Link>
                 </div>
