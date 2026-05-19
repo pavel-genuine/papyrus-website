@@ -9,7 +9,7 @@ const PapyrusTeam = () => {
   // Generate 21 members with fixed, non-overlapping coordinates
   const members = useMemo(() => {
     // 1. Grid Sampling to ensure zero overlap
-    const rows = 5;
+    const rows = 6;
     const cols = 5; // 3x7 = 21 cells
     const memberData = [];
 
@@ -19,7 +19,7 @@ const PapyrusTeam = () => {
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         const index = r * cols + c;
-        if (index >= 21) break;
+        if (index >= 30) break;
 
         // Base cell coordinates
         const cellX = c * cellWidth;

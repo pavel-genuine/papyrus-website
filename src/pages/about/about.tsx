@@ -28,7 +28,7 @@ import { teamMarqueAnim } from "@/utils/scroll-marque";
 import FooterFour from "@/layouts/footers/footer-four";
 import HeaderOne from "@/layouts/headers/header-one";
 import { instagramAnim } from "@/utils/instagram-anim";
-import PapyrusTeam from "../team/payrus-team";
+import PapyrusTeam from "../team/papyrus-team";
 
 const AboutMeMain = () => {
   useScrollSmooth();
