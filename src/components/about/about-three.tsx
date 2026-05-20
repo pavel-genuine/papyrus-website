@@ -12,7 +12,9 @@ export default function AboutThree() {
     setWidth(window.innerWidth);
   }, []);
   return (
-    <div className="tp-about-3-area pt-120 pb-110 ">
+    <div
+      className={`tp-about-3-area ${width > 768 ? "pt-120 " : "pt-10"} pb-110`}
+    >
       <div className="container">
         <div className="row">
           <div className="col-xl-11">
