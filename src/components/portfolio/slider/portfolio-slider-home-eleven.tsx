@@ -179,7 +179,7 @@ export default function PortfolioSliderHomeEleven() {
         /* ── Absolute Global Play Icon Overlay Layering ── */
         .video-play-overlay {
           position: absolute;
-          top: 50%;
+          bottom: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
           /* Uses high z-index to break clean over Swiper stacks and WebGL instances */
