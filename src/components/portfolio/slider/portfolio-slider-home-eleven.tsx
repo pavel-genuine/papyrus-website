@@ -104,7 +104,6 @@ export default function PortfolioSliderHomeEleven() {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
 
-    // Handle viewport changes dynamically
     const handleResize = () => {
       setWidth(window.innerWidth);
       setHeight(window.innerHeight);
@@ -142,6 +141,10 @@ export default function PortfolioSliderHomeEleven() {
     webGL.isRunning = false;
     webGLContainerRef.current.appendChild(webGL.renderer.domElement);
 
+    setTimeout(() => {
+      window.dispatchEvent(new Event("resize"));
+    }, 200);
+
     return () => {
       webGL.stop();
     };
@@ -155,30 +158,48 @@ export default function PortfolioSliderHomeEleven() {
   return (
     <>
       <style jsx>{`
-        /* ── Core Layout Dimensions ── */
+        /* ── Core Layout Dimensions with Header Offset ── */
         #port-showcase-slider-main {
           position: relative;
           width: 100%;
-          height: 100vh;
-          margin-top: 90px;
+          margin-top: 80px; /* Leaves 80px space for navigation */
+          height: calc(
+            100vh - 80px
+          ); /* Subtracts header space from slider viewport height */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #000;
         }
 
-        /* ── Mobile Layout Fixes ── */
+        .port-showcase-slider-spaces {
+          width: 100%;
+          height: 100%;
+        }
+
+        /* ── Absolute Mobile Image Fix ── */
         @media (max-width: 768px) {
           #port-showcase-slider-main,
           .port-showcase-slider-spaces,
           #showcase-slider-holder,
           #showcase-slider {
-            /* Force an exact aspect ratio box layout on vertical screens */
-            height: 40vh !important;
-            min-height: 250px !important;
+            height: auto !important;
+            aspect-ratio: 800 / 369 !important;
+            min-height: unset !important;
           }
 
-          /* Force WebGL canvas element to fit inside the landscape mobile box */
+          #canvas-slider {
+            height: auto !important;
+            aspect-ratio: 800 / 369 !important;
+          }
+
+          /* Force inner WebGL structural nodes to map to the 16:9 boundary box area */
           #canvas-slider canvas {
             width: 100% !important;
             height: 100% !important;
-            object-fit: contain !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
           }
         }
 
@@ -309,13 +330,7 @@ export default function PortfolioSliderHomeEleven() {
               </Swiper>
 
               <div
-                style={{
-                  backgroundColor: "#00000096",
-                  borderRadius: "30px",
-                  position: "absolute",
-                  left: "50%",
-                  bottom: width > 786 ? "100px" : "20px",
-                }}
+                style={{ backgroundColor: "#00000096", borderRadius: "30px" }}
                 className="tp-showcase-arrow-box"
               >
                 <button className="tp-showcase__button-next swiper-next">
@@ -337,8 +352,9 @@ export default function PortfolioSliderHomeEleven() {
           ref={webGLContainerRef}
           style={{
             position: "absolute",
-            top: 0,
-            left: 0,
+            top: width < 768 ? "50%" : 0,
+            left: width < 768 ? "50%" : 0,
+            transform: width < 768 ? "translate(-50%, -50%)" : "none",
             width: "100%",
             height: "100%",
             zIndex: 1,
@@ -375,7 +391,7 @@ export default function PortfolioSliderHomeEleven() {
         <Modal.Body>
           {activeSlide && (
             <div className="bg-dark">
-              <div className="ratio ratio-16x9" style={{ overflow: "hidden" }}>
+              <div className="ratio " style={{ overflow: "hidden" }}>
                 {iframeReady ? (
                   <iframe
                     src={buildIframeSrc(activeSlide.youtubeUrl)}
