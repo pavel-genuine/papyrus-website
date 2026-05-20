@@ -162,10 +162,8 @@ export default function PortfolioSliderHomeEleven() {
         #port-showcase-slider-main {
           position: relative;
           width: 100%;
-          margin-top: 80px; /* Leaves 80px space for navigation */
-          height: calc(
-            100vh - 80px
-          ); /* Subtracts header space from slider viewport height */
+          margin-top: 80px;
+          height: calc(100vh - 80px);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -173,11 +171,60 @@ export default function PortfolioSliderHomeEleven() {
         }
 
         .port-showcase-slider-spaces {
+          position: relative;
           width: 100%;
           height: 100%;
         }
 
-        /* ── Absolute Mobile Image Fix ── */
+        /* ── Absolute Global Play Icon Overlay Layering ── */
+        .video-play-overlay {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          /* Uses high z-index to break clean over Swiper stacks and WebGL instances */
+          z-index: 99 !important;
+          pointer-events: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+
+        .play-icon-circle {
+          width: 70px;
+          height: 70px;
+          background-color: rgba(247, 148, 29, 0.85);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff !important;
+          font-size: 30px;
+          transition: all 0.4s ease;
+          box-shadow: 0 0 0 0 rgba(247, 148, 29, 0.4);
+          animation: pulse-play 2s infinite;
+        }
+
+        #showcase-slider:hover .play-icon-circle {
+          transform: scale(1.1);
+          background-color: rgba(247, 148, 29, 1);
+        }
+
+        @keyframes pulse-play {
+          0% {
+            box-shadow: 0 0 0 0 rgba(247, 148, 29, 0.7);
+          }
+          70% {
+            box-shadow: 0 0 0 20px rgba(247, 148, 29, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(247, 148, 29, 0);
+          }
+        }
+
+        /* ── Absolute Mobile Aspect Sizing Fixes ── */
         @media (max-width: 768px) {
           #port-showcase-slider-main,
           .port-showcase-slider-spaces,
@@ -193,7 +240,6 @@ export default function PortfolioSliderHomeEleven() {
             aspect-ratio: 800 / 369 !important;
           }
 
-          /* Force inner WebGL structural nodes to map to the 16:9 boundary box area */
           #canvas-slider canvas {
             width: 100% !important;
             height: 100% !important;
@@ -201,46 +247,18 @@ export default function PortfolioSliderHomeEleven() {
             top: 0 !important;
             left: 0 !important;
           }
-        }
 
-        .video-play-overlay {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          z-index: 5;
-          pointer-events: none;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .play-icon-circle {
-          width: 70px;
-          height: 70px;
-          background-color: rgba(247, 148, 29, 0.85);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-size: 30px;
-          transition: all 0.4s ease;
-          box-shadow: 0 0 0 0 rgba(247, 148, 29, 0.4);
-          animation: pulse-play 2s infinite;
-        }
-        #showcase-slider:hover .play-icon-circle {
-          transform: scale(1.1);
-          background-color: rgba(247, 148, 29, 1);
-        }
-        @keyframes pulse-play {
-          0% {
-            box-shadow: 0 0 0 0 rgba(247, 148, 29, 0.7);
+          .video-play-overlay {
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
           }
-          70% {
-            box-shadow: 0 0 0 20px rgba(247, 148, 29, 0);
-          }
-          100% {
-            box-shadow: 0 0 0 0 rgba(247, 148, 29, 0);
+
+          .play-icon-circle {
+            width: 55px !important;
+            height: 55px !important;
+            font-size: 22px !important;
+            background-color: #f7941d !important; /* Locks visible opaque color on mobile */
           }
         }
 
@@ -257,6 +275,19 @@ export default function PortfolioSliderHomeEleven() {
 
       {/* ── Slider ─────────────────────────────────────────────────────────── */}
       <div id="port-showcase-slider-main">
+        {/* 
+          CRITICAL MOVE: Placed global icon overlay at root context of slider layout block.
+          This prevents Swiper internal slides from rendering on top of the icon.
+        */}
+        <div className="video-play-overlay">
+          <div className="play-icon-circle">
+            <i
+              className="fa-solid fa-play"
+              style={{ marginLeft: "4px", color: "#ffffff" }}
+            ></i>
+          </div>
+        </div>
+
         <div className="port-showcase-slider-spaces p-relative">
           <div
             className="port-showcase-slider-wrap tp-slider-parallax fix"
@@ -282,16 +313,6 @@ export default function PortfolioSliderHomeEleven() {
                 if (slideItem) handleOpen(slideItem);
               }}
             >
-              {/* Play icon overlay */}
-              <div className="video-play-overlay">
-                <div className="play-icon-circle">
-                  <i
-                    className="fa-solid fa-play"
-                    style={{ marginLeft: "5px" }}
-                  ></i>
-                </div>
-              </div>
-
               <Swiper
                 direction="horizontal"
                 slidesPerView="auto"
