@@ -819,11 +819,8 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
               key={item.id}
               className={`col-xl-4 col-lg-6 col-md-6 grid-item ${item.show}`}
             >
-              <div
-                className="tp-project-5-2-thumb mb-30 p-relative not-hide-cursor"
-                data-cursor="View<br>More"
-              >
-                <Link href="/portfolio-details-1" className="cursor-hide">
+              <div className="tp-project-5-2-thumb mb-30 p-relative not-hide-cursor">
+                <Link href="#" className="cursor-hide">
                   <Image
                     className="anim-zoomin"
                     src={item.img}
