@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 // internal imports
-import shape from "@/assets/img/home-02/service/sv-shape-1.png";
+import shape from "@/assets/img/home-01/papyrus-about/about.png";
 import { ArrowBg, RightArrowTwo, FirstBracket, FirstBracketTwo } from "../svg";
 
 export default function AboutThree() {
@@ -48,8 +48,17 @@ export default function AboutThree() {
           className="row align-items-center "
         >
           <div className="col-xl-6 col-lg-6 col-md-4">
-            <div className="tp-service-2-shape-img text-center text-lg-start">
-              <Image src={shape} alt="" />
+            <div className="">
+              <Image
+                style={{
+                  width: width > 768 ? "auto" : "auto",
+                  height: width > 768 ? "auto" : "400px",
+                  marginBottom: width > 768 ? "" : "40px",
+                  borderRadius: "10px",
+                }}
+                src={shape}
+                alt=""
+              />
             </div>
           </div>
           <div className="col-xl-6 col-lg-6 col-md-8">

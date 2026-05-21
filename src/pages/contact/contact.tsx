@@ -90,7 +90,7 @@ const ContactMain = () => {
               {/* contact area */}
 
               {/* about area start */}
-              <div className="cn-contactform-support-area pb-120 pt-100 bg-light ">
+              <div className="cn-contactform-support-area  bg-light ">
                 <div className="container">
                   <div className="row justify-content-center">
                     <div className="col-xl-10">
@@ -99,6 +99,7 @@ const ContactMain = () => {
                         style={{
                           backgroundImage:
                             "url(/assets/img/inner-contact/contact/contact-bg.png)",
+                          height: "250px",
                         }}
                       >
                         <div
