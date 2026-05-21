@@ -52,7 +52,7 @@ export default function AboutThree() {
               <Image
                 style={{
                   width: width > 768 ? "auto" : "auto",
-                  height: width > 768 ? "auto" : "400px",
+                  height: width > 768 ? "85vh" : "400px",
                   marginBottom: width > 768 ? "" : "40px",
                   borderRadius: "10px",
                 }}
