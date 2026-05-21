@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, Suspense, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-
+import shape from "@/assets/img/home-01/portfolio/shape1.jpg";
+import { useIsotop } from "@/hooks/use-isotop";
 // images
 import sv_1 from "@/assets/img/inner-service/sercive-details/sv-details-1.jpg";
 import sv_2 from "@/assets/img/inner-service/sercive-details/sv-details-2.jpg";
@@ -13,7 +14,10 @@ import port_1 from "@/assets/img/inner-project/showcase/showcase-1.jpg";
 import port_2 from "@/assets/img/inner-project/showcase/showcase-2.jpg";
 import port_3 from "@/assets/img/inner-project/showcase/showcase-3.jpg";
 import port_4 from "@/assets/img/inner-project/showcase/showcase-4.jpg";
-
+import s_1 from "@/assets/img/home-01/service/service-icon-1.png";
+import s_2 from "@/assets/img/home-01/service/service-icon-2.png";
+import s_3 from "@/assets/img/home-01/service/service-icon-3.png";
+import { createPortal } from "react-dom";
 const servicesList = [
   {
     id: 1,
@@ -382,16 +386,269 @@ const servicesList = [
   },
 ];
 
+// service data
+const service_data = [
+  {
+    id: 1,
+    title: "ATL",
+    subItems: [
+      { title: "Logo", link: "/our-canvas?service=logo" },
+      { title: "Packaging", link: "/our-canvas?service=packaging" },
+      { title: "Press Ad", link: "/our-canvas?service=press-ad" },
+      { title: "Billboard / Out-door", link: "/our-canvas?service=bill-board" },
+      { title: "Leaflet / Flyer", link: "/our-canvas?service=leaflet" },
+      {
+        title: "Brochure / Catalogue",
+        link: "/our-canvas?service=brochure-catalogue",
+      },
+      { title: "Calendar", link: "/our-canvas?service=calendar" },
+      { title: "Annual Report", link: "/our-canvas?service=annual-report" },
+      { title: "TVC", link: "/our-canvas?service=tvc" },
+      { title: "AV", link: "/our-canvas?service=av" },
+      { title: "PR", link: "/our-canvas?service=pr-media-buying" },
+      { title: "Others", link: "/our-canvas?service=campaign" }, // Mapping "Others" to "Campaign"
+    ],
+    icon: s_1,
+  },
+  {
+    id: 2,
+    title: "BTL",
+    subItems: [
+      { title: "Events", link: "/our-canvas?service=event" },
+      { title: "Activations", link: "/our-canvas?service=activation" },
+      { title: "Stall", link: "/our-canvas?service=stall" },
+    ],
+    icon: s_2,
+  },
+  {
+    id: 3,
+    title: "Digital",
+    subItems: [
+      { title: "Static", link: "/our-canvas?service=static" }, // Mapping static social posts
+      {
+        title: "Motion",
+        link: "/our-canvas?service=motion",
+      },
+      { title: "OVC", link: "/our-canvas?service=ovc" },
+      { title: "Music Video", link: "/our-canvas?service=music-video" },
+      {
+        title: "Digital Campaign",
+        link: "/our-canvas?service=digital-social-media-marketing",
+      },
+    ],
+    icon: s_3,
+  },
+];
+// ── Portal Dropdown ──────────────────────────────────────────────────────────
+function SubMenu({
+  items,
+  anchorEl,
+  visible,
+  onMouseEnter,
+  onMouseLeave,
+}: {
+  items: { title: string; link: string }[];
+  anchorEl: HTMLElement | null;
+  visible: boolean;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+}) {
+  const [pos, setPos] = useState({ top: 0, left: 0 });
+  const [mounted, setMounted] = useState(false);
+
+  // Only mount on client — fixes SSR hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (anchorEl && visible) {
+      const rect = anchorEl.getBoundingClientRect();
+      setPos({
+        top: rect.bottom + window.scrollY + 6,
+        left: rect.left + window.scrollX,
+      });
+    }
+  }, [visible, anchorEl]);
+
+  // Don't render anything until client has mounted
+  if (!mounted) return null;
+
+  return createPortal(
+    <ul
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      style={{
+        position: "absolute",
+        top: pos.top,
+        left: pos.left,
+        zIndex: 99999,
+        listStyle: "none",
+        margin: 0,
+        padding: "8px 0",
+        background: "#1a1a1a",
+        boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
+        minWidth: "200px",
+        borderRadius: "6px",
+        opacity: visible ? 1 : 0,
+        visibility: visible ? "visible" : "hidden",
+        transform: visible ? "translateY(0px)" : "translateY(-6px)",
+        transition:
+          "opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease",
+        pointerEvents: visible ? "auto" : "none",
+        border: "1px solid #2e2e2e",
+      }}
+    >
+      {items.map((item, i) => (
+        <li
+          key={i}
+          style={{
+            padding: "0",
+            borderBottom: i < items.length - 1 ? "1px solid #2e2e2e" : "none",
+          }}
+        >
+          <Link
+            href={item.link}
+            style={{
+              display: "block",
+              padding: "8px 18px",
+              color: "#cccccc",
+              fontSize: "18px",
+              fontWeight: "400",
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+              transition: "background 0.15s ease, color 0.15s ease",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.background =
+                "#2a2a2a";
+              (e.currentTarget as HTMLAnchorElement).style.color = "#ffffff";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.background =
+                "transparent";
+              (e.currentTarget as HTMLAnchorElement).style.color = "#cccccc";
+            }}
+          >
+            {item.title}
+          </Link>
+        </li>
+      ))}
+    </ul>,
+    document.body,
+  );
+}
+// data
+const portfolio_data = [
+  {
+    id: 1,
+    img: "/assets/img/inner-project/portfolio-col-2/port-9.jpg",
+    category: "Branding",
+    title: "The Stage",
+    year: "2024",
+    show: "cat2 cat4",
+  },
+  {
+    id: 2,
+    img: "/assets/img/inner-project/portfolio-col-2/port-8.jpg",
+    category: "Creative",
+    title: "Big dream",
+    year: "2023",
+    show: "cat2 cat4 cat3",
+  },
+  {
+    id: 3,
+    img: "/assets/img/inner-project/portfolio-col-2/port-7.jpg",
+    category: "Concept",
+    title: "Sed Lectus",
+    year: "2023",
+    show: "cat4 cat2 cat3",
+  },
+  {
+    id: 4,
+    img: "/assets/img/inner-project/portfolio-col-2/port-6.jpg",
+    category: "Branding",
+    title: "Art Direction",
+    year: "2024",
+    show: "cat2 cat4 cat3",
+  },
+  {
+    id: 5,
+    img: "/assets/img/inner-project/portfolio-col-2/port-5.jpg",
+    category: "Branding",
+    title: "Petit Navire",
+    year: "2024",
+    show: "cat1 cat4 cat3",
+  },
+  {
+    id: 6,
+    img: "/assets/img/inner-project/portfolio-col-2/port-4.jpg",
+    category: "Branding",
+    title: "Big dream",
+    year: "2024",
+    show: "cat4 cat1 cat3",
+  },
+  {
+    id: 7,
+    img: "/assets/img/inner-project/portfolio-col-2/port-3.jpg",
+    category: "Branding",
+    title: "The Stage",
+    year: "2024",
+    show: "cat2 cat4 cat3",
+  },
+  {
+    id: 8,
+    img: "/assets/img/inner-project/portfolio-col-2/port-2.jpg",
+    category: "Creative",
+    title: "Big dream",
+    year: "2024",
+    show: "cat2 cat4",
+  },
+  {
+    id: 9,
+    img: "/assets/img/inner-project/portfolio-col-2/port-1.jpg",
+    category: "Concept",
+    title: "Sed Lectus",
+    year: "2024",
+    show: "cat1 cat3",
+  },
+];
+
+// prop type
+type IProps = {
+  style_2?: boolean;
+};
 // Inner component to safely use search params
-function ServiceDetailsContent() {
+function ServiceDetailsContent({ style_2 = false }: IProps) {
+  const { initIsotop, isotopContainer } = useIsotop();
+
+  useEffect(() => {
+    initIsotop();
+  }, [initIsotop]);
   const searchParams = useSearchParams();
   const [activeService, setActiveService] = useState(servicesList[0]);
 
+  const [activeId, setActiveId] = useState<number | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
   const [width, setWidth] = useState(0);
 
-  const [activeId, setActiveId] = useState<number | null>(null);
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
+  const titleRefs = useRef<{ [key: number]: HTMLHeadingElement | null }>({});
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleEnter = (id: number) => {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    setHoveredId(id);
+  };
+
+  // small delay so moving mouse from title → dropdown doesn't close it
+  const handleLeave = () => {
+    leaveTimer.current = setTimeout(() => setHoveredId(null), 120);
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -472,10 +729,10 @@ function ServiceDetailsContent() {
 
   return (
     <div className="service-details__area service-details__space pt-200 pb-120">
-      <div className="container">
+      <div className="container container-1530">
         <div className="row">
-          <div className="col-xl-12">
-            <div className="service-details__title-box mb-80">
+          <div className="col-xl-11">
+            <div className="sv-hero-title-box">
               <h6
                 style={{ fontSize: width > 768 ? "75px" : "45px" }}
                 className="sv-hero-title tp-char-animation"
@@ -484,126 +741,108 @@ function ServiceDetailsContent() {
                 making them exceptional and significant in the minds of
                 consumers.
               </h6>
+              {/* <p className="tp_fade_bottom">
+                We provide powerful marketing services .
+              </p> */}
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Main Feature Image - Added ID for scrolling */}
-      <div className="container-fluid">
         <div className="row">
           <div className="col-xl-12">
-            <div className="service-details__tab-wrapper text-center mb-120">
-              <div className="service-details__tab-thumb p-relative">
-                <div>
-                  <h3
-                    style={{
-                      position: "absolute",
-                      top: "50px",
-                      left: "50px",
-                      zIndex: "20",
-                      color: "white",
-                      backgroundColor: "black",
-                      paddingInline: "30px",
-                      paddingBlock: "10px",
-                      borderRadius: "50px",
-                    }}
-                  >
-                    {activeService.title}
-                  </h3>
-                </div>
+            <div className="sv-hero-thumb p-relative">
+              <div
+                style={{}}
+                className="sv-hero-thumb-box d-flex align-items-center justify-content-center"
+              >
                 <Image
-                  data-speed="0.4"
-                  src={activeService.mainImg}
-                  alt={activeService.title}
-                  style={{ height: "90vh", width: "100vw", zIndex: "1" }}
-                  priority
+                  data-speed=".7"
+                  src={shape}
+                  alt="ser_hero-img"
+                  // width={1000}
+                  // height={800}
+                  // style={{ height: "auto", width: "80vw" }}
                 />
               </div>
+              {/* <Image
+                className="sv-hero-thumb-shape d-none d-lg-block"
+                src={ser_hero_shape}
+                alt="ser_hero-shape"
+                style={{ height: "auto" }}
+              /> */}
             </div>
           </div>
         </div>
       </div>
 
-      <div id="service" className="container-fuild px-md-5">
-        <div className="row">
-          {/* Left Side Content */}
-          <div className="col-xl-7 col-lg-7">
-            <div className="service-details__left-wrap">
-              <div className="service-details__left-text pb-20">
-                <p className="text-1 tp_title_anim">{activeService.subDesc}</p>
-              </div>
-
-              {/* Dynamic Feature List */}
-              <div className="service-details__fea-list">
-                <ul>
-                  {activeService.features?.map((feature, idx) => (
-                    <li key={idx}>{feature}</li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Dynamic Thumbnails Gallery */}
-              <div className="service-details__sm-thumb-wrap mb-60">
-                <div className="row">
-                  {activeService.thumbnails?.map((thumb, index) => (
-                    <div
-                      key={index}
-                      className="col-xl-6 col-lg-6 col-md-6 mb-20"
-                    >
-                      <div className="service-details__sm-thumb">
-                        <Image
-                          src={thumb}
-                          alt={`${activeService.title}-thumb-${index}`}
-                          style={{ height: "auto", width: "100%" }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Side Sidebar (Dynamic Navigation) */}
-          <div className="col-xl-5 col-lg-5">
-            <div className="service-details__right-wrap fix p-relative">
-              <div className="service-details__rotate-text">
-                <span>List of Canvas Elems</span>
-              </div>
-
-              <div className="service-details__right-text-box mb-40">
-                <h4>
-                  {activeService.title.split(" ").map((word, i) => (
-                    <React.Fragment key={i}>
-                      {word} <br />
-                    </React.Fragment>
-                  ))}
-                </h4>
-                <p>{activeService.desc}</p>
-              </div>
-
-              <div className="service-details__right-category">
-                {servicesList.map((item) => (
-                  <a
-                    key={item.id}
-                    href="#"
-                    onClick={(e) => handleTabClick(e, item)}
-                    className={activeService.id === item.id ? "active" : ""}
-                  >
-                    {item.title}
-                  </a>
-                ))}
-              </div>
-
-              <Link
-                className="tp-btn-white background-black mt-20"
-                href="/lets-connect"
+      <div
+        id="service"
+        className="container-fuild px-md-5 d-flex align-items-center justify-content-center"
+      >
+        <div className="tp-service d-lg-flex align-items-center mt-80">
+          {service_data.map((s) => (
+            <ul
+              key={s.id}
+              className="tp-service-item d-flex align-items-start mb-75 tp_fade_bottom mr-145"
+            >
+              <li
+                style={{ listStyle: "outside" }}
+                className="tp-service-content"
               >
-                Let’s Talk
-              </Link>
+                <h4
+                  className="tp-service-title-sm order-0"
+                  ref={(el: any) => (titleRefs.current[s.id] = el)}
+                  onMouseEnter={() => handleEnter(s.id)}
+                  onMouseLeave={handleLeave}
+                  style={{ cursor: "pointer", display: "inline-block" }}
+                >
+                  <Link href="/our-canvas">{s.title}</Link>
+                </h4>
+
+                {s.subItems && (
+                  <SubMenu
+                    items={s.subItems}
+                    anchorEl={titleRefs.current[s.id] ?? null}
+                    visible={hoveredId === s.id}
+                    onMouseEnter={() => handleEnter(s.id)}
+                    onMouseLeave={handleLeave}
+                  />
+                )}
+              </li>
+            </ul>
+          ))}
+        </div>
+      </div>
+      <div className={`container container-${style_2 ? "1800" : "1530"}`}>
+        <div className="row grid" ref={isotopContainer}>
+          {portfolio_data.map((item) => (
+            <div
+              key={item.id}
+              className={`col-xl-4 col-lg-6 col-md-6 grid-item ${item.show}`}
+            >
+              <div
+                className="tp-project-5-2-thumb mb-30 p-relative not-hide-cursor"
+                data-cursor="View<br>More"
+              >
+                <Link href="/portfolio-details-1" className="cursor-hide">
+                  <Image
+                    className="anim-zoomin"
+                    src={item.img}
+                    alt="port-img"
+                    width={style_2 ? 573 : 486}
+                    height={style_2 ? 683 : 576}
+                    style={{ width: "auto", height: "auto" }}
+                  />
+                  <div className="tp-project-5-2-category tp_fade_anim">
+                    <span>{item.category}</span>
+                  </div>
+                  <div className="tp-project-5-2-content tp_fade_anim">
+                    <span className="tp-project-5-2-meta">{item.year}</span>
+                    <h4 className="tp-project-5-2-title-sm">{item.title}</h4>
+                  </div>
+                </Link>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
