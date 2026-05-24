@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "@/assets/img/logo/logo-white.png";
 import { RightArrow, SvgBgSm } from "@/components/svg";
 import Link from "next/link";
 
 export default function FooterFour() {
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  });
+
   return (
     <footer>
       <div
@@ -69,7 +77,7 @@ export default function FooterFour() {
                     IMC
                   </p> */}
                   <Link
-                    style={{ scale: "2" }}
+                    style={{ scale: width > 768 ? "2" : "1" }}
                     className="tp-footer-3-logo p-relative mt-100"
                     href="/"
                   >
