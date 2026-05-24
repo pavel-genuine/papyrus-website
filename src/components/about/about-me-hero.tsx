@@ -20,7 +20,10 @@ export default function AboutMeHero() {
 
   return (
     <div
-      style={{ marginBottom: "150px", paddingBottom: "0px" }}
+      style={{
+        marginBottom: width > 768 ? "150px" : "0px",
+        paddingBottom: "0px",
+      }}
       className="ab-2-hero-area ab-2-hero-ptb  p-relative"
     >
       <div className="ab-2-hero-social-wrap d-none d-lg-block">
