@@ -62,7 +62,7 @@ const Preloader = () => {
         style={{ ...halfStyle, left: 0, clipPath: "inset(0 50% 0 0)" }}
       >
         <video
-          style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
+          style={{ width: "100vw", height: "100vh", objectFit: "fill" }}
           autoPlay
           muted
           loop
@@ -78,7 +78,7 @@ const Preloader = () => {
         style={{ ...halfStyle, left: 0, clipPath: "inset(0 0 0 50%)" }}
       >
         <video
-          style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
+          style={{ width: "100vw", height: "100vh", objectFit: "fill" }}
           autoPlay
           muted
           loop
