@@ -411,8 +411,8 @@ export default function PortfolioSliderHomeEleven() {
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
           {activeSlide && (
-            <div className="bg-dark">
-              <div className="ratio " style={{ overflow: "hidden" }}>
+            <div className="bg-dark" style={{ width: "100vw" }}>
+              <div className=" ">
                 {iframeReady ? (
                   <iframe
                     src={buildIframeSrc(activeSlide.youtubeUrl)}
