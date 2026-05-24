@@ -3,7 +3,7 @@ import Image from "next/image";
 import CounterItem from "./counter-item";
 
 // Adjust these to match your actual file ranges/counts
-const totalImages = 10;
+const totalImages = 15;
 const folderPath = `/assets/img/home-01/papyrus-client`; // Points directly to the public/img/marquee/ folder
 
 // 1. Generate an array of numbers from 3 to 102 (or whatever your naming starts at)
@@ -58,7 +58,7 @@ export default function CounterOne() {
             ))}
           </div>
           <div className="box">
-            {images2.map((src, index) => (
+            {images1.map((src, index) => (
               <MarqueImage
                 key={`left-box2-${index}`}
                 src={`${src}`}
@@ -71,7 +71,7 @@ export default function CounterOne() {
         {/* RIGHT MOVING MARQUEE */}
         <div className="slide-img-right">
           <div className="box">
-            {images1.map((src, index) => (
+            {images2.map((src, index) => (
               <MarqueImage
                 key={`right-box1-${index}`}
                 src={src}
