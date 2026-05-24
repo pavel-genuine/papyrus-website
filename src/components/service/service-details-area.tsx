@@ -539,80 +539,12 @@ function SubMenu({
   );
 }
 // data
-const portfolio_data = [
-  {
-    id: 1,
-    img: "/assets/img/inner-project/portfolio-col-2/port-9.jpg",
-    category: "Branding",
-    title: "The Stage",
-    year: "2024",
-    show: "cat2 cat4",
-  },
-  {
-    id: 2,
-    img: "/assets/img/inner-project/portfolio-col-2/port-8.jpg",
-    category: "Creative",
-    title: "Big dream",
-    year: "2023",
-    show: "cat2 cat4 cat3",
-  },
-  {
-    id: 3,
-    img: "/assets/img/inner-project/portfolio-col-2/port-7.jpg",
-    category: "Concept",
-    title: "Sed Lectus",
-    year: "2023",
-    show: "cat4 cat2 cat3",
-  },
-  {
-    id: 4,
-    img: "/assets/img/inner-project/portfolio-col-2/port-6.jpg",
-    category: "Branding",
-    title: "Art Direction",
-    year: "2024",
-    show: "cat2 cat4 cat3",
-  },
-  {
-    id: 5,
-    img: "/assets/img/inner-project/portfolio-col-2/port-5.jpg",
-    category: "Branding",
-    title: "Petit Navire",
-    year: "2024",
-    show: "cat1 cat4 cat3",
-  },
-  {
-    id: 6,
-    img: "/assets/img/inner-project/portfolio-col-2/port-4.jpg",
-    category: "Branding",
-    title: "Big dream",
-    year: "2024",
-    show: "cat4 cat1 cat3",
-  },
-  {
-    id: 7,
-    img: "/assets/img/inner-project/portfolio-col-2/port-3.jpg",
-    category: "Branding",
-    title: "The Stage",
-    year: "2024",
-    show: "cat2 cat4 cat3",
-  },
-  {
-    id: 8,
-    img: "/assets/img/inner-project/portfolio-col-2/port-2.jpg",
-    category: "Creative",
-    title: "Big dream",
-    year: "2024",
-    show: "cat2 cat4",
-  },
-  {
-    id: 9,
-    img: "/assets/img/inner-project/portfolio-col-2/port-1.jpg",
-    category: "Concept",
-    title: "Sed Lectus",
-    year: "2024",
-    show: "cat1 cat3",
-  },
-];
+
+const portfolio_data = Array.from({ length: 25 }, (_, index) => {
+  const fileNumber = index + 1;
+
+  return `/assets/img/home-01/portfolio/Logo/logo (${fileNumber}).png`;
+});
 
 // prop type
 type IProps = {
@@ -814,27 +746,24 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
       </div>
       <div className={`container container-${style_2 ? "1800" : "1530"}`}>
         <div className="row grid" ref={isotopContainer}>
-          {portfolio_data.map((item) => (
-            <div
-              key={item.id}
-              className={`col-xl-4 col-lg-6 col-md-6 grid-item ${item.show}`}
-            >
+          {portfolio_data.map((src, i) => (
+            <div key={i} className={`col-xl-4 col-lg-6 col-md-6 grid-item`}>
               <div className="tp-project-5-2-thumb mb-30 p-relative not-hide-cursor">
                 <Link href="#" className="cursor-hide">
                   <Image
                     className="anim-zoomin"
-                    src={item.img}
+                    src={src}
                     alt="port-img"
                     width={style_2 ? 573 : 486}
                     height={style_2 ? 683 : 576}
-                    style={{ width: "auto", height: "auto" }}
+                    style={{ width: "200px", height: "200px" }}
                   />
                   <div className="tp-project-5-2-category tp_fade_anim">
-                    <span>{item.category}</span>
+                    {/* <span>{item.category}</span> */}
                   </div>
                   <div className="tp-project-5-2-content tp_fade_anim">
-                    <span className="tp-project-5-2-meta">{item.year}</span>
-                    <h4 className="tp-project-5-2-title-sm">{item.title}</h4>
+                    {/* <span className="tp-project-5-2-meta">{item.year}</span>
+                    <h4 className="tp-project-5-2-title-sm">{item.title}</h4> */}
                   </div>
                 </Link>
               </div>
