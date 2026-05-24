@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Social from "../social/social";
 import { Leaf } from "../svg";
@@ -10,6 +10,14 @@ import hero_img from "@/assets/img/menu/shop-menu/banner-1.jpg";
 import Link from "next/link";
 
 export default function AboutMeHero() {
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  });
+
   return (
     <div
       style={{ marginBottom: "150px", paddingBottom: "0px" }}
@@ -29,7 +37,10 @@ export default function AboutMeHero() {
             <div className="col-xl-10">
               <div className="ab-2-hero-title-box p-relative">
                 <h6
-                  style={{ fontSize: "100px" }}
+                  style={{
+                    fontSize: width > 768 ? "100px" : "80px",
+                    fontWeight: width > 768 ? "" : "200",
+                  }}
                   className="ab-2-hero-title tp-char-animation"
                   // data-stagger="0.05"
                   data-on-scroll="0"
@@ -38,7 +49,10 @@ export default function AboutMeHero() {
                   Crafting Perceptions
                 </h6>
                 <h6
-                  style={{ fontSize: "100px" }}
+                  style={{
+                    fontSize: width > 768 ? "100px" : "80px",
+                    fontWeight: width > 768 ? "" : "200",
+                  }}
                   className="ab-2-hero-title tp-char-animation"
                   // data-stagger="0.05"
                   data-on-scroll="0"
