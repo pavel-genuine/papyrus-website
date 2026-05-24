@@ -3,23 +3,19 @@ import Image from "next/image";
 import CounterItem from "./counter-item";
 
 // Adjust these to match your actual file ranges/counts
-const totalImages = 50;
+const totalImages = 10;
 const folderPath = `/assets/img/home-01/papyrus-client`; // Points directly to the public/img/marquee/ folder
 
 // 1. Generate an array of numbers from 3 to 102 (or whatever your naming starts at)
 const allImagePaths = Array.from({ length: totalImages }, (_, index) => {
   const fileNumber = index + 1; // Starts at Picture3.png
 
-  // Handling extensions: if pictures 3-12 are .png and 13+ are .jpg, we can check dynamically
-  let extension;
 
   return `${folderPath}/client (${fileNumber}).png`;
 });
 const allImagePaths2 = Array.from({ length: totalImages }, (_, index) => {
   const fileNumber = index + 1; // Starts at Picture3.png
 
-  // Handling extensions: if pictures 3-12 are .png and 13+ are .jpg, we can check dynamically
-  let extension;
 
   return `${folderPath}/client (${fileNumber}).jpg`;
 });
@@ -56,7 +52,7 @@ export default function CounterOne() {
             {images1.map((src, index) => (
               <MarqueImage
                 key={`left-box1-${index}`}
-                src={src}
+                src={`${src}`}
                 alt={`brand-left-1-${index}`}
               />
             ))}
@@ -65,7 +61,7 @@ export default function CounterOne() {
             {images2.map((src, index) => (
               <MarqueImage
                 key={`left-box2-${index}`}
-                src={src}
+                src={`${src}`}
                 alt={`brand-left-2-${index}`}
               />
             ))}
