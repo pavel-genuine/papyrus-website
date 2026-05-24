@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { createPortal } from "react-dom";
 
-import shape from "@/assets/img/home-02/service/sv-shape-1.png";
+import shape from "@/assets/img/home-01/papyrus-about/about.png";
 import { ArrowBg, RightArrowTwo } from "@/components/svg";
 import ser_1 from "@/assets/img/home-02/service/sv-icon-1.png";
 import ser_2 from "@/assets/img/home-02/service/sv-icon-2.png";
@@ -136,11 +136,11 @@ export default function ServiceHome() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const titleRefs = useRef<{ [key: number]: HTMLButtonElement | null }>({});
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const [width, setWidth] = useState(0);
-  
-    useEffect(() => {
-      setWidth(window.innerWidth);
-    }, []);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
 
   const handleEnter = (id: number) => {
     if (leaveTimer.current) clearTimeout(leaveTimer.current);
@@ -181,8 +181,17 @@ export default function ServiceHome() {
 
         <div className="row align-items-center mt-50">
           <div className="col-xl-6 col-lg-6 col-md-4">
-            <div className="tp-service-2-shape-img text-center text-lg-start">
-              <Image src={shape} alt="" />
+            <div className="tp-service-2 text-center text-lg-start">
+              <Image
+                style={{
+                  width: width > 768 ? "auto" : "auto",
+                  height: width > 768 ? "auto" : "550px",
+                  marginBottom: width > 768 ? "" : "40px",
+                  borderRadius: "10px",
+                }}
+                src={shape}
+                alt=""
+              />
             </div>
           </div>
 

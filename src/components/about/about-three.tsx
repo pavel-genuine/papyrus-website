@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 // internal imports
-import shape from "@/assets/img/home-01/papyrus-about/about.png";
+import shape from "@/assets/img/inner-service/hero/hero-2.png";
 import { ArrowBg, RightArrowTwo, FirstBracket, FirstBracketTwo } from "../svg";
 
 export default function AboutThree() {
@@ -51,8 +51,8 @@ export default function AboutThree() {
             <div className="">
               <Image
                 style={{
-                  width: width > 768 ? "auto" : "auto",
-                  height: width > 768 ? "85vh" : "400px",
+                  width: width > 768 ? "800px" : "auto",
+                  height: width > 768 ? "550px" : "auto",
                   marginBottom: width > 768 ? "" : "40px",
                   borderRadius: "10px",
                 }}
