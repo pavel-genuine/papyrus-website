@@ -90,7 +90,7 @@ const ContactMain = () => {
               {/* contact area */}
 
               {/* about area start */}
-              <div className="cn-contactform-support-area  bg-light ">
+              <div className="cn-contactform-support-area  bg-light pt-40 pb-40 ">
                 <div className="container">
                   <div className="row justify-content-center">
                     <div className="col-xl-10">
@@ -104,7 +104,7 @@ const ContactMain = () => {
                       >
                         <div
                           style={{ color: "black" }}
-                          className="cn-contactform-support-text text-center"
+                          className="cn-contactform-support-text text-center "
                         >
                           <span>
                             You can contact our location above directly . Or, We
