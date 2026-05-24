@@ -1,41 +1,47 @@
 import React from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import CounterItem from "./counter-item";
 
-// images
-import marque_1 from "@/assets/img/inner-about/clients/Picture3.png";
-import marque_2 from "@/assets/img/inner-about/clients/Picture4.png";
-import marque_3 from "@/assets/img/inner-about/clients/Picture5.png";
-import marque_4 from "@/assets/img/inner-about/clients/Picture6.png";
-import marque_5 from "@/assets/img/inner-about/clients/Picture7.png";
-import marque_6 from "@/assets/img/inner-about/clients/Picture8.png";
-// import marque_7 from "@/assets/img/inner-about/clients/Picture9.png";
-import marque_8 from "@/assets/img/inner-about/clients/Picture10.png";
-import marque_9 from "@/assets/img/inner-about/clients/Picture11.png";
-import marque_10 from "@/assets/img/inner-about/clients/Picture12.png";
-import marque_11 from "@/assets/img/inner-about/clients/Picture13.jpg";
-import marque_12 from "@/assets/img/inner-about/clients/Picture14.jpg";
-import marque_13 from "@/assets/img/inner-about/clients/Picture15.jpg";
+// Adjust these to match your actual file ranges/counts
+const totalImages = 50;
+const folderPath = `/assets/img/home-01/papyrus-client`; // Points directly to the public/img/marquee/ folder
 
-const images1 = [marque_1, marque_2, marque_3, marque_4, marque_5, marque_6];
-const images2 = [
-  marque_8,
-  marque_9,
-  marque_10,
-  marque_11,
-  marque_12,
-  marque_13,
-];
+// 1. Generate an array of numbers from 3 to 102 (or whatever your naming starts at)
+const allImagePaths = Array.from({ length: totalImages }, (_, index) => {
+  const fileNumber = index + 1; // Starts at Picture3.png
 
-function MarqueImage({ src }: { src: StaticImageData }) {
+  // Handling extensions: if pictures 3-12 are .png and 13+ are .jpg, we can check dynamically
+  let extension;
+
+  return `${folderPath}/client (${fileNumber}).png`;
+});
+const allImagePaths2 = Array.from({ length: totalImages }, (_, index) => {
+  const fileNumber = index + 1; // Starts at Picture3.png
+
+  // Handling extensions: if pictures 3-12 are .png and 13+ are .jpg, we can check dynamically
+  let extension;
+
+  return `${folderPath}/client (${fileNumber}).jpg`;
+});
+
+// 2. Split your 100 images evenly into two marquee arrays
+
+const images1 = allImagePaths;
+const images2 = allImagePaths2;
+
+// Updated MarqueImage component accepting string sources from the public folder
+function MarqueImage({ src, alt }: { src: string; alt: string }) {
   return (
     <Image
       src={src}
-      alt="marque-img"
-      style={{ height: "450px", width: "450px" }}
+      alt={alt}
+      width={450} // Next.js Image requires width/height props for remote/public string paths
+      height={450}
+      style={{ height: "500px", width: "auto", objectFit: "fill" }}
     />
   );
 }
+
 export default function CounterOne() {
   return (
     <div className="slide-funfact-height slide-funfact p-relative d-flex align-items-center justify-content-center">
@@ -43,63 +49,64 @@ export default function CounterOne() {
         <div className="middle-shadow">
           <span></span>
         </div>
+
+        {/* LEFT MOVING MARQUEE */}
         <div className="slide-img-left">
           <div className="box">
-            {/* 2. Map through the array */}
-            {images1.map((img, index) => (
-              <MarqueImage key={index} src={img} />
+            {images1.map((src, index) => (
+              <MarqueImage
+                key={`left-box1-${index}`}
+                src={src}
+                alt={`brand-left-1-${index}`}
+              />
             ))}
           </div>
           <div className="box">
-            {/* 2. Map through the array */}
-            {images2.map((img, index) => (
-              <MarqueImage key={index} src={img} />
+            {images2.map((src, index) => (
+              <MarqueImage
+                key={`left-box2-${index}`}
+                src={src}
+                alt={`brand-left-2-${index}`}
+              />
             ))}
           </div>
         </div>
+
+        {/* RIGHT MOVING MARQUEE */}
         <div className="slide-img-right">
           <div className="box">
-            {/* 2. Map through the array */}
-            {images1.map((img, index) => (
-              <MarqueImage key={index} src={img} />
+            {images1.map((src, index) => (
+              <MarqueImage
+                key={`right-box1-${index}`}
+                src={src}
+                alt={`brand-right-1-${index}`}
+              />
             ))}
           </div>
           <div className="box">
-            {/* 2. Map through the array */}
-            {images2.map((img, index) => (
-              <MarqueImage key={index} src={img} />
+            {images2.map((src, index) => (
+              <MarqueImage
+                key={`right-box2-${index}`}
+                src={src}
+                alt={`brand-right-2-${index}`}
+              />
             ))}
           </div>
         </div>
       </div>
+
       <div className="slide-funfact-wrap">
-        <div>
-          <div className="container">
-            <div className="row">
-              <div className="col-xl-2 col-lg-2 col-md-4 mb-30">
-                {/* <div className="slide-funfact-item text-center">
-                  <h4>
-                    <CounterItem min={0} max={235} />+
-                  </h4>
-                  <span>Projects Finished</span>
-                </div> */}
-              </div>
-              <div className="col-xl-8 col-lg-8 col-md-4 mb-30">
-                <div className="slide-funfact-item text-center">
-                  <h4 style={{ fontWeight: "500", fontSize: "80px" }}>
-                    BRANDS <br /> WE SERVED
-                  </h4>
-                </div>
-              </div>
-              <div className="col-xl-2 col-lg-2 col-md-4 mb-30">
-                {/* <div className="slide-funfact-item text-center">
-                  <h4>
-                    <CounterItem min={0} max={140} />+
-                  </h4>
-                  <span>Clients Worldwide</span>
-                </div> */}
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-2 col-lg-2 col-md-4 mb-30"></div>
+            <div className="col-xl-8 col-lg-8 col-md-4 mb-30">
+              <div className="slide-funfact-item text-center">
+                <h4 style={{ fontWeight: "500", fontSize: "80px" }}>
+                  BRANDS <br /> WE SERVED
+                </h4>
               </div>
             </div>
+            <div className="col-xl-2 col-lg-2 col-md-4 mb-30"></div>
           </div>
         </div>
       </div>
