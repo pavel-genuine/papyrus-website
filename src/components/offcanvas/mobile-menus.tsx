@@ -20,7 +20,7 @@ export default function MobileMenus() {
             <li key={menu.id} className={`has-dropdown`}>
               <Link href={menu?.link} className="pointer">
                 {menu.title}
-              </Link>
+              </Link> 
             </li>
           ))}
         </ul>
