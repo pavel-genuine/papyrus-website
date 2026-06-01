@@ -393,7 +393,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
       {/* Grid Portfolio Display Section */}
       {/* ইউআরএল-এ service প্যারামিটার থাকলেই কেবল এই গ্রিড সেকশনটি রেন্ডার হবে */}
       {currentService && (
-        <div className={`container container-${style_2 ? "1800" : "1530"}`}>
+        <div className={`  container `}>
           <div className="row grid" ref={isotopContainer}>
             {filteredData.length > 0 ? (
               filteredData.map((item) => (
