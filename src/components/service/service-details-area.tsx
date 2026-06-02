@@ -58,19 +58,24 @@ const service_data = [
         })),
       },
       {
-        title: "Billboard / Out-door",
+        title: "Billboard - Out-door",
         link: "/our-canvas?service=bill-board",
         data: [],
       },
       {
-        title: "Leaflet / Flyer",
+        title: "Leaflet - Flyer",
         link: "/our-canvas?service=leaflet",
         data: [],
       },
       {
-        title: "Brochure / Catalogue",
+        title: "Brochure - Catalogue",
         link: "/our-canvas?service=brochure-catalogue",
-        data: [],
+        data: Array.from({ length: 23 }, (_, index) => ({
+          id: index + 101,
+          category: "packaging",
+          src: `/assets/img/home-01/portfolio/Brochure-Catalogue/Brochure-catalogue (${index + 1}).png`,
+          title: `Packaging Project ${index + 1}`,
+        })),
       },
       { title: "Calendar", link: "/our-canvas?service=calendar", data: [] },
       {
