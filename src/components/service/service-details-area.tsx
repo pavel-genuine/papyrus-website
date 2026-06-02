@@ -469,6 +469,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                           height: "auto",
                           objectFit: "fill",
                           borderRadius: "5px",
+                          aspectRatio: "1/1",
                         }}
                       >
                         <video
@@ -483,6 +484,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                             height: "auto",
                             objectFit: "fill",
                             borderRadius: "5px",
+                            aspectRatio: "1/1",
                           }}
                         />
                       </div>
