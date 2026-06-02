@@ -98,7 +98,17 @@ const service_data = [
         link: "/our-canvas?service=annual-report",
         data: [],
       },
-      { title: "TVC", link: "/our-canvas?service=tvc", data: [] },
+      {
+        title: "TVC",
+        link: "/our-canvas?service=tvc",
+        data: Array.from({ length: 13 }, (_, index) => ({
+          id: index + 101,
+          category: "ATL",
+          type: "img",
+          src: `/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (${index + 1}).png`,
+          title: `Packaging Project ${index + 1}`,
+        })),
+      },
       { title: "AV", link: "/our-canvas?service=av", data: [] },
       { title: "PR", link: "/our-canvas?service=pr-media-buying", data: [] },
       { title: "Others", link: "/our-canvas?service=campaign", data: [] },
@@ -352,7 +362,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
   };
 
   return (
-    <div className="service-details__area service-details__space pt-200 pb-120">
+    <div className="service-details__area service-details__space pt-200 pb-200">
       <div className="container container-1530">
         <div className="row">
           <div className="col-xl-11">
@@ -384,7 +394,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         id="service-section"
         className="container-fuild px-md-5 d-flex align-items-center justify-content-center"
       >
-        <div className="tp-service d-lg-flex align-items-center mt-80 mb-120">
+        <div className="tp-service d-lg-flex align-items-center mt-80 ">
           {service_data.map((s) => (
             <div
               key={s.id}
@@ -458,6 +468,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                           width: "300px",
                           height: "auto",
                           objectFit: "fill",
+                          borderRadius: "5px",
                         }}
                       >
                         <video
@@ -466,10 +477,12 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                           muted
                           loop
                           playsInline
+                          preload="metadata"
                           style={{
                             width: "300px",
                             height: "auto",
                             objectFit: "fill",
+                            borderRadius: "5px",
                           }}
                         />
                       </div>
@@ -485,6 +498,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                             width: "300px",
                             height: "auto",
                             objectFit: "fill",
+                            borderRadius: "5px",
                           }}
                         />
                       </Link>
