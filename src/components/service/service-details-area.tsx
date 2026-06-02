@@ -16,8 +16,9 @@ import { createPortal } from "react-dom";
 // Interface for Portfolio Items
 interface PortfolioItem {
   id: number;
-  category: string;
+  category?: string;
   src: string;
+  type?: string;
   title: string;
 }
 
@@ -111,12 +112,7 @@ const service_data = [
       {
         title: "Events",
         link: "/our-canvas?service=event",
-        data: Array.from({ length: 6 }, (_, index) => ({
-          id: index + 201,
-          category: "event",
-          src: `/assets/img/home-01/portfolio/Logo/logo (2).png`,
-          title: `Event Project ${index + 1}`,
-        })),
+        data: [],
       },
       {
         title: "Activations",
@@ -378,14 +374,24 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         id="service-section"
         className="container-fuild px-md-5 d-flex align-items-center justify-content-center"
       >
-        <div className="tp-service d-lg-flex align-items-center mt-80">
+        <div className="tp-service d-lg-flex align-items-center mt-80 mb-120">
           {service_data.map((s) => (
-            <ul
+            <div
               key={s.id}
               className="tp-service-item d-flex align-items-start mb-75 tp_fade_bottom mr-145"
               style={{ padding: 0 }}
             >
-              <li style={{ listStyle: "none" }} className="tp-service-content">
+              <div className="tp-service-icon">
+                <Image
+                  src={s.icon}
+                  alt="icon"
+                  style={{
+                    height: "auto",
+                    paddingRight: width > 768 ? "0px" : "20px",
+                  }}
+                />
+              </div>
+              <div className="tp-service-content">
                 <h4
                   className="tp-service-title-sm order-0"
                   ref={(el: any) => (titleRefs.current[s.id] = el)}
@@ -393,6 +399,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                   onMouseLeave={handleLeave}
                   style={{
                     cursor: "pointer",
+                    fontSize: "40px",
                     display: "inline-block",
                     color: s.subItems.some((sub) =>
                       sub.link
@@ -400,7 +407,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                         .includes(`service=${currentService?.toLowerCase()}`),
                     )
                       ? "#ff5e14"
-                      : "inherit",
+                      : "white",
                   }}
                 >
                   <Link href="/our-canvas">{s.title}</Link>
@@ -415,8 +422,8 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                     onMouseLeave={handleLeave}
                   />
                 )}
-              </li>
-            </ul>
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -433,33 +440,53 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                   className="col-xl-4 col-lg-6 col-md-6 grid-item"
                 >
                   <div className="tp-project-5-2-thumb mb-30 p-relative not-hide-cursor">
-                    <Link href="#" className="cursor-hide">
-                      <Image
-                        className="anim-zoomin"
-                        src={item.src}
-                        alt={item.title}
-                        width={style_2 ? 573 : 600}
-                        height={style_2 ? 683 : 600}
+                    {item.type === "video" ? (
+                      <div
+                        className="portfolio-video-wrapper"
                         style={{
-                          width: "280px",
-                          height: "auto",
-                          objectFit: "fill",
+                          position: "relative",
+                          width: "200px",
+                          height: "200px",
+                          overflow: "hidden",
                         }}
-                      />
-                      <div className="tp-project-5-2-content tp_fade_anim">
-                        <h4
-                          className="tp-project-5-2-title-sm"
-                          style={{ color: "#fff", marginTop: "10px" }}
-                        >
-                          {/* {item.title} */}
-                        </h4>
+                      >
+                        <video
+                          src={item.src}
+                          controls
+                          muted
+                          loop
+                          playsInline
+                          style={{
+                            width: "280px",
+                            height: "auto",
+                            objectFit: "fill",
+                          }}
+                        />
                       </div>
-                    </Link>
+                    ) : (
+                      <Link href="#" className="cursor-hide">
+                        <Image
+                          className="anim-zoomin"
+                          src={item.src}
+                          alt={item.title}
+                          width={style_2 ? 573 : 600}
+                          height={style_2 ? 683 : 600}
+                          style={{
+                            width: "280px",
+                            height: "auto",
+                            objectFit: "fill",
+                          }}
+                        />
+                      </Link>
+                    )}
                   </div>
                 </div>
               ))
             ) : (
-              <div className="col-12 text-center mt-50">
+              <div
+                className="col-12 text-center mt-50"
+                style={{ height: "30vh" }}
+              >
                 <p style={{ color: "#888", fontSize: "18px" }}>
                   No items found for this canvas.
                 </p>

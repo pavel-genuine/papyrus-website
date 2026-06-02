@@ -185,7 +185,7 @@ export default function ServiceHome() {
               <Image
                 style={{
                   width: width > 768 ? "auto" : "auto",
-                  height: width > 768 ? "80vh" : "auto",
+                  height: width > 768 ? "90vh" : "auto",
                   marginBottom: width > 768 ? "" : "40px",
                   borderRadius: "10px",
                 }}
