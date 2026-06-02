@@ -32,7 +32,8 @@ const service_data = [
         link: "/our-canvas?service=logo",
         data: Array.from({ length: 45 }, (_, index) => ({
           id: index + 1,
-          category: "logo",
+          category: "ATL",
+          type: "img",
           src: `/assets/img/home-01/portfolio/Logo/logo (${index + 1}).png`,
           title: `Logo Project ${index + 1}`,
         })),
@@ -42,7 +43,8 @@ const service_data = [
         link: "/our-canvas?service=packaging",
         data: Array.from({ length: 66 }, (_, index) => ({
           id: index + 101,
-          category: "packaging",
+          category: "ATL",
+          type: "img",
           src: `/assets/img/home-01/portfolio/Packaging/packaging (${index + 1}).png`,
           title: `Packaging Project ${index + 1}`,
         })),
@@ -52,7 +54,8 @@ const service_data = [
         link: "/our-canvas?service=press-ad",
         data: Array.from({ length: 49 }, (_, index) => ({
           id: index + 101,
-          category: "packaging",
+          category: "ATL",
+          type: "img",
           src: `/assets/img/home-01/portfolio/Press-add/press-ad (${index + 1}).png`,
           title: `Packaging Project ${index + 1}`,
         })),
@@ -72,12 +75,23 @@ const service_data = [
         link: "/our-canvas?service=brochure-catalogue",
         data: Array.from({ length: 23 }, (_, index) => ({
           id: index + 101,
-          category: "packaging",
+          category: "ATL",
+          type: "img",
           src: `/assets/img/home-01/portfolio/Brochure-Catalogue/Brochure-catalogue (${index + 1}).png`,
           title: `Packaging Project ${index + 1}`,
         })),
       },
-      { title: "Calendar", link: "/our-canvas?service=calendar", data: [] },
+      {
+        title: "Calendar",
+        link: "/our-canvas?service=calendar",
+        data: Array.from({ length: 33 }, (_, index) => ({
+          id: index + 101,
+          category: "ATL",
+          type: "img",
+          src: `/assets/img/home-01/portfolio/Calandar/calandar (${index + 1}).png`,
+          title: `Packaging Project ${index + 1}`,
+        })),
+      },
       {
         title: "Annual Report",
         link: "/our-canvas?service=annual-report",
