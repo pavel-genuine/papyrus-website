@@ -134,11 +134,14 @@ const service_data = [
       {
         title: "Static",
         link: "/our-canvas?service=static",
-        data: Array.from({ length: 4 }, (_, index) => ({
-          id: index + 301,
-          category: "static",
-          src: `/assets/img/home-01/portfolio/Logo/logo (3).png`,
-          title: `Static Design ${index + 1}`,
+        category: "Digital",
+        type: "img",
+        data: Array.from({ length: 45 }, (_, index) => ({
+          id: index + 101,
+          category: "ATL",
+          type: "img",
+          src: `/assets/img/home-01/portfolio/Static/static (${index + 1}).png`,
+          title: `Packaging Project ${index + 1}`,
         })),
       },
       { title: "Motion", link: "/our-canvas?service=motion", data: [] },
