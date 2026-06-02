@@ -134,13 +134,23 @@ const service_data = [
         type: "img",
         data: Array.from({ length: 45 }, (_, index) => ({
           id: index + 101,
-          category: "ATL",
+          category: "Digital",
           type: "img",
           src: `/assets/img/home-01/portfolio/Static/static (${index + 1}).png`,
           title: `Packaging Project ${index + 1}`,
         })),
       },
-      { title: "Motion", link: "/our-canvas?service=motion", data: [] },
+      {
+        title: "Motion",
+        link: "/our-canvas?service=motion",
+        data: Array.from({ length: 30 }, (_, index) => ({
+          id: index + 101,
+          category: "Digital",
+          type: "video",
+          src: `/assets/img/home-01/portfolio/Motion/motion (${index + 1}).mp4`,
+          title: `Packaging Project ${index + 1}`,
+        })),
+      },
       { title: "OVC", link: "/our-canvas?service=ovc", data: [] },
       {
         title: "Music Video",
@@ -445,9 +455,9 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                         className="portfolio-video-wrapper"
                         style={{
                           position: "relative",
-                          width: "200px",
-                          height: "200px",
-                          overflow: "hidden",
+                          width: "300px",
+                          height: "auto",
+                          objectFit: "fill",
                         }}
                       >
                         <video
@@ -457,7 +467,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                           loop
                           playsInline
                           style={{
-                            width: "280px",
+                            width: "300px",
                             height: "auto",
                             objectFit: "fill",
                           }}
@@ -472,7 +482,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                           width={style_2 ? 573 : 600}
                           height={style_2 ? 683 : 600}
                           style={{
-                            width: "280px",
+                            width: "300px",
                             height: "auto",
                             objectFit: "fill",
                           }}
