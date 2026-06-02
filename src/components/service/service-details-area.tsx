@@ -30,7 +30,7 @@ const service_data = [
       {
         title: "Logo",
         link: "/our-canvas?service=logo",
-        data: Array.from({ length: 10 }, (_, index) => ({
+        data: Array.from({ length: 45 }, (_, index) => ({
           id: index + 1,
           category: "logo",
           src: `/assets/img/home-01/portfolio/Logo/logo (${index + 1}).png`,
@@ -40,14 +40,23 @@ const service_data = [
       {
         title: "Packaging",
         link: "/our-canvas?service=packaging",
-        data: Array.from({ length: 5 }, (_, index) => ({
+        data: Array.from({ length: 66 }, (_, index) => ({
           id: index + 101,
           category: "packaging",
-          src: `/assets/img/home-01/portfolio/Logo/logo (1).png`,
+          src: `/assets/img/home-01/portfolio/Packaging/packaging (${index + 1}).png`,
           title: `Packaging Project ${index + 1}`,
         })),
       },
-      { title: "Press Ad", link: "/our-canvas?service=press-ad", data: [] },
+      {
+        title: "Press Ad",
+        link: "/our-canvas?service=press-ad",
+        data: Array.from({ length: 49 }, (_, index) => ({
+          id: index + 101,
+          category: "packaging",
+          src: `/assets/img/home-01/portfolio/Press-add/press-ad (${index + 1}).png`,
+          title: `Packaging Project ${index + 1}`,
+        })),
+      },
       {
         title: "Billboard / Out-door",
         link: "/our-canvas?service=bill-board",
@@ -407,12 +416,12 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                         className="anim-zoomin"
                         src={item.src}
                         alt={item.title}
-                        width={style_2 ? 573 : 486}
-                        height={style_2 ? 683 : 576}
+                        width={style_2 ? 573 : 600}
+                        height={style_2 ? 683 : 600}
                         style={{
-                          width: "200px",
-                          height: "200px",
-                          objectFit: "cover",
+                          width: "280px",
+                          height: "auto",
+                          objectFit: "fill",
                         }}
                       />
                       <div className="tp-project-5-2-content tp_fade_anim">
