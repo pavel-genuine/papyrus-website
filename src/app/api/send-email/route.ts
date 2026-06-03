@@ -15,12 +15,12 @@ export async function POST(request: Request) {
 
     // SMTP কনফিগারেশন
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
+      host: "mail.papyrus.agency",
+      port: 465,
       secure: true, // 465 পোর্টের জন্য true
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        user: "smtp@mail.papyrus.agency",
+        pass: "P@pyrus4321!",
       },
     });
 
