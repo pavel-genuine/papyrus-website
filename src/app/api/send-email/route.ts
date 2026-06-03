@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     // বেসিক ভ্যালিডেশন
     if (!name || !email || !message) {
       return NextResponse.json(
-        { success: false, message: "All fields are required" },
+        { success: false, message: "All fields are required to send" },
         { status: 400 },
       );
     }
