@@ -253,7 +253,7 @@ export default function PortfolioHome() {
                       onMouseLeave={handleLeave}
                       style={{ cursor: "pointer", display: "inline-block" }}
                     >
-                      <Link href="/our-canvas">{s.title}</Link>
+                      <Link href="#">{s.title}</Link>
                     </h4>
 
                     {s.subItems && (

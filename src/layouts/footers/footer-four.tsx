@@ -132,7 +132,7 @@ export default function FooterFour() {
                     </span>
                   </div>
                 </div>
-                <div className="tp-footer-3-widget mb-60">
+                <div className="tp-footer-3-widget mb-100">
                   <h4 className="tp-footer-3-title">Follow</h4>
                   <div className="tp-footer-3-social">
                     <Link
