@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import emailjs from "@emailjs/browser";
 import ErrorMsg from "../error-msg";
 
 type FormData = {
@@ -45,29 +46,44 @@ export default function ContactForm({ btnCls = "" }: IProps) {
     setIsSubmitting(true);
     setStatusMsg(null);
 
+    // EmailJS-এর ড্যাশবোর্ড থেকে পাওয়া আইডিগুলো এখানে বসান
+    const SERVICE_ID = "service_pikxpoc";
+    const TEMPLATE_ID = "template_wivtvwc";
+    const PUBLIC_KEY = "NSd_WHXdGPGamp7Zn";
+
+    // আপনার ফর্মের ডেটা যা টেমপ্লেটের {{name}}, {{email}} এর সাথে মিলবে
+    const templateParams = {
+      name: data.name,
+      email: data.email,
+      message: data.message,
+    };
+
     try {
-      // আমাদের তৈরি করা নতুন App Router API Route-এ হিট করছি
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        templateParams,
+        PUBLIC_KEY,
+      );
 
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        setStatusMsg({ type: "success", text: result.message });
-        reset(); // ফর্ম ক্লিয়ার করার জন্য
+      if (response.status === 200) {
+        setStatusMsg({
+          type: "success",
+          text: "Your message has been sent successfully!",
+        });
+        reset(); // ফর্মের ফিল্ড খালি করার জন্য
       } else {
         setStatusMsg({
           type: "error",
-          text: result.message || "Something went wrong.",
+          text: "Failed to send message. Please try again.",
         });
       }
     } catch (error) {
-      setStatusMsg({ type: "error", text: "Failed to connect to the server." });
+      console.error("EmailJS Error:", error);
+      setStatusMsg({
+        type: "error",
+        text: "Something went wrong. Please try again later.",
+      });
     } finally {
       setIsSubmitting(false);
     }
