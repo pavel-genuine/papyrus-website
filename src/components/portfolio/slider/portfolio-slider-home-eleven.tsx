@@ -6,37 +6,42 @@ import Image from "next/image";
 import Modal from "react-bootstrap/Modal";
 import gsap from "gsap";
 import { verTextFragment } from "@/utils/webgl-anim";
+
 import { WebGL } from "@/plugins";
-import showcase_1 from "@/assets/img/inner-project/showcase/showcase-1.jpg";
-import showcase_2 from "@/assets/img/inner-project/showcase/showcase-2.jpg";
-import showcase_3 from "@/assets/img/inner-project/showcase/showcase-3.jpg";
-import showcase_4 from "@/assets/img/inner-project/showcase/showcase-4.jpg";
+import showcase_1 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (1).png";
+import showcase_2 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (14).png";
+import showcase_3 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (5).png";
+import showcase_4 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (4).png";
+import showcase_5 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (10).png";
+import showcase_6 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (12).png";
+import showcase_7 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (3).png";
 
 // ─── Slider Data ─────────────────────────────────────────────────────────────
 const slider_data = [
   {
-    id: 1,
-    subtitle: "Branding & Marketing",
-    title: "Top Paddock",
-    youtubeUrl: "https://www.youtube.com/embed/Nhvi0TvxS6E",
-    description: "A beautiful UI and web design project.",
-    client: "Akij Dairy",
-    year: "2024",
-  },
-  {
     id: 2,
     subtitle: "Branding & Marketing",
     title: "Band Some",
-    youtubeUrl: "https://www.youtube.com/embed/F2S30xmksIw",
+    youtubeUrl: "https://www.youtube.com/embed/Nhvi0TvxS6E",
     description: "Modern branding and web experience.",
-    client: "Mr. White",
+    client: "Milk Land",
     year: "2024",
   },
+  {
+    id: 1,
+    subtitle: "Branding & Marketing",
+    title: "Top Paddock",
+    youtubeUrl: "https://www.youtube.com/embed/zxY_lA7zeJk",
+    description: "A beautiful UI and web design project.",
+    client: "Bashundhara LPG",
+    year: "2024",
+  },
+
   {
     id: 3,
     subtitle: "Branding & Marketing",
     title: "Lune Lab",
-    youtubeUrl: "https://www.youtube.com/embed/_PUuZs4LXXM",
+    youtubeUrl: "https://www.youtube.com/embed/fh5EQnNrJzM",
     description: "Creative lab portfolio showcase.",
     client: "Bashundhara Spice",
     year: "2023",
@@ -45,14 +50,50 @@ const slider_data = [
     id: 4,
     subtitle: "Branding & Marketing",
     title: "Park 108 Nyc",
-    youtubeUrl: "https://www.youtube.com/embed/KDuOZZTydNI",
+    youtubeUrl: "https://www.youtube.com/embed/LZoncSoN5uI",
     description: "Luxury real estate digital experience.",
-    client: "Bashundhara LPG",
+    client: "Bashundhara ATA, Moida, Shuji ",
     year: "2023",
+  },
+  {
+    id: 5,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/ao6Ka-zHOew",
+    description: "Luxury real estate digital experience.",
+    client: "Harpoon ",
+    year: "2024",
+  },
+  {
+    id: 6,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/HKkNpX945O0",
+    description: "Luxury real estate digital experience.",
+    client: "Quazi Safe Hands ",
+    year: "2025",
+  },
+  {
+    id: 7,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/TR833DwttyA",
+    description: "Luxury real estate digital experience.",
+    client: "Toggi Fun World",
+    year: "2025",
   },
 ];
 
-const slider_images = [showcase_1, showcase_2, showcase_3, showcase_4];
+const slider_images = [
+  showcase_2,
+  showcase_1,
+
+  showcase_3,
+  showcase_4,
+  showcase_5,
+  showcase_6,
+  showcase_7,
+];
 
 // ─── WebGL Transition Helper ──────────────────────────────────────────────────
 function triggerWebGLTransition(webGL: any, realIndex: number) {
@@ -162,12 +203,13 @@ export default function PortfolioSliderHomeEleven() {
         #port-showcase-slider-main {
           position: relative;
           width: 100%;
-          margin-top: 80px;
-          height: calc(100vh - 80px);
+          margin-top: 88px;
+          height: calc(100vh - 88px);
           display: flex;
           align-items: center;
           justify-content: center;
           background-color: #000;
+          object-fit: cover;
         }
 
         .port-showcase-slider-spaces {
@@ -439,45 +481,6 @@ export default function PortfolioSliderHomeEleven() {
               </div>
 
               {/* Project details */}
-              <div className="z-index-9">
-                <div className="container">
-                  <div className="project-details-video-style">
-                    <div className="row align-items-start">
-                      <div className="col-xl-12">
-                        <div className="project-details-1-info-wrap mb-90 flex-wrap d-flex justify-content-between align-items-center">
-                          <div className="project-details-1-info">
-                            <span>Client</span>
-                            <h4>{activeSlide.client}</h4>
-                          </div>
-                          <div className="project-details-1-info">
-                            <span>Date</span>
-                            <h4>October {"'2024"}</h4>
-                          </div>
-                          <div className="project-details-1-info">
-                            <span>Services</span>
-                            <h4>{activeSlide.subtitle}</h4>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-xl-12">
-                        <div className="project-details-1-title-box pb-50">
-                          <span className="project-details-1-subtitle">
-                            <i>01</i>Shooting
-                          </span>
-                          <h4 className="project-details-1-title">
-                            Perspective
-                          </h4>
-                          <p>
-                            Lorem ipsum dolor sit amet consectetur. Ultrices
-                            malesuada sed volutpat elit cum. Viverra dolor
-                            maecenas amet dui.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           )}
         </Modal.Body>

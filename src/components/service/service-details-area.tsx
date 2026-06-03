@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import shape from "@/assets/img/home-01/portfolio/shape1.jpg";
 import { useIsotop } from "@/hooks/use-isotop";
+import Modal from "react-bootstrap/Modal";
 
 // Icons & Images
 import s_1 from "@/assets/img/home-01/service/service-icon-1.png";
@@ -13,7 +14,7 @@ import s_2 from "@/assets/img/home-01/service/service-icon-2.png";
 import s_3 from "@/assets/img/home-01/service/service-icon-3.png";
 import { createPortal } from "react-dom";
 
-// Interface for Portfolio Items
+// Interfaces
 interface PortfolioItem {
   id: number;
   category?: string;
@@ -22,8 +23,35 @@ interface PortfolioItem {
   title: string;
 }
 
-// ── Service Data with Nested Portfolio Items ─────────────────────────────────
-const service_data = [
+interface DeepSubItem {
+  title: string;
+  link: string;
+  data: PortfolioItem[];
+}
+
+interface SubSubItem {
+  title: string;
+  link: string;
+  data?: PortfolioItem[];
+  subItems?: DeepSubItem[];
+}
+
+interface SubItem {
+  title: string;
+  link: string;
+  data?: PortfolioItem[];
+  subItems?: SubSubItem[];
+}
+
+interface ServiceData {
+  id: number;
+  title: string;
+  subItems: SubItem[];
+  icon: any;
+}
+
+// ── Service Data ───────────────────────────────────────────────────────────
+const service_data: ServiceData[] = [
   {
     id: 1,
     title: "ATL",
@@ -58,7 +86,7 @@ const service_data = [
           category: "ATL",
           type: "img",
           src: `/assets/img/home-01/portfolio/Press-add/press-ad (${index + 1}).png`,
-          title: `Packaging Project ${index + 1}`,
+          title: `Press Ad Project ${index + 1}`,
         })),
       },
       {
@@ -79,7 +107,7 @@ const service_data = [
           category: "ATL",
           type: "img",
           src: `/assets/img/home-01/portfolio/Brochure-Catalogue/Brochure-catalogue (${index + 1}).png`,
-          title: `Packaging Project ${index + 1}`,
+          title: `Brochure Project ${index + 1}`,
         })),
       },
       {
@@ -90,7 +118,7 @@ const service_data = [
           category: "ATL",
           type: "img",
           src: `/assets/img/home-01/portfolio/Calandar/calandar (${index + 1}).png`,
-          title: `Packaging Project ${index + 1}`,
+          title: `Calendar Project ${index + 1}`,
         })),
       },
       {
@@ -101,12 +129,12 @@ const service_data = [
       {
         title: "TVC",
         link: "/our-canvas?service=tvc",
-        data: Array.from({ length: 13 }, (_, index) => ({
+        data: Array.from({ length: 14 }, (_, index) => ({
           id: index + 101,
           category: "ATL",
           type: "img",
           src: `/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (${index + 1}).png`,
-          title: `Packaging Project ${index + 1}`,
+          title: `TVC Project ${index + 1}`,
         })),
       },
       { title: "AV", link: "/our-canvas?service=av", data: [] },
@@ -122,7 +150,292 @@ const service_data = [
       {
         title: "Events",
         link: "/our-canvas?service=event",
-        data: [],
+        subItems: [
+          {
+            title: "Manikganj Model High School 100 Years Celebration Event",
+            link: "/our-canvas?service=manikganj-school-100-years",
+            data: Array.from({ length: 12 }, (_, index) => ({
+              id: index + 1001,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/1.Manikganj Model High School 100 Years Celebration Event/manikganj (${index + 1}).jpg`,
+              title: `Manikganj Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "6th-generation Kia Sportage 2026 Launching Event",
+            link: "/our-canvas?service=kia-sportage-2026-launch",
+            data: Array.from({ length: 18 }, (_, index) => ({
+              id: index + 1101,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/2.6th-generation Kia Sportage 2026 Launching Event/kia (${index + 1}).jpg`,
+              title: `Kia Sportage Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "EC Daily pakage reviled event",
+            link: "/our-canvas?service=ec-daily-package-revealed",
+            data: Array.from({ length: 6 }, (_, index) => ({
+              id: index + 1201,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/3. EC Daily pakage reviled event/ec-package (${index + 1}).jpg`,
+              title: `EC Package Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Finlay South City Shopping Mall Grand Launching Event",
+            link: "/our-canvas?service=finlay-south-city-launch",
+            data: Array.from({ length: 1 }, (_, index) => ({
+              id: index + 1301,
+              category: "BTL",
+              type: "video",
+              src: `/assets/img/home-01/portfolio/Events/4. Finlay South City Shopping Mall Grand Launching Event/south-city (${index + 1}).mp4`,
+              title: `Finlay Mall Project ${index + 1}`,
+            })),
+          },
+          {
+            title:
+              "Forland, Metal Motors Limited 6th Dhaka Commercial Automotive Show",
+            link: "/our-canvas?service=forland-metal-motors-automotive-show",
+            data: Array.from({ length: 11 }, (_, index) => ({
+              id: index + 1401,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/5. Forland,  Metal 𝐌𝐨𝐭𝐨𝐫𝐬 𝐋imi𝐭e𝐝 𝟔𝐭𝐡 𝐃𝐡𝐚𝐤𝐚 𝐂𝐨𝐦𝐦𝐞𝐫𝐜𝐢𝐚𝐥 𝐀𝐮𝐭𝐨𝐦𝐨𝐭𝐢𝐯𝐞 𝐒𝐡𝐨𝐰 𝟐𝟎𝟐𝟒/img (${index + 1}).jpg`,
+              title: `Forland Automotive Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "EC sunflower Product Launching Ceremony",
+            link: "/our-canvas?service=ec-sunflower-launch",
+            data: Array.from({ length: 6 }, (_, index) => ({
+              id: index + 1501,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/6. EC sunflower  Product Launching Ceremony/img (${index + 1}).jpg`,
+              title: `EC Sunflower Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "ACI Motors,5th Dhaka Commercial Automotive Show",
+            link: "/our-canvas?service=aci-motors-automotive-show",
+            data: Array.from({ length: 12 }, (_, index) => ({
+              id: index + 1601,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/7. ACI Motors,5th Dhaka Commercial Automotive Show 2023/img (${index + 1}).jpg`,
+              title: `ACI Motors Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Chartered Life Annual Awards Night 2022",
+            link: "/our-canvas?service=chartered-life-awards-2022",
+            data: Array.from({ length: 16 }, (_, index) => ({
+              id: index + 1701,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/8. Chartered Life Annual Awards Night 2022/img (${index + 1}).jpg`,
+              title: `Chartered Life Awards Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Rupayan City Uttara, Project Handover Ceremony",
+            link: "/our-canvas?service=rupayan-city-handover",
+            data: Array.from({ length: 27 }, (_, index) => ({
+              id: index + 1801,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/9.Rupayan City Uttara, Project Handover Ceremony/img (${index + 1}).jpg`,
+              title: `Rupayan Handover Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Bosudhara Group, চেতনার বর্ণমালা Event",
+            link: "/our-canvas?service=bosudhara-chetonar-bornomala",
+            data: Array.from({ length: 21 }, (_, index) => ({
+              id: index + 1901,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/10.Bosudhara Group, চেতনার বর্ণমালা Event/img (${index + 1}).jpg`,
+              title: `Bosudhara Event Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Pharmasia Limited,Pharmasia Conference 2022",
+            link: "/our-canvas?service=pharmasia-conference-2022",
+            data: Array.from({ length: 26 }, (_, index) => ({
+              id: index + 2001,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/11. Pharmasia Limited,Pharmasia Conference 2022/img (${index + 1}).jpg`,
+              title: `Pharmasia Conference Project ${index + 1}`,
+            })),
+          },
+          {
+            title:
+              "Chartered Life Insurance Company Limited, Annual Conference",
+            link: "/our-canvas?service=chartered-life-annual-conference",
+            data: Array.from({ length: 33 }, (_, index) => ({
+              id: index + 2101,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/12. Chartered Life Insurance Company Limited, Annual Award Program 2021/img (${index + 1}).jpg`,
+              title: `Chartered Life Conf Project ${index + 1}`,
+            })),
+          },
+          {
+            title:
+              "চার্টার্ড লাইফ ইন্সুরেন্স কোম্পানী লিমিটেড, রং তুলিতে মুক্তিযুদ্ধ",
+            link: "/our-canvas?service=chartered-life-rong-tulite-muktijuddho",
+            data: Array.from({ length: 13 }, (_, index) => ({
+              id: index + 2201,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/13.  চার্টার্ড লাইফ ইন্স্যুরেন্স কোম্পানী লিমিটেড, রং তুলিতে বিজয় উৎসব/img (${index + 1}).jpg`,
+              title: `রং তুলিতে মুক্তিযুদ্ধ Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Channel I + Safe Hands, রং তুলিতে মুক্তিযুদ্ধ Event",
+            link: "/our-canvas?service=channel-i-safe-hands-muktijuddho",
+            data: Array.from({ length: 12 }, (_, index) => ({
+              id: index + 2301,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/14. Channel I + Safe Hands,রং তুলিতে মুক্তিযুদ্ধ Event/img (${index + 1}).jpg`,
+              title: `Channel I Event Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Fogg Spcial Audition Launching Press Conference",
+            link: "/our-canvas?service=fogg-special-audition-press-conf",
+            data: Array.from({ length: 23 }, (_, index) => ({
+              id: index + 2401,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/15. Fogg Spcial Audition Launching Press Conference/img (${index + 1}).jpg`,
+              title: `Fogg Press Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "DT( Dhaka Tribune ),5th Anniversary of DT",
+            link: "/our-canvas?service=dhaka-tribune-5th-anniversary",
+            data: Array.from({ length: 6 }, (_, index) => ({
+              id: index + 2501,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/16. DT( Dhaka Tribune ),5th Anniversary of DT/img (${index + 1}).jpg`,
+              title: `Dhaka Tribune Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Jafflong Tea Event",
+            link: "/our-canvas?service=jafflong-tea-event",
+            data: Array.from({ length: 4 }, (_, index) => ({
+              id: index + 2601,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/17. Jafflong Tea Event/img (${index + 1}).jpg`,
+              title: `Jafflong Tea Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Launching of CLUB LOVELLO",
+            link: "/our-canvas?service=launching-of-club-lovello",
+            data: Array.from({ length: 50 }, (_, index) => ({
+              id: index + 2701,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/18. Launching of CLUB LOVELLO/img (${index + 1}).jpg`,
+              title: `Club Lovello Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Kulna Titens Activation Work",
+            link: "/our-canvas?service=khulna-titans-activation",
+            data: Array.from({ length: 45 }, (_, index) => ({
+              id: index + 2801,
+              category: "BTL",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/Events/19. Kulna Titens Activation Work/img (${index + 1}).jpg`,
+              title: `Khulna Titans Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Bank Asia Limited",
+            link: "/our-canvas?service=bank-asia-limited",
+            subItems: [
+              {
+                title: "Aglabazar Branch Opening",
+                link: "/our-canvas?service=aglabazar-branch-opening",
+                data: Array.from({ length: 1 }, (_, index) => ({
+                  id: index + 3001,
+                  category: "Events",
+                  type: "img",
+                  src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Aglabazar Branch Opening/img (${index + 1}).jpg`,
+                  title: `Aglabazar Project ${index + 1}`,
+                })),
+              },
+              {
+                title: "Airport Branding",
+                link: "/our-canvas?service=airport-branding",
+                data: Array.from({ length: 2 }, (_, index) => ({
+                  id: index + 3101,
+                  category: "Events",
+                  type: "img",
+                  src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Airport Branding/img (${index + 1}).jpg`,
+                  title: `Airport Branding Project ${index + 1}`,
+                })),
+              },
+              {
+                title: "Annual General Meeting",
+                link: "/our-canvas?service=annual-general-meeting",
+                data: Array.from({ length: 5 }, (_, index) => ({
+                  id: index + 3201,
+                  category: "Events",
+                  type: "img",
+                  src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Annual General Meeting/img (${index + 1}).jpg`,
+                  title: `AGM Project ${index + 1}`,
+                })),
+              },
+              {
+                title: "CSR Event, Nowakhali Chatkhil",
+                link: "/our-canvas?service=csr-event-noakhali-chatkhil",
+                data: Array.from({ length: 1 }, (_, index) => ({
+                  id: index + 3301,
+                  category: "Events",
+                  type: "img",
+                  src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/CSR Event,Nowakhali Chatkhil/img (${index + 1}).jpg`,
+                  title: `CSR Event Project ${index + 1}`,
+                })),
+              },
+              {
+                title: "Narshindi Branch Opening",
+                link: "/our-canvas?service=narshindi-branch-opening",
+                data: Array.from({ length: 1 }, (_, index) => ({
+                  id: index + 3401,
+                  category: "Events",
+                  type: "img",
+                  src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Narshindi Branch Opening/img (${index + 1}).jpg`,
+                  title: `Narshindi Project ${index + 1}`,
+                })),
+              },
+              {
+                title: "Sylhet Branch Opening",
+                link: "/our-canvas?service=sylhet-branch-opening",
+                data: Array.from({ length: 1 }, (_, index) => ({
+                  id: index + 3501,
+                  category: "Events",
+                  type: "img",
+                  src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Sylhet Branch Opening/img (${index + 1}).jpg`,
+                  title: `Sylhet Project ${index + 1}`,
+                })),
+              },
+            ],
+          },
+        ],
       },
       {
         title: "Activations",
@@ -140,25 +453,23 @@ const service_data = [
       {
         title: "Static",
         link: "/our-canvas?service=static",
-        category: "Digital",
-        type: "img",
         data: Array.from({ length: 45 }, (_, index) => ({
-          id: index + 101,
+          id: index + 4001,
           category: "Digital",
           type: "img",
           src: `/assets/img/home-01/portfolio/Static/static (${index + 1}).png`,
-          title: `Packaging Project ${index + 1}`,
+          title: `Static Project ${index + 1}`,
         })),
       },
       {
         title: "Motion",
         link: "/our-canvas?service=motion",
         data: Array.from({ length: 30 }, (_, index) => ({
-          id: index + 101,
+          id: index + 4101,
           category: "Digital",
           type: "video",
           src: `/assets/img/home-01/portfolio/Motion/motion (${index + 1}).mp4`,
-          title: `Packaging Project ${index + 1}`,
+          title: `Motion Project ${index + 1}`,
         })),
       },
       { title: "OVC", link: "/our-canvas?service=ovc", data: [] },
@@ -177,7 +488,7 @@ const service_data = [
   },
 ];
 
-// ── Portal Dropdown ──────────────────────────────────────────────────────────
+// ── Smart Portal Dropdown (Supports Mobile Click & Desktop Hover) ──────────────
 function SubMenu({
   items,
   anchorEl,
@@ -185,35 +496,97 @@ function SubMenu({
   onMouseEnter,
   onMouseLeave,
 }: {
-  items: { title: string; link: string }[];
+  items: SubItem[];
   anchorEl: HTMLElement | null;
   visible: boolean;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }) {
-  const [pos, setPos] = useState({ top: 0, left: 0 });
+  const [pos, setPos] = useState({ top: 0, left: 0, width: 250 });
+  const [isMobile, setIsMobile] = useState(false);
+  const [renderLeft, setRenderLeft] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  // Mobile Click States
+  const [activeChildMenu, setActiveChildMenu] = useState<number | null>(null);
+  const [activeDeepMenu, setActiveDeepMenu] = useState<number | null>(null);
 
   useEffect(() => {
     setMounted(true);
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   useEffect(() => {
     if (anchorEl && visible) {
       const rect = anchorEl.getBoundingClientRect();
-      setPos({
-        top: rect.bottom + window.scrollY + 6,
-        left: rect.left + window.scrollX,
-      });
+
+      if (window.innerWidth <= 768) {
+        // মোবাইলের জন্য ফুল উইডথ রেসপনসিভ পজিশনিং
+        setPos({
+          top: rect.bottom + window.scrollY + 6,
+          left: 15,
+          width: window.innerWidth - 30,
+        });
+      } else {
+        const spaceRight = window.innerWidth - rect.left;
+        if (spaceRight < 700) {
+          setRenderLeft(true);
+          setPos({
+            top: rect.bottom + window.scrollY + 6,
+            left: rect.right + window.scrollX - 250,
+            width: 250,
+          });
+        } else {
+          setRenderLeft(false);
+          setPos({
+            top: rect.bottom + window.scrollY + 6,
+            left: rect.left + window.scrollX,
+            width: 250,
+          });
+        }
+      }
     }
   }, [visible, anchorEl]);
 
   if (!mounted) return null;
 
+  // কমন মেনু টগল ফাংশন (মোবাইলের জন্য চাইল্ড টগল করবে, ডেসকটপে নরমাল লিংক)
+  const handleItemClick = (
+    e: React.MouseEvent,
+    index: number,
+    hasSub: boolean,
+  ) => {
+    if (isMobile && hasSub) {
+      e.preventDefault();
+      setActiveChildMenu(activeChildMenu === index ? null : index);
+      setActiveDeepMenu(null);
+    }
+  };
+
+  const handleSubSubClick = (
+    e: React.MouseEvent,
+    idx: number,
+    hasDeep: boolean,
+  ) => {
+    if (isMobile && hasDeep) {
+      e.preventDefault();
+      setActiveDeepMenu(activeDeepMenu === idx ? null : idx);
+    }
+  };
+
   return createPortal(
     <ul
       onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseLeave={() => {
+        if (!isMobile) {
+          onMouseLeave();
+          setActiveChildMenu(null);
+          setActiveDeepMenu(null);
+        }
+      }}
       style={{
         position: "absolute",
         top: pos.top,
@@ -224,7 +597,7 @@ function SubMenu({
         padding: "8px 0",
         background: "#1a1a1a",
         boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
-        minWidth: "200px",
+        width: `${pos.width}px`,
         borderRadius: "6px",
         opacity: visible ? 1 : 0,
         visibility: visible ? "visible" : "hidden",
@@ -233,43 +606,201 @@ function SubMenu({
           "opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease",
         pointerEvents: visible ? "auto" : "none",
         border: "1px solid #2e2e2e",
+        maxHeight: isMobile ? "70vh" : "none",
+        overflowY: isMobile ? "auto" : "visible",
       }}
     >
-      {items.map((item, i) => (
-        <li
-          key={i}
-          style={{
-            padding: "0",
-            borderBottom: i < items.length - 1 ? "1px solid #2e2e2e" : "none",
-          }}
-        >
-          <Link
-            href={item.link}
+      {items.map((item, i) => {
+        const hasSubSub = !!(item.subItems && item.subItems.length > 0);
+        const isChildOpen = activeChildMenu === i;
+
+        return (
+          <li
+            key={i}
             style={{
-              display: "block",
-              padding: "8px 18px",
-              color: "#cccccc",
-              fontSize: "18px",
-              fontWeight: "400",
-              textDecoration: "none",
-              whiteSpace: "nowrap",
-              transition: "background 0.15s ease, color 0.15s ease",
+              padding: "0",
+              position: "relative",
+              borderBottom: i < items.length - 1 ? "1px solid #2e2e2e" : "none",
             }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background =
-                "#2a2a2a";
-              (e.currentTarget as HTMLAnchorElement).style.color = "#ffffff";
+            onMouseEnter={() => {
+              if (!isMobile && hasSubSub) setActiveChildMenu(i);
             }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background =
-                "transparent";
-              (e.currentTarget as HTMLAnchorElement).style.color = "#cccccc";
+            onMouseLeave={() => {
+              if (!isMobile) setActiveChildMenu(null);
             }}
           >
-            {item.title}
-          </Link>
-        </li>
-      ))}
+            <Link
+              href={item.link}
+              onClick={(e) => handleItemClick(e, i, hasSubSub)}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "10px 18px",
+                color: isChildOpen && isMobile ? "#ff5e14" : "#cccccc",
+                fontSize: "16px",
+                textDecoration: "none",
+                whiteSpace: isMobile ? "normal" : "nowrap",
+                transition: "background 0.15s ease",
+              }}
+            >
+              <span>{item.title}</span>
+              {hasSubSub && (
+                <span
+                  style={{
+                    fontSize: "12px",
+                    transition: "transform 0.2s",
+                    transform:
+                      isChildOpen && isMobile ? "rotate(90deg)" : "none",
+                  }}
+                >
+                  {isMobile ? "▶" : renderLeft ? "◀" : "▶"}
+                </span>
+              )}
+            </Link>
+
+            {/* ── ২য় লেয়ার সাব-মেনু (Events) ── */}
+            {hasSubSub && isChildOpen && item.subItems && (
+              <ul
+                style={{
+                  position: isMobile ? "relative" : "absolute",
+                  top: 0,
+                  left: isMobile ? "0" : renderLeft ? "-252px" : "100%",
+                  width: isMobile ? "100%" : "250px",
+                  listStyle: "none",
+                  margin: 0,
+                  padding: "4px 0",
+                  background: isMobile ? "#222222" : "#222222",
+                  boxShadow: isMobile ? "none" : "0 8px 24px rgba(0,0,0,0.5)",
+                  borderRadius: isMobile ? "0" : "6px",
+                  borderLeft: isMobile
+                    ? "3px solid #ff5e14"
+                    : "1px solid #3a3a3a",
+                  borderTop: isMobile ? "none" : "1px solid #3a3a3a",
+                  borderBottom: isMobile ? "none" : "1px solid #3a3a3a",
+                  borderRight: isMobile ? "none" : "1px solid #3a3a3a",
+                  zIndex: 100000,
+                }}
+              >
+                {item.subItems.map((subSub, subIdx) => {
+                  const hasDeepSub = !!(
+                    subSub.subItems && subSub.subItems.length > 0
+                  );
+                  const isDeepOpen = activeDeepMenu === subIdx;
+
+                  return (
+                    <li
+                      key={subIdx}
+                      style={{ padding: "0", position: "relative" }}
+                      onMouseEnter={() => {
+                        if (!isMobile && hasDeepSub) setActiveDeepMenu(subIdx);
+                      }}
+                      onMouseLeave={() => {
+                        if (!isMobile) setActiveDeepMenu(null);
+                      }}
+                    >
+                      <Link
+                        href={subSub.link}
+                        onClick={(e) =>
+                          handleSubSubClick(e, subIdx, hasDeepSub)
+                        }
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          padding: "10px 18px",
+                          color: isDeepOpen && isMobile ? "#ff5e14" : "#bbbbbb",
+                          fontSize: "15px",
+                          textDecoration: "none",
+                          whiteSpace: isMobile ? "normal" : "nowrap",
+                        }}
+                      >
+                        <span
+                          style={{
+                            overflow: isMobile ? "visible" : "hidden",
+                            textOverflow: "ellipsis",
+                            maxWidth: isMobile ? "100%" : "200px",
+                            display: "inline-block",
+                          }}
+                        >
+                          {subSub.title}
+                        </span>
+                        {hasDeepSub && (
+                          <span
+                            style={{
+                              fontSize: "10px",
+                              transition: "transform 0.2s",
+                              transform:
+                                isDeepOpen && isMobile
+                                  ? "rotate(90deg)"
+                                  : "none",
+                            }}
+                          >
+                            {isMobile ? "▶" : renderLeft ? "◀" : "▶"}
+                          </span>
+                        )}
+                      </Link>
+
+                      {/* ── ৩য় লেয়ার সাব-মেনু (Bank Asia Limited) ── */}
+                      {hasDeepSub && isDeepOpen && subSub.subItems && (
+                        <ul
+                          style={{
+                            position: isMobile ? "relative" : "absolute",
+                            top: 0,
+                            left: isMobile
+                              ? "0"
+                              : renderLeft
+                                ? "-222px"
+                                : "100%",
+                            width: isMobile ? "100%" : "220px",
+                            listStyle: "none",
+                            margin: 0,
+                            padding: "4px 0",
+                            background: isMobile ? "#2d2d2d" : "#2d2d2d",
+                            boxShadow: isMobile
+                              ? "none"
+                              : "0 8px 24px rgba(0,0,0,0.5)",
+                            borderRadius: isMobile ? "0" : "6px",
+                            borderLeft: isMobile
+                              ? "3px solid #fff"
+                              : "1px solid #4a4a4a",
+                            borderTop: isMobile ? "none" : "1px solid #4a4a4a",
+                            borderBottom: isMobile
+                              ? "none"
+                              : "1px solid #4a4a4a",
+                            borderRight: isMobile
+                              ? "none"
+                              : "1px solid #4a4a4a",
+                            zIndex: 100001,
+                          }}
+                        >
+                          {subSub.subItems.map((deepItem, deepIdx) => (
+                            <li key={deepIdx} style={{ padding: "0" }}>
+                              <Link
+                                href={deepItem.link}
+                                style={{
+                                  display: "block",
+                                  padding: "10px 25px",
+                                  color: "#aaaaaa",
+                                  fontSize: "14px",
+                                  textDecoration: "none",
+                                  whiteSpace: isMobile ? "normal" : "nowrap",
+                                }}
+                              >
+                                {deepItem.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </li>
+        );
+      })}
     </ul>,
     document.body,
   );
@@ -285,7 +816,6 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
   const searchParams = useSearchParams();
 
   const [currentService, setCurrentService] = useState<string | null>(null);
-  // ইনিশিয়ালি খালি অ্যারে রাখা হয়েছে যাতে প্রথম লোডে কিছু না দেখায়
   const [filteredData, setFilteredData] = useState<PortfolioItem[]>([]);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [width, setWidth] = useState(0);
@@ -293,14 +823,12 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
   const titleRefs = useRef<{ [key: number]: HTMLHeadingElement | null }>({});
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Initialize Isotope
   useEffect(() => {
     if (filteredData.length > 0) {
       initIsotop();
     }
   }, [initIsotop, filteredData]);
 
-  // Window Resize handling
   useEffect(() => {
     setWidth(window.innerWidth);
     const handleResize = () => setWidth(window.innerWidth);
@@ -308,7 +836,6 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // URL query parameter effect
   useEffect(() => {
     const serviceParam: any = searchParams?.get("service");
     setCurrentService(serviceParam);
@@ -317,20 +844,53 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
       let targetData: PortfolioItem[] = [];
 
       for (const service of service_data) {
-        const matchedSubItem = service.subItems.find((sub) =>
-          sub.link
-            .toLowerCase()
-            .includes(`service=${serviceParam.toLowerCase()}`),
-        );
-        if (matchedSubItem && matchedSubItem.data) {
-          targetData = matchedSubItem.data;
-          break;
+        for (const sub of service.subItems) {
+          if (
+            sub.link
+              .toLowerCase()
+              .includes(`service=${serviceParam.toLowerCase()}`) &&
+            sub.data
+          ) {
+            targetData = sub.data;
+            break;
+          }
+          if (sub.subItems) {
+            const matchedSubSub = sub.subItems.find((subSub) =>
+              subSub.link
+                .toLowerCase()
+                .includes(`service=${serviceParam.toLowerCase()}`),
+            );
+
+            if (
+              matchedSubSub &&
+              matchedSubSub.data &&
+              matchedSubSub.data.length > 0
+            ) {
+              targetData = matchedSubSub.data;
+              break;
+            }
+
+            for (const subSub of sub.subItems) {
+              if (subSub.subItems) {
+                const matchedDeep = subSub.subItems.find((deepItem) =>
+                  deepItem.link
+                    .toLowerCase()
+                    .includes(`service=${serviceParam.toLowerCase()}`),
+                );
+                if (matchedDeep && matchedDeep.data) {
+                  targetData = matchedDeep.data;
+                  break;
+                }
+              }
+            }
+          }
+          if (targetData.length > 0) break;
         }
+        if (targetData.length > 0) break;
       }
 
       setFilteredData(targetData);
 
-      // Smooth scroll adjustment
       requestAnimationFrame(() => {
         const element = document.getElementById("service-section");
         if (element) {
@@ -347,18 +907,63 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         }
       });
     } else {
-      // কোনো subItem ক্লিক না হলে (অর্থাৎ ফার্স্ট লোডে) স্টেট খালি থাকবে
       setFilteredData([]);
     }
   }, [searchParams]);
 
+  // মেইন আইটেম ক্লিক টগল (মোবাইলের জন্য হোভারের বদলে টগল)
+  const handleMainItemClick = (id: number) => {
+    if (window.innerWidth <= 768) {
+      if (hoveredId === id) {
+        setHoveredId(null);
+      } else {
+        setHoveredId(id);
+      }
+    }
+  };
+
   const handleEnter = (id: number) => {
-    if (leaveTimer.current) clearTimeout(leaveTimer.current);
-    setHoveredId(id);
+    if (window.innerWidth > 768) {
+      if (leaveTimer.current) clearTimeout(leaveTimer.current);
+      setHoveredId(id);
+    }
   };
 
   const handleLeave = () => {
-    leaveTimer.current = setTimeout(() => setHoveredId(null), 120);
+    if (window.innerWidth > 768) {
+      leaveTimer.current = setTimeout(() => setHoveredId(null), 120);
+    }
+  };
+
+  const isServiceActive = (s: ServiceData) => {
+    if (!currentService) return false;
+    return s.subItems.some((sub) => {
+      if (
+        sub.link
+          .toLowerCase()
+          .includes(`service=${currentService.toLowerCase()}`)
+      )
+        return true;
+      if (sub.subItems) {
+        return sub.subItems.some((subSub) => {
+          if (
+            subSub.link
+              .toLowerCase()
+              .includes(`service=${currentService.toLowerCase()}`)
+          )
+            return true;
+          if (subSub.subItems) {
+            return subSub.subItems.some((deep) =>
+              deep.link
+                .toLowerCase()
+                .includes(`service=${currentService.toLowerCase()}`),
+            );
+          }
+          return false;
+        });
+      }
+      return false;
+    });
   };
 
   return (
@@ -389,69 +994,93 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         </div>
       </div>
 
-      {/* Main navigation & target element wrapper */}
+      {/* Main navigation - Fixed position row for ATL, BTL, DIGITAL */}
       <div
         id="service-section"
-        className="container-fuild px-md-5 d-flex align-items-center justify-content-center"
+        className="container mt-80"
+        style={{ maxWidth: "1200px" }}
       >
-        <div className="tp-service d-lg-flex align-items-center mt-80 ">
+        <div className="row justify-content-center align-items-center text-center">
           {service_data.map((s) => (
             <div
               key={s.id}
-              className="tp-service-item d-flex align-items-start mb-75 tp_fade_bottom mr-145"
-              style={{ padding: 0 }}
+              className="col-lg-4 col-md-4 col-4 d-flex justify-content-center align-items-center mb-40"
+              style={{ minWidth: "100px" }} // পজিশন ফিক্সড রাখার জন্য উইডথ ব্রেক প্রোভাইডার
             >
-              <div className="tp-service-icon">
-                <Image
-                  src={s.icon}
-                  alt="icon"
-                  style={{
-                    height: "auto",
-                    paddingRight: width > 768 ? "0px" : "20px",
-                  }}
-                />
-              </div>
-              <div className="tp-service-content">
-                <h4
-                  className="tp-service-title-sm order-0"
-                  ref={(el: any) => (titleRefs.current[s.id] = el)}
-                  onMouseEnter={() => handleEnter(s.id)}
-                  onMouseLeave={handleLeave}
-                  style={{
-                    cursor: "pointer",
-                    fontSize: "40px",
-                    display: "inline-block",
-                    color: s.subItems.some((sub) =>
-                      sub.link
-                        .toLowerCase()
-                        .includes(`service=${currentService?.toLowerCase()}`),
-                    )
-                      ? "#ff5e14"
-                      : "white",
-                  }}
+              <div className="tp-service-item d-flex flex-column flex-md-row align-items-center justify-content-center">
+                <div
+                  className="tp-service-icon mb-2 mb-md-0"
+                  style={{ marginRight: width > 768 ? "15px" : "0px" }}
                 >
-                  <Link href="/our-canvas">{s.title}</Link>
-                </h4>
-
-                {s.subItems && (
-                  <SubMenu
-                    items={s.subItems}
-                    anchorEl={titleRefs.current[s.id] ?? null}
-                    visible={hoveredId === s.id}
+                  <Image
+                    src={s.icon}
+                    alt="icon"
+                    style={{
+                      width: width > 768 ? "40px" : "25px",
+                      height: "auto",
+                    }}
+                  />
+                </div>
+                <div
+                  className="tp-service-content"
+                  style={{ position: "relative" }}
+                >
+                  <h4
+                    className="tp-service-title-sm m-0"
+                    ref={(el: any) => (titleRefs.current[s.id] = el)}
                     onMouseEnter={() => handleEnter(s.id)}
                     onMouseLeave={handleLeave}
-                  />
-                )}
+                    onClick={() => handleMainItemClick(s.id)}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: width > 768 ? "36px" : "20px", // রেসপনসিভ ফন্ট সাইজ
+                      fontWeight: "600",
+                      color:
+                        isServiceActive(s) ||
+                        (hoveredId === s.id && width <= 768)
+                          ? "#ff5e14"
+                          : "white",
+                      transition: "color 0.2s ease",
+                    }}
+                  >
+                    <span>{s.title}</span>
+                  </h4>
+
+                  {s.subItems && (
+                    <SubMenu
+                      items={s.subItems}
+                      anchorEl={titleRefs.current[s.id] ?? null}
+                      visible={hoveredId === s.id}
+                      onMouseEnter={() => handleEnter(s.id)}
+                      onMouseLeave={handleLeave}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-
+      <p
+        style={{
+          textAlign: "center",
+          color: "#d74400",
+          fontSize: "26px",
+          fontWeight: "400",
+        }}
+      >
+        <span
+          style={{
+            borderBottom: "1px solid",
+            textTransform: "capitalize",
+          }}
+        >
+          {currentService}
+        </span>
+      </p>
       {/* Grid Portfolio Display Section */}
-      {/* ইউআরএল-এ service প্যারামিটার থাকলেই কেবল এই গ্রিড সেকশনটি রেন্ডার হবে */}
       {currentService && (
-        <div className={`  container `}>
+        <div className="container mt-60">
           <div className="row grid" ref={isotopContainer}>
             {filteredData.length > 0 ? (
               filteredData.map((item) => (
@@ -465,11 +1094,12 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                         className="portfolio-video-wrapper"
                         style={{
                           position: "relative",
-                          width: "300px",
-                          height: "auto",
-                          objectFit: "fill",
+                          width: "100%",
+                          maxWidth: "300px",
+                          overflow: "hidden",
                           borderRadius: "5px",
                           aspectRatio: "1/1",
+                          background: "#000",
                         }}
                       >
                         <video
@@ -480,29 +1110,37 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                           playsInline
                           preload="metadata"
                           style={{
-                            width: "300px",
-                            height: "auto",
+                            width: "100%",
+                            height: "100%",
                             objectFit: "fill",
-                            borderRadius: "5px",
-                            aspectRatio: "1/1",
                           }}
                         />
                       </div>
                     ) : (
                       <Link href="#" className="cursor-hide">
-                        <Image
-                          className="anim-zoomin"
-                          src={item.src}
-                          alt={item.title}
-                          width={style_2 ? 573 : 600}
-                          height={style_2 ? 683 : 600}
+                        <div
                           style={{
-                            width: "300px",
+                            width: "100%",
+                            maxWidth: "300px",
                             height: "auto",
-                            objectFit: "fill",
-                            borderRadius: "5px",
+                            position: "relative",
                           }}
-                        />
+                        >
+                          <Image
+                            className="anim-zoomin"
+                            src={item.src}
+                            alt={item.title}
+                            width={750}
+                            height={750}
+                            style={{
+                              width: "100%",
+                              maxWidth: "300px",
+                              height: "auto",
+                              objectFit: "fill",
+                              borderRadius: "5px",
+                            }}
+                          />
+                        </div>
                       </Link>
                     )}
                   </div>
