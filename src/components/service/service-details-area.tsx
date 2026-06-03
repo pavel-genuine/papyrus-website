@@ -137,7 +137,17 @@ const service_data: ServiceData[] = [
           title: `TVC Project ${index + 1}`,
         })),
       },
-      { title: "AV", link: "/our-canvas?service=av", data: [] },
+      {
+        title: "AV",
+        link: "/our-canvas?service=av",
+        data: Array.from({ length: 1 }, (_, index) => ({
+          id: index + 101,
+          category: "ATL",
+          type: "video",
+          src: `/assets/img/home-01/portfolio/AV/AV (${index + 1}).mp4`,
+          title: `TVC Project ${index + 1}`,
+        })),
+      },
       { title: "PR", link: "/our-canvas?service=pr-media-buying", data: [] },
       { title: "Others", link: "/our-canvas?service=campaign", data: [] },
     ],
@@ -149,7 +159,7 @@ const service_data: ServiceData[] = [
     subItems: [
       {
         title: "Events",
-        link: "/our-canvas?service=event",
+        link: "/our-canvas?service=manikganj-school-100-years",
         subItems: [
           {
             title: "Manikganj Model High School 100 Years Celebration Event",
@@ -439,10 +449,226 @@ const service_data: ServiceData[] = [
       },
       {
         title: "Activations",
-        link: "/our-canvas?service=activation",
-        data: [],
+        link: "/our-canvas?service=AKIJ PLASTICS",
+
+        subItems: [
+          {
+            title: "AKIJ PLASTICS",
+            link: "/our-canvas?service=AKIJ PLASTICS",
+            data: Array.from({ length: 6 }, (_, index) => ({
+              id: index + 1001,
+              category: "Activations",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/ACTIVATIONS/AKIJ PLASTICS/img (${index + 1}).jpg`,
+              title: `Activations ${index + 1}`,
+            })),
+          },
+          {
+            title: "BERGER EASY CLEAN ACTIVATION",
+            link: "/our-canvas?service=BERGER EASY CLEAN ACTIVATION",
+            data: Array.from({ length: 3 }, (_, index) => ({
+              id: index + 1002,
+              category: "Activations",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/ACTIVATIONS/BERGER EASY CLEAN ACTIVATION/img (${index + 1}).jpg`,
+              title: `Activations ${index + 1}`,
+            })),
+          },
+          {
+            title: "DABUR RED TOOTHPASTE",
+            link: "/our-canvas?service=DABUR RED TOOTHPASTE",
+            data: Array.from({ length: 4 }, (_, index) => ({
+              id: index + 1003,
+              category: "Activations",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/ACTIVATIONS/DABUR RED TOOTHPASTE/img (${index + 1}).jpg`,
+              title: `Activations ${index + 1}`,
+            })),
+          },
+          {
+            title: "EAGLE SUPER AEROSOL",
+            link: "/our-canvas?service=EAGLE SUPER AEROSOL",
+            data: Array.from({ length: 5 }, (_, index) => ({
+              id: index + 1004,
+              category: "Activations",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/ACTIVATIONS/EAGLE SUPER AEROSOL/img (${index + 1}).jpg`,
+              title: `Activations Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "FREEDOM SANITARY NAPKIN",
+            link: "/our-canvas?service=FREEDOM SANITARY NAPKIN",
+            data: Array.from({ length: 8 }, (_, index) => ({
+              id: index + 1005,
+              category: "Activations",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/ACTIVATIONS/FREEDOM SANITARY NAPKIN/img (${index + 1}).jpg`,
+              title: `Activations Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Mr White",
+            link: "/our-canvas?service=Mr White",
+            data: Array.from({ length: 6 }, (_, index) => ({
+              id: index + 1006,
+              category: "Activations",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/ACTIVATIONS/Mr White/img (${index + 1}).jpg`,
+              title: `Activations Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "QUAZI ENTERPRISES CARAVAN ACTIVATIONS",
+            link: "/our-canvas?service=QUAZI ENTERPRISES CARAVAN ACTIVATIONS",
+            data: Array.from({ length: 19 }, (_, index) => ({
+              id: index + 1007,
+              category: "Activations",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/ACTIVATIONS/QUAZI ENTERPRISES/CARAVAN ACTIVATIONS/img (${index + 1}).jpg`,
+              title: `Activations Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "SAFE HANDS",
+            link: "/our-canvas?service=SAFE HANDS",
+            data: Array.from({ length: 9 }, (_, index) => ({
+              id: index + 1008,
+              category: "Activations",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/ACTIVATIONS/SAFE HANDS/img (${index + 1}).png`,
+              title: `Activations Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "Wonder",
+            link: "/our-canvas?service=Wonder",
+            data: Array.from({ length: 2 }, (_, index) => ({
+              id: index + 1009,
+              category: "Activations",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/ACTIVATIONS/Wonder/img (${index + 1}).jpg`,
+              title: `Activations Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "SAVLON HAND WASH",
+            link: "/our-canvas?service=SAVLON HAND WASH",
+            data: Array.from({ length: 4 }, (_, index) => ({
+              id: index + 10010,
+              category: "Activations",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/ACTIVATIONS/SAVLON HAND WASH/img (${index + 1}).jpg`,
+              title: `Activations Project ${index + 1}`,
+            })),
+          },
+        ],
       },
-      { title: "Stall", link: "/our-canvas?service=stall", data: [] },
+      {
+        title: "Stall",
+        link: "/our-canvas?service=ACI – STALL DESIGN AND EXECUTION",
+        subItems: [
+          {
+            title: "ACI – STALL DESIGN AND EXECUTION",
+            link: "/our-canvas?service=ACI – STALL DESIGN AND EXECUTION",
+            data: Array.from({ length: 2 }, (_, index) => ({
+              id: index + 2001,
+              category: "Stalls",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/STALLS/ACI – STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
+              title: `Stalls Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "AIRPORT IMMIGRATION BOOTH BRANDING",
+            link: "/our-canvas?service=AIRPORT IMMIGRATION BOOTH BRANDING",
+            data: Array.from({ length: 4 }, (_, index) => ({
+              id: index + 2002,
+              category: "Stalls",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/STALLS/AIRPORT IMMIGRATION BOOTH BRANDING/img (${index + 1}).jpg`,
+              title: `Stalls Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "FREEDOM - DITF STALL EXECUTION",
+            link: "/our-canvas?service=FREEDOM - DITF STALL EXECUTION",
+            data: Array.from({ length: 2 }, (_, index) => ({
+              id: index + 2003,
+              category: "Stalls",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/STALLS/FREEDOM - DITF STALL EXECUTION/img (${index + 1}).jpg`,
+              title: `Stalls Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "GLOBAL BRAND STALL DESIGN AND EXECUTION",
+            link: "/our-canvas?service=GLOBAL BRAND STALL DESIGN AND EXECUTION",
+            data: Array.from({ length: 2 }, (_, index) => ({
+              id: index + 2004,
+              category: "Stalls",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/STALLS/GLOBAL BRAND STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
+              title: `Stalls Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "GUARDIAN STALL DESIGN AND EXECUTION",
+            link: "/our-canvas?service=GUARDIAN STALL DESIGN AND EXECUTION",
+            data: Array.from({ length: 2 }, (_, index) => ({
+              id: index + 2005,
+              category: "Stalls",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/STALLS/GUARDIAN STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
+              title: `Stalls Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "METAL – STALL DESIGN AND EXECUTION",
+            link: "/our-canvas?service=METAL – STALL DESIGN AND EXECUTION",
+            data: Array.from({ length: 4 }, (_, index) => ({
+              id: index + 2006,
+              category: "Stalls",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/STALLS/METAL – STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
+              title: `Stalls Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "RUPAYAN - STALL DESIGN & EXECUTION",
+            link: "/our-canvas?service=RUPAYAN - STALL DESIGN & EXECUTION",
+            data: Array.from({ length: 6 }, (_, index) => ({
+              id: index + 2007,
+              category: "Stalls",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/STALLS/RUPAYAN - STALL DESIGN & EXECUTION/img (${index + 1}).png`,
+              title: `Stalls Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "SHANTA HOLDINGS – STALL DESIGN AND EXECUTION",
+            link: "/our-canvas?service=SHANTA HOLDINGS – STALL DESIGN AND EXECUTION",
+            data: Array.from({ length: 7 }, (_, index) => ({
+              id: index + 2008,
+              category: "Stalls",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/STALLS/SHANTA HOLDINGS – STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
+              title: `Stalls Project ${index + 1}`,
+            })),
+          },
+          {
+            title: "TOTALGAZ - STALL DESIGN & EXECUTION",
+            link: "/our-canvas?service=TOTALGAZ - STALL DESIGN & EXECUTION",
+            data: Array.from({ length: 2 }, (_, index) => ({
+              id: index + 2009,
+              category: "Stalls",
+              type: "img",
+              src: `/assets/img/home-01/portfolio/STALLS/TOTALGAZ - STALL DESIGN & EXECUTION/img (${index + 1}).jpg`,
+              title: `Stalls Project ${index + 1}`,
+            })),
+          },
+        ],
+      },
     ],
     icon: s_2,
   },
