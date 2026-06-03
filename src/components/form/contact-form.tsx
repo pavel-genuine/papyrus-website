@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ErrorMsg from "../error-msg";
-import { sendEmail } from "./action"; // আপনার ফোল্ডার স্ট্রাকচার অনুযায়ী সঠিক পাথ দিন
 
 type FormData = {
   name: string;
@@ -12,7 +11,6 @@ type FormData = {
   message: string;
 };
 
-// ইমেইল ভ্যালিডেশন সহ Yup স্কিমা
 const schema = yup.object().shape({
   name: yup.string().required("Name is required").label("Name"),
   email: yup
@@ -47,16 +45,31 @@ export default function ContactForm({ btnCls = "" }: IProps) {
     setIsSubmitting(true);
     setStatusMsg(null);
 
-    // সার্ভার অ্যাকশন কল
-    const result = await sendEmail(data);
+    try {
+      // আমাদের তৈরি করা নতুন App Router API Route-এ হিট করছি
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    setIsSubmitting(false);
+      const result = await response.json();
 
-    if (result.success) {
-      setStatusMsg({ type: "success", text: result.message });
-      reset(); // ফর্মের ইনপুট ফিল্ড খালি করার জন্য
-    } else {
-      setStatusMsg({ type: "error", text: result.message });
+      if (response.ok && result.success) {
+        setStatusMsg({ type: "success", text: result.message });
+        reset(); // ফর্ম ক্লিয়ার করার জন্য
+      } else {
+        setStatusMsg({
+          type: "error",
+          text: result.message || "Something went wrong.",
+        });
+      }
+    } catch (error) {
+      setStatusMsg({ type: "error", text: "Failed to connect to the server." });
+    } finally {
+      setIsSubmitting(false);
     }
   });
 
@@ -89,7 +102,6 @@ export default function ContactForm({ btnCls = "" }: IProps) {
         <ErrorMsg msg={errors.message?.message!} />
       </div>
 
-      {/* সাবমিট করার পর সাকসেস বা এরর মেসেজ দেখানোর জন্য */}
       {statusMsg && (
         <div
           className="status-message mb-20"
