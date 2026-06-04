@@ -184,7 +184,7 @@ export default function ServiceHome() {
             <div className="tp-service-2 text-center text-lg-start">
               <Image
                 style={{
-                  width: width > 768 ? "550px" : "auto",
+                  width: width > 768 ? "550px" : "100vw",
                   height: width > 768 ? "auto" : "auto",
                   marginBottom: width > 768 ? "110px" : "40px",
                   borderRadius: "10px",
@@ -232,7 +232,7 @@ export default function ServiceHome() {
             </div>
 
             <Link
-              className="tp-btn-black-2 tp_fade_bottom mt-100"
+              className={`tp-btn-black-2 tp_fade_bottom ${width > 768 ? "mt-60" : "mt-0"}`}
               href="/our-areas"
             >
               Our Areas
