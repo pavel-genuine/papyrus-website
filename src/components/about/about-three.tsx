@@ -51,7 +51,7 @@ export default function AboutThree() {
             <div className="">
               <Image
                 style={{
-                  width: width > 768 ? "800px" : "auto",
+                  width: width > 768 ? "550px" : "auto",
                   height: width > 768 ? "550px" : "auto",
                   marginBottom: width > 768 ? "" : "40px",
                   borderRadius: "10px",

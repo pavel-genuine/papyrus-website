@@ -184,9 +184,9 @@ export default function ServiceHome() {
             <div className="tp-service-2 text-center text-lg-start">
               <Image
                 style={{
-                  width: width > 768 ? "auto" : "auto",
-                  height: width > 768 ? "90vh" : "auto",
-                  marginBottom: width > 768 ? "" : "40px",
+                  width: width > 768 ? "550px" : "auto",
+                  height: width > 768 ? "auto" : "auto",
+                  marginBottom: width > 768 ? "110px" : "40px",
                   borderRadius: "10px",
                 }}
                 src={shape}
