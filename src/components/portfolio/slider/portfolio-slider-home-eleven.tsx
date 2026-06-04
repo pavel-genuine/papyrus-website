@@ -19,10 +19,17 @@ import showcase_8 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (8)
 import showcase_9 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (9).png";
 import showcase_10 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (10).png";
 import showcase_11 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (11).png";
-import showcase_12 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (12).png";
-import showcase_13 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (13).png";
 import showcase_14 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (14).png";
 import showcase_15 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (15).png";
+import showcase_16 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (16).png";
+import showcase_17 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (17).png";
+import showcase_18 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (18).png";
+import showcase_19 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (19).png";
+import showcase_20 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (20).png";
+import showcase_21 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (21).png";
+import showcase_22 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (22).png";
+import showcase_23 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (23).png";
+import showcase_24 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (24).png";
 
 // ─── Slider Data ─────────────────────────────────────────────────────────────
 const slider_data = [
@@ -134,6 +141,99 @@ const slider_data = [
     client: "Lemon Bright TVC",
     year: "2025",
   },
+  {
+    id: 7003,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/403f6-iGrYc",
+    description: "Luxury real estate digital experience.",
+    client: "Lemon White Powder",
+    year: "2025",
+  },
+  {
+    id: 7004,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/FqzXlfjXRT0",
+    description: "Luxury real estate digital experience.",
+    client: "Bashundhara TownView",
+    year: "2025",
+  },
+  {
+    id: 7005,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/ezZzHU8cQoc",
+    description: "Luxury real estate digital experience.",
+    client: "Kiddo Cake",
+    year: "2025",
+  },
+  {
+    id: 7006,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/oyMGZ3MuHSQ",
+    description: "Luxury real estate digital experience.",
+    client: "Diplomilk",
+    year: "2025",
+  },
+
+  {
+    id: 7007,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/-RONGs06cAg",
+    description: "Luxury real estate digital experience.",
+    client: "Eagle coil",
+    year: "2025",
+  },
+  {
+    id: 7008,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/HBouDycfTFI",
+    description: "Luxury real estate digital experience.",
+    client: "DEKKO CORPORATE",
+    year: "2025",
+  },
+
+  {
+    id: 7009,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/WoIPSIOr55k",
+    description: "Luxury real estate digital experience.",
+    client: "EAGLE MOSQUITO COIL",
+    year: "2025",
+  },
+
+  {
+    id: 7011,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/Im0RkJ3WdME",
+    description: "Luxury real estate digital experience.",
+    client: "ICY Cycle",
+    year: "2025",
+  },
+  {
+    id: 7012,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/Xg-Mp2iWSj8",
+    description: "Luxury real estate digital experience.",
+    client: "ICY Mom",
+    year: "2025",
+  },
+  {
+    id: 7013,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/PheBReZDBIk",
+    description: "Luxury real estate digital experience.",
+    client: "ICY Guest",
+    year: "2025",
+  },
 ];
 
 const slider_images = [
@@ -149,8 +249,17 @@ const slider_images = [
   showcase_9,
   showcase_10,
   showcase_11,
-  showcase_12,
-  showcase_13,
+
+  showcase_15,
+  showcase_16,
+  showcase_17,
+  showcase_18,
+  showcase_19,
+  showcase_20,
+  showcase_21,
+  showcase_22,
+  showcase_23,
+  showcase_24,
 ];
 
 // ─── WebGL Transition Helper ──────────────────────────────────────────────────

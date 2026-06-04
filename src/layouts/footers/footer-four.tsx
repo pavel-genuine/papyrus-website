@@ -79,7 +79,10 @@ export default function FooterFour() {
                     IMC
                   </p> */}
                   <Link
-                    style={{ scale: width > 768 ? "2" : "1" }}
+                    style={{
+                      scale: width > 768 ? "2" : "1",
+                      marginBottom: width > 768 ? " " : "40px",
+                    }}
                     className={`tp-footer-3-logo p-relative ${width > 768 ? "mt-100" : ""} `}
                     href="/"
                   >

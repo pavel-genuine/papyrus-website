@@ -211,7 +211,7 @@ export default function PortfolioHome() {
               <Image
                 style={{
                   width: width > 768 ? "550px" : "100vw",
-                  height: width > 768 ? "550px" : "auto",
+                  height: width > 768 ? "450px" : "auto",
                   // paddingRight: width > 768 ? "70px" : "0px",
                   // paddingTop: width > 768 ? "0px" : "50px",
                   borderRadius: "10px",

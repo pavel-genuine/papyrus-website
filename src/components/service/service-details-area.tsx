@@ -129,7 +129,7 @@ const service_data: ServiceData[] = [
       {
         title: "TVC",
         link: "/our-canvas?service=tvc",
-        data: Array.from({ length: 14 }, (_, index) => ({
+        data: Array.from({ length: 24 }, (_, index) => ({
           id: index + 101,
           category: "ATL",
           type: "img",
