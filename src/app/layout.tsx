@@ -76,11 +76,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 3000);
-  }, []);
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <head>

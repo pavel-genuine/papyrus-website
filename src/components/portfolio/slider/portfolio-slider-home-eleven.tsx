@@ -203,8 +203,8 @@ export default function PortfolioSliderHomeEleven() {
         #port-showcase-slider-main {
           position: relative;
           width: 100%;
-          margin-top: 88px;
-          height: calc(100vh - 88px);
+          margin-top: ${width > 768 ? "90px" : "80px"};
+          height: ${width > 768 ? "calc(100vh - 90px)" : "calc(100vh - 80px)"};
           display: flex;
           align-items: center;
           justify-content: center;

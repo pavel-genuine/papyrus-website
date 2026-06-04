@@ -15,19 +15,15 @@ const Preloader = () => {
 
       const tl = gsap.timeline({
         onComplete: () => setIsDone(true),
-        delay: 1.5,
+        delay: 3,
       });
 
-      // Animation for the split
       tl.to([leftHalf.current, rightHalf.current], {
-        duration: 1.6,
+        duration: 3,
         ease: "expo.inOut",
-        // We use function-based values to move them in opposite directions
         xPercent: (index) => (index === 0 ? -100 : 100),
       });
 
-      // OPTIONAL: Smoothly fade out the container at the very end
-      // to ensure no "flicker" when the component is unmounted
       tl.to(container.current, { opacity: 0, duration: 0.4 }, "-=0.4");
     },
     { scope: container },
@@ -38,11 +34,22 @@ const Preloader = () => {
   const halfStyle: React.CSSProperties = {
     position: "fixed",
     top: 0,
-    width: "100vw",
+    width: "100%",
     height: "100vh",
-    backgroundColor: "black", // Keep this black so the video area looks solid
+    // FIX 1: পুরো ব্যাকগ্রাউন্ড সলিড ব্ল্যাক রাখা হয়েছে যাতে হোমপেজ একদমই না দেখা যায়
+    backgroundColor: "black",
     overflow: "hidden",
-    willChange: "transform", // Optimizes performance for the slide
+    willChange: "transform",
+    // FIX 2: ভিডিওটিকে স্ক্রিনের একদম মাঝখানে (Center) লক করার জন্য Flexbox ব্যবহার
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const videoStyle: React.CSSProperties = {
+    width: "100vw",
+    height: "auto",
+    objectFit: "contain", // ভিডিও ক্রপ বা শ্রিন্ক হওয়া আটকাবে
   };
 
   return (
@@ -52,8 +59,8 @@ const Preloader = () => {
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        pointerEvents: "none", // Allows clicking "through" to the site during animation
-        backgroundColor: "transparent", // Ensure the main container is clear
+        pointerEvents: "none",
+        backgroundColor: "transparent",
       }}
     >
       {/* Left Half */}
@@ -61,17 +68,7 @@ const Preloader = () => {
         ref={leftHalf}
         style={{ ...halfStyle, left: 0, clipPath: "inset(0 50% 0 0)" }}
       >
-        <video
-          style={{
-            width: "100vw",
-            height: "100vh",
-            objectFit: "fill",
-          }}
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
+        <video autoPlay muted loop playsInline style={videoStyle}>
           <source src="/assets/video/loader.mp4" type="video/mp4" />
         </video>
       </div>
@@ -81,13 +78,7 @@ const Preloader = () => {
         ref={rightHalf}
         style={{ ...halfStyle, left: 0, clipPath: "inset(0 0 0 50%)" }}
       >
-        <video
-          style={{ width: "100vw", height: "100vh", objectFit: "fill" }}
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
+        <video autoPlay muted loop playsInline style={videoStyle}>
           <source src="/assets/video/loader.mp4" type="video/mp4" />
         </video>
       </div>
