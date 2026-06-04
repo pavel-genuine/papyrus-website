@@ -254,6 +254,21 @@ export default function PortfolioSliderHomeEleven() {
     return `${baseUrl}?autoplay=1&origin=${origin}`;
   };
 
+  // কাস্টম বাটন ইভেন্ট হ্যান্ডলার (Direct Swiper Method Trigger)
+  const goPrev = (e: React.MouseEvent) => {
+    e.stopPropagation(); // আটকাতে যেন মেইন স্লাইড ক্লিকে মোডাল ওপেন না হয়
+    if (swiperRef.current) {
+      swiperRef.current.slidePrev();
+    }
+  };
+
+  const goNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (swiperRef.current) {
+      swiperRef.current.slideNext();
+    }
+  };
+
   return (
     <>
       <style jsx>{`
@@ -323,49 +338,58 @@ export default function PortfolioSliderHomeEleven() {
           }
         }
 
-        /* ── কাস্টম নেভিগেশন বাটন স্টাইল (মোবাইল ও ডেস্কটপ দুই জায়গাতেই ফিক্সড) ── */
+        /* ── কাস্টম নেভিগেশন বাটন স্টাইল ── */
         .tp-showcase-arrow-box {
           display: flex !important;
           align-items: center;
           justify-content: center;
-          gap: 10px;
-          background-color: rgba(0, 0, 0, 0.75) !important;
+          gap: 15px;
+          background-color: rgba(0, 0, 0, 0.85) !important;
           border-radius: 30px;
           position: absolute !important;
-          bottom: 5% !important;
-          left: 49% !important;
+          bottom: 2% !important;
+          left: 48% !important;
+          scale: 0.5;
           transform: translateX(-50%) !important;
-          z-index: 999 !important; /* স্লাইডার কনটেন্টের উপরে জোর করে ধরে রাখার জন্য */
-          padding: 8px 16px;
+          z-index: 9999 !important; /* সর্বোচ্চ লেয়ারে নিয়ে আসা হলো */
+          padding: 10px 20px;
           visibility: visible !important;
           opacity: 1 !important;
-          scale: 0.7;
+          pointer-events: auto !important; /* ক্লিক যাতে কোনোভাবেই ব্লক না হয় */
+          border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .tp-showcase-arrow-box button {
-          background: none;
-          border: none;
-          color: #fff !important;
-          font-size: 20px;
-          padding: 5px 15px;
-          cursor: pointer;
+          background: none !important;
+          border: none !important;
+          color: #ffffff !important;
+          font-size: 22px !important;
+          padding: 5px 15px !important;
+          cursor: pointer !important;
           display: inline-flex !important;
           align-items: center;
           justify-content: center;
-          z-index: 1000 !important;
+          pointer-events: auto !important;
+          transition: transform 0.2s ease;
+        }
+
+        .tp-showcase-arrow-box button:active {
+          transform: scale(0.9); /* মোবাইলে টাচ রেসপন্স এর জন্য */
         }
 
         /* ── Absolute Mobile Aspect Sizing Fixes ── */
         @media (max-width: 768px) {
           .tp-showcase-arrow-box {
-            bottom: 0% !important; /* মোবাইলে যেন ভিডিও থাম্বনেইল না ঢাকে */
-            left: 40% !important;
-            padding: 5px 12px;
-            scale: 0.5;
+            bottom: 1% !important; /* মোবাইলে পজিশন ঠিক করা হলো */
+            left: 35% !important;
+            padding: 6px 14px;
+            scale: 0.3;
+            z-index: 99999 !important;
           }
 
           .tp-showcase-arrow-box button {
-            font-size: 16px;
+            font-size: 18px !important;
+            padding: 5px 10px !important;
           }
 
           #port-showcase-slider-main,
@@ -427,15 +451,25 @@ export default function PortfolioSliderHomeEleven() {
           </div>
         </div>
 
-        {/* CRITICAL FIX: নেভিগেশন বক্সটিকে Swiper-এর অভ্যন্তরীণ লেয়ার থেকে বাইরে নিয়ে আসা হয়েছে।
-          এর ফলে Swiper মোবাইলে এটিকে আর হাইড (display: none) করতে পারবে না।
+        {/* CRITICAL FIXES:
+          ১. `pointer-events: "auto"` ইনলাইন ফোর্স করা হয়েছে।
+          ২. `onClick` দিয়ে সরাসরি Swiper কন্ট্রোল করা হচ্ছে, যা নেভিগেশনের বাগগুলোকে দূর করবে।
         */}
-        <div className="tp-showcase-arrow-box">
-          <button className="tp-showcase__button-prev swiper-prev">
-            <i className="fa-solid fa-chevron-left"></i>
+        <div
+          className="tp-showcase-arrow-box"
+          style={{ pointerEvents: "auto" }}
+        >
+          <button className="swiper-prev" onClick={goPrev} type="button">
+            <i
+              className="fa-solid fa-chevron-left"
+              style={{ pointerEvents: "none" }}
+            ></i>
           </button>
-          <button className="tp-showcase__button-next swiper-next">
-            <i className="fa-solid fa-chevron-right"></i>
+          <button className="swiper-next" onClick={goNext} type="button">
+            <i
+              className="fa-solid fa-chevron-right"
+              style={{ pointerEvents: "none" }}
+            ></i>
           </button>
         </div>
 
@@ -453,12 +487,10 @@ export default function PortfolioSliderHomeEleven() {
               onClick={(e) => {
                 if (!e.isTrusted) return;
                 const target = e.target as HTMLElement;
-                // বাটনে ক্লিক করলে যেন ভিডিও মোডাল অন না হয়ে যায় তার হ্যান্ডলার
                 if (
                   target.closest(".tp-showcase-arrow-box") ||
                   target.closest(".swiper-prev") ||
-                  target.closest(".swiper-next") ||
-                  target.closest(".tp-slider-dot")
+                  target.closest(".swiper-next")
                 )
                   return;
                 if (activeSlideRef.current) return;
@@ -473,19 +505,13 @@ export default function PortfolioSliderHomeEleven() {
                 touchStartPreventDefault={false}
                 speed={1000}
                 loop={true}
-                simulateTouch={true} /* মোবাইলে সুইপ করার সুবিধা চালু করা হলো */
+                simulateTouch={
+                  true
+                } /* মোবাইলে টেনে ড্র্যাগ/সোয়াইপ করার সুবিধাও থাকবে */
                 autoplay={{
                   delay: 3000,
                   disableOnInteraction: false,
                   pauseOnMouseEnter: false,
-                }}
-                navigation={{
-                  nextEl: ".swiper-next",
-                  prevEl: ".swiper-prev",
-                }}
-                pagination={{
-                  el: ".tp-slider-dot",
-                  clickable: true,
                 }}
                 modules={[Navigation, Pagination, Autoplay]}
                 onSlideChange={(swiper) => {
