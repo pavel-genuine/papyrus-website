@@ -453,14 +453,21 @@ export default function PortfolioSliderHomeEleven() {
               </Swiper>
 
               <div
-                style={{ backgroundColor: "#00000096", borderRadius: "30px" }}
+                style={{
+                  backgroundColor: "#00000096",
+                  borderRadius: "30px",
+                  position: "absolute",
+                  bottom: "20%",
+                  left: "50%",
+                  zIndex: 100,
+                }}
                 className="tp-showcase-arrow-box"
               >
-                <button className="tp-showcase__button-next swiper-next">
-                  <i className="fa-light fa-angle-up"></i>
-                </button>
                 <button className="tp-showcase__button-prev swiper-prev">
-                  <i className="fa-light fa-angle-down"></i>
+                  <i className="fa-light fa-angle-left"></i>
+                </button>
+                <button className="tp-showcase__button-next swiper-next">
+                  <i className="fa-light fa-angle-right"></i>
                 </button>
               </div>
               <div className="tp-slider-dot d-none d-md-block"></div>
