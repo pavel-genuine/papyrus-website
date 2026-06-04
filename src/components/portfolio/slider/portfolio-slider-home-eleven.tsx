@@ -15,6 +15,9 @@ import showcase_4 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (4)
 import showcase_5 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (10).png";
 import showcase_6 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (12).png";
 import showcase_7 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (3).png";
+import showcase_8 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (13).png";
+import showcase_9 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (15).png";
+import showcase_10 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (16).png";
 
 // ─── Slider Data ─────────────────────────────────────────────────────────────
 const slider_data = [
@@ -28,15 +31,23 @@ const slider_data = [
     year: "2024",
   },
   {
-    id: 1,
+    id: 2001,
     subtitle: "Branding & Marketing",
-    title: "Top Paddock",
-    youtubeUrl: "https://www.youtube.com/embed/zxY_lA7zeJk",
-    description: "A beautiful UI and web design project.",
-    client: "Bashundhara LPG",
+    title: "Band Some",
+    youtubeUrl: "https://www.youtube.com/embed/OCTB_Sa07sA",
+    description: "Modern branding and web experience.",
+    client: "Mr. White",
     year: "2024",
   },
-
+  {
+    id: 2002,
+    subtitle: "Branding & Marketing",
+    title: "Band Some",
+    youtubeUrl: "https://www.youtube.com/embed/NBw8akBIzrg",
+    description: "Modern branding and web experience.",
+    client: "Bashundhara ready mix",
+    year: "2024",
+  },
   {
     id: 3,
     subtitle: "Branding & Marketing",
@@ -46,6 +57,26 @@ const slider_data = [
     client: "Bashundhara Spice",
     year: "2023",
   },
+
+  {
+    id: 1,
+    subtitle: "Branding & Marketing",
+    title: "Top Paddock",
+    youtubeUrl: "https://www.youtube.com/embed/zxY_lA7zeJk",
+    description: "A beautiful UI and web design project.",
+    client: "Bashundhara LPG",
+    year: "2024",
+  },
+  {
+    id: 1001,
+    subtitle: "Branding & Marketing",
+    title: "Top Paddock",
+    youtubeUrl: "https://www.youtube.com/embed/kFx5BkRUiDE",
+    description: "A beautiful UI and web design project.",
+    client: "Bashundhara LPG joya",
+    year: "2024",
+  },
+
   {
     id: 4,
     subtitle: "Branding & Marketing",
@@ -86,9 +117,11 @@ const slider_data = [
 
 const slider_images = [
   showcase_2,
-  showcase_1,
-
+  showcase_8,
+  showcase_9,
   showcase_3,
+  showcase_1,
+  showcase_10,
   showcase_4,
   showcase_5,
   showcase_6,
