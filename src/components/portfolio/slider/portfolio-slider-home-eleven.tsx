@@ -9,15 +9,20 @@ import { verTextFragment } from "@/utils/webgl-anim";
 
 import { WebGL } from "@/plugins";
 import showcase_1 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (1).png";
-import showcase_2 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (14).png";
-import showcase_3 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (5).png";
+import showcase_2 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (2).png";
+import showcase_3 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (3).png";
 import showcase_4 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (4).png";
-import showcase_5 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (10).png";
-import showcase_6 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (12).png";
-import showcase_7 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (3).png";
-import showcase_8 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (13).png";
-import showcase_9 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (15).png";
-import showcase_10 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (16).png";
+import showcase_5 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (5).png";
+import showcase_6 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (6).png";
+import showcase_7 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (7).png";
+import showcase_8 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (8).png";
+import showcase_9 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (9).png";
+import showcase_10 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (10).png";
+import showcase_11 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (11).png";
+import showcase_12 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (12).png";
+import showcase_13 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (13).png";
+import showcase_14 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (14).png";
+import showcase_15 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (15).png";
 
 // ─── Slider Data ─────────────────────────────────────────────────────────────
 const slider_data = [
@@ -113,19 +118,41 @@ const slider_data = [
     client: "Toggi Fun World",
     year: "2025",
   },
+  {
+    id: 7001,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/_0hHGdVTq8M",
+    description: "Luxury real estate digital experience.",
+    client: "Eagle Super aerosol",
+    year: "2025",
+  },
+  {
+    id: 7002,
+    subtitle: "Branding & Marketing",
+    title: "Park 108 Nyc",
+    youtubeUrl: "https://www.youtube.com/embed/i0bTZdPnsOE",
+    description: "Luxury real estate digital experience.",
+    client: "Lemon Bright TVC",
+    year: "2025",
+  },
 ];
 
 const slider_images = [
-  showcase_2,
-  showcase_8,
-  showcase_9,
-  showcase_3,
+  showcase_14,
   showcase_1,
-  showcase_10,
+  showcase_2,
+  showcase_3,
   showcase_4,
   showcase_5,
   showcase_6,
   showcase_7,
+  showcase_8,
+  showcase_9,
+  showcase_10,
+  showcase_11,
+  showcase_12,
+  showcase_13,
 ];
 
 // ─── WebGL Transition Helper ──────────────────────────────────────────────────
