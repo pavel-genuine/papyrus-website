@@ -62,7 +62,6 @@ const slider_data = [
     client: "Bashundhara Spice",
     year: "2023",
   },
-
   {
     id: 1,
     subtitle: "Branding & Marketing",
@@ -81,7 +80,6 @@ const slider_data = [
     client: "Bashundhara LPG joya",
     year: "2024",
   },
-
   {
     id: 4,
     subtitle: "Branding & Marketing",
@@ -284,7 +282,6 @@ export default function PortfolioSliderHomeEleven() {
           bottom: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          /* Uses high z-index to break clean over Swiper stacks and WebGL instances */
           z-index: 99 !important;
           pointer-events: none;
           display: flex;
@@ -326,8 +323,51 @@ export default function PortfolioSliderHomeEleven() {
           }
         }
 
+        /* ── কাস্টম নেভিগেশন বাটন স্টাইল (মোবাইল ও ডেস্কটপ দুই জায়গাতেই ফিক্সড) ── */
+        .tp-showcase-arrow-box {
+          display: flex !important;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          background-color: rgba(0, 0, 0, 0.75) !important;
+          border-radius: 30px;
+          position: absolute !important;
+          bottom: 5% !important;
+          left: 49% !important;
+          transform: translateX(-50%) !important;
+          z-index: 999 !important; /* স্লাইডার কনটেন্টের উপরে জোর করে ধরে রাখার জন্য */
+          padding: 8px 16px;
+          visibility: visible !important;
+          opacity: 1 !important;
+          scale: 0.7;
+        }
+
+        .tp-showcase-arrow-box button {
+          background: none;
+          border: none;
+          color: #fff !important;
+          font-size: 20px;
+          padding: 5px 15px;
+          cursor: pointer;
+          display: inline-flex !important;
+          align-items: center;
+          justify-content: center;
+          z-index: 1000 !important;
+        }
+
         /* ── Absolute Mobile Aspect Sizing Fixes ── */
         @media (max-width: 768px) {
+          .tp-showcase-arrow-box {
+            bottom: 0% !important; /* মোবাইলে যেন ভিডিও থাম্বনেইল না ঢাকে */
+            left: 40% !important;
+            padding: 5px 12px;
+            scale: 0.5;
+          }
+
+          .tp-showcase-arrow-box button {
+            font-size: 16px;
+          }
+
           #port-showcase-slider-main,
           .port-showcase-slider-spaces,
           #showcase-slider-holder,
@@ -360,7 +400,7 @@ export default function PortfolioSliderHomeEleven() {
             width: 55px !important;
             height: 55px !important;
             font-size: 22px !important;
-            background-color: #f7941d !important; /* Locks visible opaque color on mobile */
+            background-color: #f7941d !important;
           }
         }
 
@@ -377,10 +417,7 @@ export default function PortfolioSliderHomeEleven() {
 
       {/* ── Slider ─────────────────────────────────────────────────────────── */}
       <div id="port-showcase-slider-main">
-        {/* 
-          CRITICAL MOVE: Placed global icon overlay at root context of slider layout block.
-          This prevents Swiper internal slides from rendering on top of the icon.
-        */}
+        {/* প্লে আইকন */}
         <div className="video-play-overlay">
           <div className="play-icon-circle">
             <i
@@ -388,6 +425,18 @@ export default function PortfolioSliderHomeEleven() {
               style={{ marginLeft: "4px", color: "#ffffff" }}
             ></i>
           </div>
+        </div>
+
+        {/* CRITICAL FIX: নেভিগেশন বক্সটিকে Swiper-এর অভ্যন্তরীণ লেয়ার থেকে বাইরে নিয়ে আসা হয়েছে।
+          এর ফলে Swiper মোবাইলে এটিকে আর হাইড (display: none) করতে পারবে না।
+        */}
+        <div className="tp-showcase-arrow-box">
+          <button className="tp-showcase__button-prev swiper-prev">
+            <i className="fa-solid fa-chevron-left"></i>
+          </button>
+          <button className="tp-showcase__button-next swiper-next">
+            <i className="fa-solid fa-chevron-right"></i>
+          </button>
         </div>
 
         <div className="port-showcase-slider-spaces p-relative">
@@ -404,8 +453,11 @@ export default function PortfolioSliderHomeEleven() {
               onClick={(e) => {
                 if (!e.isTrusted) return;
                 const target = e.target as HTMLElement;
+                // বাটনে ক্লিক করলে যেন ভিডিও মোডাল অন না হয়ে যায় তার হ্যান্ডলার
                 if (
                   target.closest(".tp-showcase-arrow-box") ||
+                  target.closest(".swiper-prev") ||
+                  target.closest(".swiper-next") ||
                   target.closest(".tp-slider-dot")
                 )
                   return;
@@ -421,7 +473,7 @@ export default function PortfolioSliderHomeEleven() {
                 touchStartPreventDefault={false}
                 speed={1000}
                 loop={true}
-                simulateTouch={false}
+                simulateTouch={true} /* মোবাইলে সুইপ করার সুবিধা চালু করা হলো */
                 autoplay={{
                   delay: 3000,
                   disableOnInteraction: false,
@@ -452,24 +504,6 @@ export default function PortfolioSliderHomeEleven() {
                 ))}
               </Swiper>
 
-              <div
-                style={{
-                  backgroundColor: "#00000096",
-                  borderRadius: "30px",
-                  position: "absolute",
-                  bottom: "20%",
-                  left: "50%",
-                  zIndex: 100,
-                }}
-                className="tp-showcase-arrow-box"
-              >
-                <button className="tp-showcase__button-prev swiper-prev">
-                  <i className="fa-light fa-angle-left"></i>
-                </button>
-                <button className="tp-showcase__button-next swiper-next">
-                  <i className="fa-light fa-angle-right"></i>
-                </button>
-              </div>
               <div className="tp-slider-dot d-none d-md-block"></div>
             </div>
           </div>
@@ -546,8 +580,6 @@ export default function PortfolioSliderHomeEleven() {
                   </div>
                 )}
               </div>
-
-              {/* Project details */}
             </div>
           )}
         </Modal.Body>
