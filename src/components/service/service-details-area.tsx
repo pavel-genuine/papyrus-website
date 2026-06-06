@@ -13,6 +13,7 @@ import s_1 from "@/assets/img/home-01/service/service-icon-1.png";
 import s_2 from "@/assets/img/home-01/service/service-icon-2.png";
 import s_3 from "@/assets/img/home-01/service/service-icon-3.png";
 import { createPortal } from "react-dom";
+import { div } from "three/examples/jsm/nodes/Nodes.js";
 
 // Interfaces
 interface PortfolioItem {
@@ -20,6 +21,7 @@ interface PortfolioItem {
   category?: string;
   src: string;
   type?: string;
+  youtubeUrl?: string;
   title: string;
 }
 
@@ -49,6 +51,34 @@ interface ServiceData {
   subItems: SubItem[];
   icon: any;
 }
+
+const tvcYoutubeUrls = [
+  ,
+  "https://www.youtube.com/embed/OCTB_Sa07sA", // index 1
+  "https://www.youtube.com/embed/NBw8akBIzrg", // index 2
+  "https://www.youtube.com/embed/fh5EQnNrJzM", // index 3
+  "https://www.youtube.com/embed/zxY_lA7zeJk", // index 4
+  "https://www.youtube.com/embed/kFx5BkRUiDE", // index 5
+  "https://www.youtube.com/embed/LZoncSoN5uI", // index 6
+  "https://www.youtube.com/embed/ao6Ka-zHOew", // index 7
+  "https://www.youtube.com/embed/HKkNpX945O0", // index 8
+  "https://www.youtube.com/embed/TR833DwttyA", // index 9
+  "https://www.youtube.com/embed/_0hHGdVTq8M", // index 10
+  "https://www.youtube.com/embed/i0bTZdPnsOE", // index 11
+  "https://www.youtube.com/embed/fh5EQnNrJzM", // index 12 (Blank)
+  "https://www.youtube.com/embed/LZoncSoN5uI", // index 13 (Blank)
+  "https://www.youtube.com/embed/Nhvi0TvxS6E",
+  "https://www.youtube.com/embed/403f6-iGrYc", // index 14
+  "https://www.youtube.com/embed/FqzXlfjXRT0", // index 15
+  "https://www.youtube.com/embed/ezZzHU8cQoc", // index 16
+  "https://www.youtube.com/embed/oyMGZ3MuHSQ", // index 17
+  "https://www.youtube.com/embed/-RONGs06cAg", // index 18
+  "https://www.youtube.com/embed/HBouDycfTFI", // index 19
+  "https://www.youtube.com/embed/WoIPSIOr55k", // index 20
+  "https://www.youtube.com/embed/Im0RkJ3WdME", // index 21
+  "https://www.youtube.com/embed/Xg-Mp2iWSj8", // index 22
+  "https://www.youtube.com/embed/PheBReZDBIk", // index 23
+];
 
 // ── Service Data ───────────────────────────────────────────────────────────
 const service_data: ServiceData[] = [
@@ -132,9 +162,10 @@ const service_data: ServiceData[] = [
         data: Array.from({ length: 24 }, (_, index) => ({
           id: index + 101,
           category: "ATL",
-          type: "img",
+          type: "yt",
           src: `/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (${index + 1}).png`,
           title: `TVC Project ${index + 1}`,
+          youtubeUrl: tvcYoutubeUrls[index + 1] || "",
         })),
       },
       {
@@ -145,7 +176,7 @@ const service_data: ServiceData[] = [
           category: "ATL",
           type: "video",
           src: `/assets/img/home-01/portfolio/AV/AV (${index + 1}).mp4`,
-          title: `TVC Project ${index + 1}`,
+          title: `AV Project ${index + 1}`,
         })),
       },
       { title: "PR", link: "/our-canvas?service=pr-media-buying", data: [] },
@@ -450,7 +481,6 @@ const service_data: ServiceData[] = [
       {
         title: "Activations",
         link: "/our-canvas?service=AKIJ PLASTICS",
-
         subItems: [
           {
             title: "AKIJ PLASTICS",
@@ -750,7 +780,6 @@ function SubMenu({
       const rect = anchorEl.getBoundingClientRect();
 
       if (window.innerWidth <= 768) {
-        // মোবাইলের জন্য ফুল উইডথ রেসপনসিভ পজিশনিং
         setPos({
           top: rect.bottom + window.scrollY + 6,
           left: 15,
@@ -779,7 +808,6 @@ function SubMenu({
 
   if (!mounted) return null;
 
-  // কমন মেনু টগল ফাংশন (মোবাইলের জন্য চাইল্ড টগল করবে, ডেসকটপে নরমাল লিংক)
   const handleItemClick = (
     e: React.MouseEvent,
     index: number,
@@ -885,7 +913,7 @@ function SubMenu({
               )}
             </Link>
 
-            {/* ── ২য় লেয়ার সাব-মেনু (Events) ── */}
+            {/* ── ২য় লেয়ার সাব-মেনু ── */}
             {hasSubSub && isChildOpen && item.subItems && (
               <ul
                 style={{
@@ -967,7 +995,7 @@ function SubMenu({
                         )}
                       </Link>
 
-                      {/* ── ৩য় লেয়ার সাব-মেনু (Bank Asia Limited) ── */}
+                      {/* ── ৩য় লেয়ার সাব-মেনু ── */}
                       {hasDeepSub && isDeepOpen && subSub.subItems && (
                         <ul
                           style={{
@@ -1045,6 +1073,10 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
   const [filteredData, setFilteredData] = useState<PortfolioItem[]>([]);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [width, setWidth] = useState(0);
+
+  // Modal Controls
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [modalItem, setModalItem] = useState<PortfolioItem | null>(null);
 
   const titleRefs = useRef<{ [key: number]: HTMLHeadingElement | null }>({});
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -1137,7 +1169,6 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
     }
   }, [searchParams]);
 
-  // মেইন আইটেম ক্লিক টগল (মোবাইলের জন্য হোভারের বদলে টগল)
   const handleMainItemClick = (id: number) => {
     if (window.innerWidth <= 768) {
       if (hoveredId === id) {
@@ -1159,6 +1190,17 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
     if (window.innerWidth > 768) {
       leaveTimer.current = setTimeout(() => setHoveredId(null), 120);
     }
+  };
+
+  const handleOpenModal = (e: React.MouseEvent, item: PortfolioItem) => {
+    e.preventDefault();
+    setModalItem(item);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setModalItem(null);
   };
 
   const isServiceActive = (s: ServiceData) => {
@@ -1220,7 +1262,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         </div>
       </div>
 
-      {/* Main navigation - Fixed position row for ATL, BTL, DIGITAL */}
+      {/* Main navigation */}
       <div
         id="service-section"
         className="container mt-80"
@@ -1231,7 +1273,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
             <div
               key={s.id}
               className="col-lg-4 col-md-4 col-4 d-flex justify-content-center align-items-center mb-40"
-              style={{ minWidth: "100px" }} // পজিশন ফিক্সড রাখার জন্য উইডথ ব্রেক প্রোভাইডার
+              style={{ minWidth: "100px" }}
             >
               <div className="tp-service-item d-flex flex-column flex-md-row align-items-center justify-content-center">
                 <div
@@ -1259,7 +1301,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                     onClick={() => handleMainItemClick(s.id)}
                     style={{
                       cursor: "pointer",
-                      fontSize: width > 768 ? "36px" : "20px", // রেসপনসিভ ফন্ট সাইজ
+                      fontSize: width > 768 ? "36px" : "20px",
                       fontWeight: "600",
                       color:
                         isServiceActive(s) ||
@@ -1304,6 +1346,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
           {currentService}
         </span>
       </p>
+
       {/* Grid Portfolio Display Section */}
       {currentService && (
         <div className="container mt-60">
@@ -1318,6 +1361,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                     {item.type === "video" ? (
                       <div
                         className="portfolio-video-wrapper"
+                        onClick={(e) => handleOpenModal(e, item)}
                         style={{
                           position: "relative",
                           width: "100%",
@@ -1326,11 +1370,12 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                           borderRadius: "5px",
                           aspectRatio: "1/1",
                           background: "#000",
+                          cursor: "pointer",
                         }}
                       >
+                        {/* Preview without control buttons to prevent conflict with overlay layer */}
                         <video
                           src={item.src}
-                          controls
                           muted
                           loop
                           playsInline
@@ -1341,9 +1386,28 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                             objectFit: "fill",
                           }}
                         />
+                        {/* Play Icon Indicator Overlay */}
+                        <div
+                          style={{
+                            position: "absolute",
+                            inset: 0,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            background: "rgba(0,0,0,0.2)",
+                          }}
+                        >
+                          <span style={{ color: "#fff", fontSize: "24px" }}>
+                            ▶
+                          </span>
+                        </div>
                       </div>
                     ) : (
-                      <Link href="#" className="cursor-hide">
+                      <Link
+                        href="#"
+                        onClick={(e) => handleOpenModal(e, item)}
+                        className="cursor-hide"
+                      >
                         <div
                           style={{
                             width: "100%",
@@ -1385,6 +1449,76 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
           </div>
         </div>
       )}
+
+      {/* ── Portfolio Lightbox Modal (React-Bootstrap) ── */}
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        centered
+        size="lg"
+        style={{ zIndex: 999999 }}
+      >
+        <Modal.Header
+          closeButton
+          closeVariant="white"
+          style={{
+            background: "#1a1a1a",
+            borderBottom: "1px solid #2e2e2e",
+          }}
+        ></Modal.Header>
+        <Modal.Body
+          style={{
+            background: "#111",
+            padding: "0",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            overflow: "hidden",
+          }}
+        >
+          {modalItem?.type === "video" ? (
+            <video
+              src={modalItem.src}
+              controls
+              autoPlay
+              playsInline
+              style={{
+                width: "100%",
+                maxHeight: "75vh",
+                backgroundColor: "#000",
+              }}
+            />
+          ) : modalItem?.type == "yt" ? (
+            <iframe
+              src={modalItem?.youtubeUrl}
+              // title={activeSlide.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              style={{
+                border: "none",
+                borderRadius: "10px",
+                width: width > 768 ? "97vw" : "90vw",
+                height: width > 768 ? "95vh" : "40vh",
+                margin: "20px",
+              }}
+            />
+          ) : (
+            modalItem && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={modalItem.src}
+                alt={modalItem.title}
+                style={{
+                  width: "50%",
+                  height: "auto",
+                  maxHeight: "75vh",
+                  objectFit: "contain",
+                }}
+              />
+            )
+          )}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
