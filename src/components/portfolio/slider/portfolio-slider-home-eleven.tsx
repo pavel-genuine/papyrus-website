@@ -30,6 +30,7 @@ import showcase_21 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (2
 import showcase_22 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (22).png";
 import showcase_23 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (23).png";
 import showcase_24 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (24).png";
+import Link from "next/link";
 
 // ─── Slider Data ─────────────────────────────────────────────────────────────
 const slider_data = [
@@ -406,7 +407,7 @@ export default function PortfolioSliderHomeEleven() {
           bottom: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          z-index: 99 !important;
+          z-index: 999 !important;
           pointer-events: none;
           display: flex;
           align-items: center;
@@ -418,12 +419,12 @@ export default function PortfolioSliderHomeEleven() {
         .play-icon-circle {
           width: 70px;
           height: 70px;
-          background-color: rgba(247, 148, 29, 0.85);
+          background-color: rgba(247, 149, 29, 0.66);
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #ffffff !important;
+          color: #ffffffb1 !important;
           font-size: 30px;
           transition: all 0.4s ease;
           box-shadow: 0 0 0 0 rgba(247, 148, 29, 0.4);
@@ -466,6 +467,10 @@ export default function PortfolioSliderHomeEleven() {
           opacity: 1 !important;
           pointer-events: auto !important; /* ক্লিক যাতে কোনোভাবেই ব্লক না হয় */
           border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .show-all {
+          z-index: 9999 !important;
         }
 
         .tp-showcase-arrow-box button {
@@ -580,6 +585,22 @@ export default function PortfolioSliderHomeEleven() {
               style={{ pointerEvents: "none" }}
             ></i>
           </button>
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            right: "2%",
+            bottom: width > 768 ? "4%" : "2%",
+            zIndex: "1000",
+            color: "white",
+            backgroundColor: "#000000",
+            padding: width > 768 ? "3px 20px" : "0px 10px",
+            borderRadius: "30px",
+            fontSize: width > 768 ? "20px" : "10px",
+          }}
+          className="show-all"
+        >
+          <Link href={"/our-canvas?service=tvc"}>Show All TVCs ▶ </Link>
         </div>
 
         <div className="port-showcase-slider-spaces p-relative">
