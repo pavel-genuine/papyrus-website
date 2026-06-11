@@ -3,7 +3,12 @@ import { gsap } from "gsap";
 import React, { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import useScrollSmooth from "@/hooks/use-scroll-smooth";
-import { ScrollSmoother, ScrollTrigger, SplitText, cursorAnimation } from "@/plugins";
+import {
+  ScrollSmoother,
+  ScrollTrigger,
+  SplitText,
+  cursorAnimation,
+} from "@/plugins";
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 // internal imports
@@ -28,14 +33,17 @@ const PortfolioGridColFourFullwidthMain = () => {
     document.body.classList.add("tp-magic-cursor");
     return () => {
       document.body.classList.remove("tp-magic-cursor");
-    }
+    };
   }, []);
 
   useEffect(() => {
-    if(typeof window !== 'undefined' && document.querySelector('.tp-magic-cursor')) {
+    if (
+      typeof window !== "undefined" &&
+      document.querySelector(".tp-magic-cursor")
+    ) {
       cursorAnimation();
     }
-  },[]);
+  }, []);
 
   useGSAP(() => {
     const timer = setTimeout(() => {
@@ -50,7 +58,6 @@ const PortfolioGridColFourFullwidthMain = () => {
 
   return (
     <Wrapper>
-
       {/* magic cursor start */}
       <div id="magic-cursor">
         <div id="ball"></div>
@@ -89,7 +96,7 @@ const PortfolioGridColFourFullwidthMain = () => {
             {/* portfolio hero */}
 
             {/* portfolio area */}
-            <PortfolioGridFourColArea style_2={true}/>
+            {/* <PortfolioGridFourColArea /> */}
             {/* portfolio area */}
 
             {/* big text */}
