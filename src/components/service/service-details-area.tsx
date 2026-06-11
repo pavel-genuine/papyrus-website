@@ -1501,7 +1501,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
             <div className="sv-hero-title-box">
               <h6
                 style={{ fontSize: width > 768 ? "75px" : "45px" }}
-                className="sv-hero-title tp-char-animation"
+                className="sv-hero-title "
               >
                 Our expertise lies in crafting perceptions that empower brands,
                 making them exceptional and significant in the minds of

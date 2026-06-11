@@ -20,7 +20,9 @@ export default function ServiceHero() {
             <div className="sv-hero-title-box">
               <h6
                 style={{ fontSize: width > 768 ? "75px" : "45px" }}
-                className="sv-hero-title tp-char-animation"
+                className="sv-hero-title tp-char"
+                data-on-scroll="0"
+                data-delay="0.6"
               >
                 We are all about adaptable approaches, implementing creative
                 thinking, and driving long-lasting effective strategies that
