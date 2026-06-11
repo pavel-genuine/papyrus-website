@@ -1625,7 +1625,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
               filteredData.map((item) => (
                 <div
                   key={item.id}
-                  className="col-xl-4 col-lg-6 col-md-6 grid-item"
+                  className="col-xl-3 col-lg-3 col-md-6 col-6 grid-item"
                 >
                   <div className="tp-project-5-2-thumb mb-30 p-relative not-hide-cursor">
                     {item.mediaType === "video" ? (

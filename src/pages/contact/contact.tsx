@@ -90,7 +90,7 @@ const ContactMain = () => {
               {/* contact area */}
 
               {/* about area start */}
-              <div className="cn-contactform-support-area  bg-light pt-40 pb-40 ">
+              <div className="cn-contactform-support-area  bg-light pt-10 pb-10 ">
                 <div className="container">
                   <div className="row justify-content-center">
                     <div className="col-xl-10">
