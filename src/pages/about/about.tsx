@@ -1,6 +1,6 @@
 "use client";
 import { gsap } from "gsap";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
@@ -29,9 +29,29 @@ import FooterFour from "@/layouts/footers/footer-four";
 import HeaderOne from "@/layouts/headers/header-one";
 import { instagramAnim } from "@/utils/instagram-anim";
 import PapyrusTeam from "../team/papyrus-team";
+import PortfolioGridFourColArea from "@/components/portfolio/portfolio-grid-4-col-area";
+import portfolio_data from "@/data/portfolio-data";
+
+const ARMData = Array.from({ length: 29 }, (_, index) => ({
+  id: index + 101,
+  mediaType: "image",
+  src: `/assets/img/home-01/papyrus-about/ARM/img (${index + 1}).jpg`,
+}));
+const socialData = Array.from({ length: 14 }, (_, index) => ({
+  id: index + 101,
+  mediaType: "image",
+  src: `/assets/img/home-01/papyrus-about/Social/img (${index + 1}).jpg`,
+}));
 
 const AboutMeMain = () => {
   useScrollSmooth();
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  });
   useEffect(() => {
     document.body.classList.add("tp-smooth-scroll");
     return () => {
@@ -63,32 +83,105 @@ const AboutMeMain = () => {
             {/* about hero */}
             <AboutMeHero />
             {/* about hero */}
-
-            {/* about me area */}
-            <AboutMeArea />
-            {/* about me area */}
-
-            {/* about portfolio */}
-            {/* <AboutPortfolio /> */}
-            {/* about portfolio */}
-
-            {/* about work */}
-            {/* <AboutWork /> */}
-            {/* about work */}
-
-            {/* line img slider */}
-            {/* <LineImgSlider /> */}
-            {/* line img slider */}
-
-            <PapyrusTeam />
-
-            {/* brand area */}
-            <div className="tp-brand-4-area pt-20 pb-120">
-              <div className="container">
-                <div className="row gx-0">{/* <BrandItems /> */}</div>
+            <div className="tp-brand-4-area bg-black">
+              <div className="tm-hero-area tm-hero pt-100">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-xl-12">
+                      <div className="tm-hero-content">
+                        <h4
+                          style={{
+                            fontSize: width > 768 ? "90px" : "80px",
+                            fontWeight: width > 768 ? "" : "200",
+                          }}
+                          className="tm-hero-title tp-char-animation"
+                        >
+                          Papyrus Team
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            {/* brand area */}
+            <PapyrusTeam />
+
+            {/* brand arm */}
+            <div className="tp-brand-4-area pt-0 pb-60">
+              <div className="tm-hero-area pt-100">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-xl-12">
+                      <div className="tm-hero-content">
+                        <h4
+                          style={{
+                            fontSize: width > 768 ? "90px" : "80px",
+                            fontWeight: width > 768 ? "" : "200",
+                          }}
+                          className="tm-hero-title fs-120 tp-char-animation "
+                        >
+                          Papyrus ARM
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="tp-brand-4-area pt-20 pb-120">
+              <PortfolioGridFourColArea portfolio_data={ARMData} />
+            </div>
+            {/* brand social */}
+            <div className="tp-brand-4-area pt-0 pb-60 bg-black">
+              <div className="tm-hero-area pt-100">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-xl-12">
+                      <div className="tm-hero-content">
+                        <h4
+                          style={{
+                            fontSize: width > 768 ? "90px" : "80px",
+                            fontWeight: width > 768 ? "" : "200",
+                          }}
+                          className="tm-hero-title fs-120 tp-char-animation "
+                        >
+                          Papyrus Social
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="tp-brand-4-area pt-20 pb-120 bg-black">
+              <PortfolioGridFourColArea portfolio_data={socialData} />
+            </div>
+            {/* brand bts */}
+            <div className="tp-brand-4-area pt-0 pb-60">
+              <div className="tm-hero-area pt-100">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-xl-12">
+                      <div className="tm-hero-content">
+                        <h4
+                          style={{
+                            fontSize: width > 768 ? "90px" : "80px",
+                            fontWeight: width > 768 ? "" : "200",
+                          }}
+                          className="tm-hero-title fs-120 tp-char-animation "
+                        >
+                          Papyrus BTS
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="tp-brand-4-area pt-20 pb-120">
+              <p className="text-center text-white"> Up Comming....</p>
+              {/* <PortfolioGridFourColArea portfolio_data={portfolio_data} /> */}
+            </div>
 
             {/* big text */}
             <BigText cls="char-wrapper" />

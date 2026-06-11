@@ -60,7 +60,7 @@ const PapyrusTeam = () => {
 
         memberData.push({
           id: index,
-          image: `/assets/img/home-01/papyrus-team/team%20(${index + 1}).png`,
+          image: `/assets/img/home-01/papyrus-about/papyrus-team/team%20(${index + 1}).png`,
           shape: "",
           size: size,
           top: `${top}%`,

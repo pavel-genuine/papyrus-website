@@ -13,14 +13,41 @@ import s_1 from "@/assets/img/home-01/service/service-icon-1.png";
 import s_2 from "@/assets/img/home-01/service/service-icon-2.png";
 import s_3 from "@/assets/img/home-01/service/service-icon-3.png";
 import { createPortal } from "react-dom";
-import { div } from "three/examples/jsm/nodes/Nodes.js";
+
+// ── Sanity Client Import ──
+import { client } from "@/sanity/lib/client";
+
+const getEmbedUrl = (url: any) => {
+  // যদি ইউআরএল না থাকে, টাইপ স্ট্রিং না হয় বা ফাঁকা হয়, তবে এরর না দিয়ে সরাসরি খালি রিটার্ন করবে
+  if (!url || typeof url !== "string") return "";
+
+  try {
+    let videoId = "";
+    const trimmedUrl = url.trim();
+
+    if (trimmedUrl.includes("watch?v=")) {
+      videoId = trimmedUrl.split("watch?v=")[1]?.split("&")[0] || "";
+    } else if (trimmedUrl.includes("youtu.be/")) {
+      videoId = trimmedUrl.split("youtu.be/")[1]?.split(/[?#]/)[0] || "";
+    } else if (trimmedUrl.includes("/shorts/")) {
+      videoId = trimmedUrl.split("/shorts/")[1]?.split(/[?#]/)[0] || "";
+    } else if (trimmedUrl.includes("/embed/")) {
+      return trimmedUrl;
+    }
+
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : trimmedUrl;
+  } catch (error) {
+    console.error("YouTube URL parsing error:", error);
+    return ""; // ব্যাকআপ হিসেবে কোনো ক্র্যাশ ছাড়া খালি স্ট্রিং
+  }
+};
 
 // Interfaces
 interface PortfolioItem {
-  id: number;
-  category?: string;
+  id: number | string; // Sanity string ID সাপোর্ট করার জন্য number | string করা হলো
+
   src: string;
-  type?: string;
+  mediaType?: string;
   youtubeUrl?: string;
   title: string;
 }
@@ -35,19 +62,19 @@ interface SubSubItem {
   title: string;
   link: string;
   data?: PortfolioItem[];
-  subItems?: DeepSubItem[];
+  deepItems?: DeepSubItem[];
 }
 
 interface SubItem {
   title: string;
   link: string;
   data?: PortfolioItem[];
-  subItems?: SubSubItem[];
+  nestedItems?: SubSubItem[];
 }
 
 interface ServiceData {
-  id: number;
-  title: string;
+  id: number | string;
+  item: string;
   subItems: SubItem[];
   icon: any;
 }
@@ -84,15 +111,14 @@ const tvcYoutubeUrls = [
 const service_data: ServiceData[] = [
   {
     id: 1,
-    title: "ATL",
+    item: "ATL",
     subItems: [
       {
         title: "Logo",
         link: "/our-canvas?service=logo",
         data: Array.from({ length: 45 }, (_, index) => ({
           id: index + 1,
-          category: "ATL",
-          type: "img",
+
           src: `/assets/img/home-01/portfolio/Logo/logo (${index + 1}).png`,
           title: `Logo Project ${index + 1}`,
         })),
@@ -102,8 +128,7 @@ const service_data: ServiceData[] = [
         link: "/our-canvas?service=packaging",
         data: Array.from({ length: 66 }, (_, index) => ({
           id: index + 101,
-          category: "ATL",
-          type: "img",
+          mediaType: "image",
           src: `/assets/img/home-01/portfolio/Packaging/packaging (${index + 1}).png`,
           title: `Packaging Project ${index + 1}`,
         })),
@@ -113,8 +138,7 @@ const service_data: ServiceData[] = [
         link: "/our-canvas?service=press-ad",
         data: Array.from({ length: 49 }, (_, index) => ({
           id: index + 101,
-          category: "ATL",
-          type: "img",
+          mediaType: "image",
           src: `/assets/img/home-01/portfolio/Press-add/press-ad (${index + 1}).png`,
           title: `Press Ad Project ${index + 1}`,
         })),
@@ -134,8 +158,7 @@ const service_data: ServiceData[] = [
         link: "/our-canvas?service=brochure-catalogue",
         data: Array.from({ length: 23 }, (_, index) => ({
           id: index + 101,
-          category: "ATL",
-          type: "img",
+          mediaType: "image",
           src: `/assets/img/home-01/portfolio/Brochure-Catalogue/Brochure-catalogue (${index + 1}).png`,
           title: `Brochure Project ${index + 1}`,
         })),
@@ -145,8 +168,7 @@ const service_data: ServiceData[] = [
         link: "/our-canvas?service=calendar",
         data: Array.from({ length: 33 }, (_, index) => ({
           id: index + 101,
-          category: "ATL",
-          type: "img",
+          mediaType: "image",
           src: `/assets/img/home-01/portfolio/Calandar/calandar (${index + 1}).png`,
           title: `Calendar Project ${index + 1}`,
         })),
@@ -158,11 +180,10 @@ const service_data: ServiceData[] = [
       },
       {
         title: "TVC",
-        link: "/our-canvas?service=tvc",
+        link: "/our-canvas?service=TVC",
         data: Array.from({ length: 24 }, (_, index) => ({
           id: index + 101,
-          category: "ATL",
-          type: "yt",
+          mediaType: "youtube",
           src: `/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (${index + 1}).png`,
           title: `TVC Project ${index + 1}`,
           youtubeUrl: tvcYoutubeUrls[index + 1] || "",
@@ -173,32 +194,35 @@ const service_data: ServiceData[] = [
         link: "/our-canvas?service=av",
         data: Array.from({ length: 1 }, (_, index) => ({
           id: index + 101,
-          category: "ATL",
-          type: "video",
+          mediaType: "video",
           src: `/assets/img/home-01/portfolio/AV/AV (${index + 1}).mp4`,
           title: `AV Project ${index + 1}`,
         })),
       },
       { title: "PR", link: "/our-canvas?service=pr-media-buying", data: [] },
-      { title: "Others", link: "/our-canvas?service=campaign", data: [] },
+      {
+        title: "Others",
+        link: "/our-canvas?service=others-campaign",
+        data: [],
+      },
     ],
     icon: s_1,
   },
   {
     id: 2,
-    title: "BTL",
+    item: "BTL",
     subItems: [
       {
         title: "Events",
         link: "/our-canvas?service=manikganj-school-100-years",
-        subItems: [
+        nestedItems: [
           {
             title: "Manikganj Model High School 100 Years Celebration Event",
             link: "/our-canvas?service=manikganj-school-100-years",
             data: Array.from({ length: 12 }, (_, index) => ({
               id: index + 1001,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/1.Manikganj Model High School 100 Years Celebration Event/manikganj (${index + 1}).jpg`,
               title: `Manikganj Project ${index + 1}`,
             })),
@@ -208,8 +232,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=kia-sportage-2026-launch",
             data: Array.from({ length: 18 }, (_, index) => ({
               id: index + 1101,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/2.6th-generation Kia Sportage 2026 Launching Event/kia (${index + 1}).jpg`,
               title: `Kia Sportage Project ${index + 1}`,
             })),
@@ -219,8 +243,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=ec-daily-package-revealed",
             data: Array.from({ length: 6 }, (_, index) => ({
               id: index + 1201,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/3. EC Daily pakage reviled event/ec-package (${index + 1}).jpg`,
               title: `EC Package Project ${index + 1}`,
             })),
@@ -230,8 +254,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=finlay-south-city-launch",
             data: Array.from({ length: 1 }, (_, index) => ({
               id: index + 1301,
-              category: "BTL",
-              type: "video",
+
+              mediaType: "video",
               src: `/assets/img/home-01/portfolio/Events/4. Finlay South City Shopping Mall Grand Launching Event/south-city (${index + 1}).mp4`,
               title: `Finlay Mall Project ${index + 1}`,
             })),
@@ -242,8 +266,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=forland-metal-motors-automotive-show",
             data: Array.from({ length: 11 }, (_, index) => ({
               id: index + 1401,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/5. Forland,  Metal 𝐌𝐨𝐭𝐨𝐫𝐬 𝐋imi𝐭e𝐝 𝟔𝐭𝐡 𝐃𝐡𝐚𝐤𝐚 𝐂𝐨𝐦𝐦𝐞𝐫𝐜𝐢𝐚𝐥 𝐀𝐮𝐭𝐨𝐦𝐨𝐭𝐢𝐯𝐞 𝐒𝐡𝐨𝐰 𝟐𝟎𝟐𝟒/img (${index + 1}).jpg`,
               title: `Forland Automotive Project ${index + 1}`,
             })),
@@ -253,8 +277,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=ec-sunflower-launch",
             data: Array.from({ length: 6 }, (_, index) => ({
               id: index + 1501,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/6. EC sunflower  Product Launching Ceremony/img (${index + 1}).jpg`,
               title: `EC Sunflower Project ${index + 1}`,
             })),
@@ -264,8 +288,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=aci-motors-automotive-show",
             data: Array.from({ length: 12 }, (_, index) => ({
               id: index + 1601,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/7. ACI Motors,5th Dhaka Commercial Automotive Show 2023/img (${index + 1}).jpg`,
               title: `ACI Motors Project ${index + 1}`,
             })),
@@ -275,8 +299,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=chartered-life-awards-2022",
             data: Array.from({ length: 16 }, (_, index) => ({
               id: index + 1701,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/8. Chartered Life Annual Awards Night 2022/img (${index + 1}).jpg`,
               title: `Chartered Life Awards Project ${index + 1}`,
             })),
@@ -286,8 +310,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=rupayan-city-handover",
             data: Array.from({ length: 27 }, (_, index) => ({
               id: index + 1801,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/9.Rupayan City Uttara, Project Handover Ceremony/img (${index + 1}).jpg`,
               title: `Rupayan Handover Project ${index + 1}`,
             })),
@@ -297,8 +321,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=bosudhara-chetonar-bornomala",
             data: Array.from({ length: 21 }, (_, index) => ({
               id: index + 1901,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/10.Bosudhara Group, চেতনার বর্ণমালা Event/img (${index + 1}).jpg`,
               title: `Bosudhara Event Project ${index + 1}`,
             })),
@@ -308,8 +332,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=pharmasia-conference-2022",
             data: Array.from({ length: 26 }, (_, index) => ({
               id: index + 2001,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/11. Pharmasia Limited,Pharmasia Conference 2022/img (${index + 1}).jpg`,
               title: `Pharmasia Conference Project ${index + 1}`,
             })),
@@ -320,8 +344,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=chartered-life-annual-conference",
             data: Array.from({ length: 33 }, (_, index) => ({
               id: index + 2101,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/12. Chartered Life Insurance Company Limited, Annual Award Program 2021/img (${index + 1}).jpg`,
               title: `Chartered Life Conf Project ${index + 1}`,
             })),
@@ -332,8 +356,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=chartered-life-rong-tulite-muktijuddho",
             data: Array.from({ length: 13 }, (_, index) => ({
               id: index + 2201,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/13.  চার্টার্ড লাইফ ইন্স্যুরেন্স কোম্পানী লিমিটেড, রং তুলিতে বিজয় উৎসব/img (${index + 1}).jpg`,
               title: `রং তুলিতে মুক্তিযুদ্ধ Project ${index + 1}`,
             })),
@@ -343,8 +367,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=channel-i-safe-hands-muktijuddho",
             data: Array.from({ length: 12 }, (_, index) => ({
               id: index + 2301,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/14. Channel I + Safe Hands,রং তুলিতে মুক্তিযুদ্ধ Event/img (${index + 1}).jpg`,
               title: `Channel I Event Project ${index + 1}`,
             })),
@@ -354,8 +378,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=fogg-special-audition-press-conf",
             data: Array.from({ length: 23 }, (_, index) => ({
               id: index + 2401,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/15. Fogg Spcial Audition Launching Press Conference/img (${index + 1}).jpg`,
               title: `Fogg Press Project ${index + 1}`,
             })),
@@ -365,8 +389,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=dhaka-tribune-5th-anniversary",
             data: Array.from({ length: 6 }, (_, index) => ({
               id: index + 2501,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/16. DT( Dhaka Tribune ),5th Anniversary of DT/img (${index + 1}).jpg`,
               title: `Dhaka Tribune Project ${index + 1}`,
             })),
@@ -376,8 +400,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=jafflong-tea-event",
             data: Array.from({ length: 4 }, (_, index) => ({
               id: index + 2601,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/17. Jafflong Tea Event/img (${index + 1}).jpg`,
               title: `Jafflong Tea Project ${index + 1}`,
             })),
@@ -387,8 +411,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=launching-of-club-lovello",
             data: Array.from({ length: 50 }, (_, index) => ({
               id: index + 2701,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/18. Launching of CLUB LOVELLO/img (${index + 1}).jpg`,
               title: `Club Lovello Project ${index + 1}`,
             })),
@@ -398,8 +422,8 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=khulna-titans-activation",
             data: Array.from({ length: 45 }, (_, index) => ({
               id: index + 2801,
-              category: "BTL",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/Events/19. Kulna Titens Activation Work/img (${index + 1}).jpg`,
               title: `Khulna Titans Project ${index + 1}`,
             })),
@@ -407,14 +431,14 @@ const service_data: ServiceData[] = [
           {
             title: "Bank Asia Limited",
             link: "/our-canvas?service=bank-asia-limited",
-            subItems: [
+            deepItems: [
               {
                 title: "Aglabazar Branch Opening",
                 link: "/our-canvas?service=aglabazar-branch-opening",
                 data: Array.from({ length: 1 }, (_, index) => ({
                   id: index + 3001,
-                  category: "Events",
-                  type: "img",
+
+                  mediaType: "image",
                   src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Aglabazar Branch Opening/img (${index + 1}).jpg`,
                   title: `Aglabazar Project ${index + 1}`,
                 })),
@@ -424,8 +448,8 @@ const service_data: ServiceData[] = [
                 link: "/our-canvas?service=airport-branding",
                 data: Array.from({ length: 2 }, (_, index) => ({
                   id: index + 3101,
-                  category: "Events",
-                  type: "img",
+
+                  mediaType: "image",
                   src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Airport Branding/img (${index + 1}).jpg`,
                   title: `Airport Branding Project ${index + 1}`,
                 })),
@@ -435,8 +459,8 @@ const service_data: ServiceData[] = [
                 link: "/our-canvas?service=annual-general-meeting",
                 data: Array.from({ length: 5 }, (_, index) => ({
                   id: index + 3201,
-                  category: "Events",
-                  type: "img",
+
+                  mediaType: "image",
                   src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Annual General Meeting/img (${index + 1}).jpg`,
                   title: `AGM Project ${index + 1}`,
                 })),
@@ -446,8 +470,8 @@ const service_data: ServiceData[] = [
                 link: "/our-canvas?service=csr-event-noakhali-chatkhil",
                 data: Array.from({ length: 1 }, (_, index) => ({
                   id: index + 3301,
-                  category: "Events",
-                  type: "img",
+
+                  mediaType: "image",
                   src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/CSR Event,Nowakhali Chatkhil/img (${index + 1}).jpg`,
                   title: `CSR Event Project ${index + 1}`,
                 })),
@@ -457,8 +481,8 @@ const service_data: ServiceData[] = [
                 link: "/our-canvas?service=narshindi-branch-opening",
                 data: Array.from({ length: 1 }, (_, index) => ({
                   id: index + 3401,
-                  category: "Events",
-                  type: "img",
+
+                  mediaType: "image",
                   src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Narshindi Branch Opening/img (${index + 1}).jpg`,
                   title: `Narshindi Project ${index + 1}`,
                 })),
@@ -468,8 +492,8 @@ const service_data: ServiceData[] = [
                 link: "/our-canvas?service=sylhet-branch-opening",
                 data: Array.from({ length: 1 }, (_, index) => ({
                   id: index + 3501,
-                  category: "Events",
-                  type: "img",
+
+                  mediaType: "image",
                   src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Sylhet Branch Opening/img (${index + 1}).jpg`,
                   title: `Sylhet Project ${index + 1}`,
                 })),
@@ -480,92 +504,92 @@ const service_data: ServiceData[] = [
       },
       {
         title: "Activations",
-        link: "/our-canvas?service=AKIJ PLASTICS",
-        subItems: [
+        link: "/our-canvas?service=ACI–STALL-DESIGN-AND-EXECUTION",
+        nestedItems: [
           {
             title: "AKIJ PLASTICS",
-            link: "/our-canvas?service=AKIJ PLASTICS",
+            link: "/our-canvas?service=AKIJ-PLASTICS",
             data: Array.from({ length: 6 }, (_, index) => ({
-              id: index + 1001,
-              category: "Activations",
-              type: "img",
+              id: index + 11001,
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/ACTIVATIONS/AKIJ PLASTICS/img (${index + 1}).jpg`,
               title: `Activations ${index + 1}`,
             })),
           },
           {
             title: "BERGER EASY CLEAN ACTIVATION",
-            link: "/our-canvas?service=BERGER EASY CLEAN ACTIVATION",
+            link: "/our-canvas?service=BERGER-EASY-CLEAN-ACTIVATION",
             data: Array.from({ length: 3 }, (_, index) => ({
               id: index + 1002,
-              category: "Activations",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/ACTIVATIONS/BERGER EASY CLEAN ACTIVATION/img (${index + 1}).jpg`,
               title: `Activations ${index + 1}`,
             })),
           },
           {
             title: "DABUR RED TOOTHPASTE",
-            link: "/our-canvas?service=DABUR RED TOOTHPASTE",
+            link: "/our-canvas?service=DABUR-RED-TOOTHPASTE",
             data: Array.from({ length: 4 }, (_, index) => ({
               id: index + 1003,
-              category: "Activations",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/ACTIVATIONS/DABUR RED TOOTHPASTE/img (${index + 1}).jpg`,
               title: `Activations ${index + 1}`,
             })),
           },
           {
             title: "EAGLE SUPER AEROSOL",
-            link: "/our-canvas?service=EAGLE SUPER AEROSOL",
+            link: "/our-canvas?service=EAGLE-SUPER-AEROSOL",
             data: Array.from({ length: 5 }, (_, index) => ({
               id: index + 1004,
-              category: "Activations",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/ACTIVATIONS/EAGLE SUPER AEROSOL/img (${index + 1}).jpg`,
               title: `Activations Project ${index + 1}`,
             })),
           },
           {
             title: "FREEDOM SANITARY NAPKIN",
-            link: "/our-canvas?service=FREEDOM SANITARY NAPKIN",
+            link: "/our-canvas?service=FREEDOM-SANITARY-NAPKIN",
             data: Array.from({ length: 8 }, (_, index) => ({
               id: index + 1005,
-              category: "Activations",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/ACTIVATIONS/FREEDOM SANITARY NAPKIN/img (${index + 1}).jpg`,
               title: `Activations Project ${index + 1}`,
             })),
           },
           {
             title: "Mr White",
-            link: "/our-canvas?service=Mr White",
+            link: "/our-canvas?service=Mr-White",
             data: Array.from({ length: 6 }, (_, index) => ({
               id: index + 1006,
-              category: "Activations",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/ACTIVATIONS/Mr White/img (${index + 1}).jpg`,
               title: `Activations Project ${index + 1}`,
             })),
           },
           {
             title: "QUAZI ENTERPRISES CARAVAN ACTIVATIONS",
-            link: "/our-canvas?service=QUAZI ENTERPRISES CARAVAN ACTIVATIONS",
+            link: "/our-canvas?service=QUAZI-ENTERPRISES-CARAVAN-ACTIVATIONS",
             data: Array.from({ length: 19 }, (_, index) => ({
               id: index + 1007,
-              category: "Activations",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/ACTIVATIONS/QUAZI ENTERPRISES/CARAVAN ACTIVATIONS/img (${index + 1}).jpg`,
               title: `Activations Project ${index + 1}`,
             })),
           },
           {
             title: "SAFE HANDS",
-            link: "/our-canvas?service=SAFE HANDS",
+            link: "/our-canvas?service=SAFE-HANDS",
             data: Array.from({ length: 9 }, (_, index) => ({
               id: index + 1008,
-              category: "Activations",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/ACTIVATIONS/SAFE HANDS/img (${index + 1}).png`,
               title: `Activations Project ${index + 1}`,
             })),
@@ -575,19 +599,19 @@ const service_data: ServiceData[] = [
             link: "/our-canvas?service=Wonder",
             data: Array.from({ length: 2 }, (_, index) => ({
               id: index + 1009,
-              category: "Activations",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/ACTIVATIONS/Wonder/img (${index + 1}).jpg`,
               title: `Activations Project ${index + 1}`,
             })),
           },
           {
             title: "SAVLON HAND WASH",
-            link: "/our-canvas?service=SAVLON HAND WASH",
+            link: "/our-canvas?service=SAVLON-HAND-WASH",
             data: Array.from({ length: 4 }, (_, index) => ({
               id: index + 10010,
-              category: "Activations",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/ACTIVATIONS/SAVLON HAND WASH/img (${index + 1}).jpg`,
               title: `Activations Project ${index + 1}`,
             })),
@@ -596,103 +620,103 @@ const service_data: ServiceData[] = [
       },
       {
         title: "Stall",
-        link: "/our-canvas?service=ACI – STALL DESIGN AND EXECUTION",
-        subItems: [
+        link: "/our-canvas?service=ACI–STALL-DESIGN-AND-EXECUTION",
+        nestedItems: [
           {
             title: "ACI – STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=ACI – STALL DESIGN AND EXECUTION",
+            link: "/our-canvas?service=ACI–STALL-DESIGN-AND-EXECUTION",
             data: Array.from({ length: 2 }, (_, index) => ({
               id: index + 2001,
-              category: "Stalls",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/STALLS/ACI – STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
               title: `Stalls Project ${index + 1}`,
             })),
           },
           {
             title: "AIRPORT IMMIGRATION BOOTH BRANDING",
-            link: "/our-canvas?service=AIRPORT IMMIGRATION BOOTH BRANDING",
+            link: "/our-canvas?service=AIRPORT-IMMIGRATION-BOOTH-BRANDING",
             data: Array.from({ length: 4 }, (_, index) => ({
               id: index + 2002,
-              category: "Stalls",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/STALLS/AIRPORT IMMIGRATION BOOTH BRANDING/img (${index + 1}).jpg`,
               title: `Stalls Project ${index + 1}`,
             })),
           },
           {
             title: "FREEDOM - DITF STALL EXECUTION",
-            link: "/our-canvas?service=FREEDOM - DITF STALL EXECUTION",
+            link: "/our-canvas?service=FREEDOM-DITF-STALL-EXECUTION",
             data: Array.from({ length: 2 }, (_, index) => ({
               id: index + 2003,
-              category: "Stalls",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/STALLS/FREEDOM - DITF STALL EXECUTION/img (${index + 1}).jpg`,
               title: `Stalls Project ${index + 1}`,
             })),
           },
           {
             title: "GLOBAL BRAND STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=GLOBAL BRAND STALL DESIGN AND EXECUTION",
+            link: "/our-canvas?service=GLOBAL-BRAND-STALL-DESIGN-AND-EXECUTION",
             data: Array.from({ length: 2 }, (_, index) => ({
               id: index + 2004,
-              category: "Stalls",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/STALLS/GLOBAL BRAND STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
               title: `Stalls Project ${index + 1}`,
             })),
           },
           {
             title: "GUARDIAN STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=GUARDIAN STALL DESIGN AND EXECUTION",
+            link: "/our-canvas?service=GUARDIAN-STALL-DESIGN-AND-EXECUTION",
             data: Array.from({ length: 2 }, (_, index) => ({
               id: index + 2005,
-              category: "Stalls",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/STALLS/GUARDIAN STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
               title: `Stalls Project ${index + 1}`,
             })),
           },
           {
             title: "METAL – STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=METAL – STALL DESIGN AND EXECUTION",
+            link: "/our-canvas?service=METAL–STALL-DESIGN-AND-EXECUTION",
             data: Array.from({ length: 4 }, (_, index) => ({
               id: index + 2006,
-              category: "Stalls",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/STALLS/METAL – STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
               title: `Stalls Project ${index + 1}`,
             })),
           },
           {
             title: "RUPAYAN - STALL DESIGN & EXECUTION",
-            link: "/our-canvas?service=RUPAYAN - STALL DESIGN & EXECUTION",
+            link: "/our-canvas?service=RUPAYAN-STALL-DESIG-&-EXECUTION",
             data: Array.from({ length: 6 }, (_, index) => ({
               id: index + 2007,
-              category: "Stalls",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/STALLS/RUPAYAN - STALL DESIGN & EXECUTION/img (${index + 1}).png`,
               title: `Stalls Project ${index + 1}`,
             })),
           },
           {
             title: "SHANTA HOLDINGS – STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=SHANTA HOLDINGS – STALL DESIGN AND EXECUTION",
+            link: "/our-canvas?service=SHANTA-HOLDINGS–STALL-DESIGN-AND-EXECUTION",
             data: Array.from({ length: 7 }, (_, index) => ({
               id: index + 2008,
-              category: "Stalls",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/STALLS/SHANTA HOLDINGS – STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
               title: `Stalls Project ${index + 1}`,
             })),
           },
           {
             title: "TOTALGAZ - STALL DESIGN & EXECUTION",
-            link: "/our-canvas?service=TOTALGAZ - STALL DESIGN & EXECUTION",
+            link: "/our-canvas?service=TOTALGAZ-STALL-DESIGN-&-EXECUTION",
             data: Array.from({ length: 2 }, (_, index) => ({
               id: index + 2009,
-              category: "Stalls",
-              type: "img",
+
+              mediaType: "image",
               src: `/assets/img/home-01/portfolio/STALLS/TOTALGAZ - STALL DESIGN & EXECUTION/img (${index + 1}).jpg`,
               title: `Stalls Project ${index + 1}`,
             })),
@@ -704,15 +728,15 @@ const service_data: ServiceData[] = [
   },
   {
     id: 3,
-    title: "Digital",
+    item: "Digital",
     subItems: [
       {
         title: "Static",
         link: "/our-canvas?service=static",
         data: Array.from({ length: 45 }, (_, index) => ({
           id: index + 4001,
-          category: "Digital",
-          type: "img",
+
+          mediaType: "image",
           src: `/assets/img/home-01/portfolio/Static/static (${index + 1}).png`,
           title: `Static Project ${index + 1}`,
         })),
@@ -722,8 +746,8 @@ const service_data: ServiceData[] = [
         link: "/our-canvas?service=motion",
         data: Array.from({ length: 30 }, (_, index) => ({
           id: index + 4101,
-          category: "Digital",
-          type: "video",
+
+          mediaType: "video",
           src: `/assets/img/home-01/portfolio/Motion/motion (${index + 1}).mp4`,
           title: `Motion Project ${index + 1}`,
         })),
@@ -744,26 +768,116 @@ const service_data: ServiceData[] = [
   },
 ];
 
-// ── Smart Portal Dropdown (Supports Mobile Click & Desktop Hover) ──────────────
+// ── ৩-লেয়ারের হাইব্রিড ডাটা মার্জিং লজিক ──
+const mergeStaticAndSanityData = (
+  staticData: ServiceData[],
+  sanityData: any[],
+): ServiceData[] => {
+  const merged: ServiceData[] = JSON.parse(JSON.stringify(staticData));
+
+  sanityData.forEach((sanityService: any) => {
+    if (!sanityService.item) return;
+
+    const matchService = merged.find(
+      (s) =>
+        s.item?.trim().toLowerCase() ===
+        sanityService.item?.trim().toLowerCase(),
+    );
+
+    if (matchService) {
+      sanityService.subItems?.forEach((sanitySub: any) => {
+        if (!sanitySub.title) return; // স্টুডিওতে টাইটেল সেভ না থাকলে এখান থেকে ব্যাক করবে
+
+        const matchSub = matchService.subItems.find(
+          (sub) =>
+            sub.title?.trim().toLowerCase() ===
+            sanitySub.title?.trim().toLowerCase(),
+        );
+
+        if (matchSub) {
+          // ১ম লেয়ারের পোর্টফোলিও ডাটা মার্জ
+          if (sanitySub.data && sanitySub.data.length > 0) {
+            matchSub.data = [...(matchSub.data || []), ...sanitySub.data];
+          }
+
+          // ২য় লেয়ারের মার্জ
+          sanitySub.nestedItems?.forEach((sanitySubSub: any) => {
+            if (!sanitySubSub.title) return;
+
+            if (!matchSub.nestedItems) matchSub.nestedItems = [];
+            const matchSubSub = matchSub.nestedItems.find(
+              (ss) =>
+                ss.title?.trim().toLowerCase() ===
+                sanitySubSub.title?.trim().toLowerCase(),
+            );
+
+            if (matchSubSub) {
+              if (sanitySubSub.data && sanitySubSub.data.length > 0) {
+                matchSubSub.data = [
+                  ...(matchSubSub.data || []),
+                  ...sanitySubSub.data,
+                ];
+              }
+
+              // ৩য় লেয়ারের মার্জ
+              sanitySubSub.deepItems?.forEach((sanityDeep: any) => {
+                if (!sanityDeep.title) return;
+
+                if (!matchSubSub.deepItems) matchSubSub.deepItems = [];
+                const matchDeep = matchSubSub.deepItems.find(
+                  (d) =>
+                    d.title?.trim().toLowerCase() ===
+                    sanityDeep.title?.trim().toLowerCase(),
+                );
+
+                if (matchDeep) {
+                  if (sanityDeep.data && sanityDeep.data.length > 0) {
+                    matchDeep.data = [
+                      ...(matchDeep.data || []),
+                      ...sanityDeep.data,
+                    ];
+                  }
+                } else {
+                  matchSubSub.deepItems.push(sanityDeep);
+                }
+              });
+            } else {
+              matchSub.nestedItems.push(sanitySubSub);
+            }
+          });
+        } else {
+          matchService.subItems.push(sanitySub);
+        }
+      });
+    } else {
+      merged.push(sanityService);
+    }
+  });
+
+  return merged;
+};
+
+// ── Smart Portal Dropdown ───────────────────────────────────────────────────
 function SubMenu({
   items,
   anchorEl,
   visible,
   onMouseEnter,
   onMouseLeave,
+  currentService,
 }: {
   items: SubItem[];
   anchorEl: HTMLElement | null;
   visible: boolean;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
+  currentService: string | null;
 }) {
   const [pos, setPos] = useState({ top: 0, left: 0, width: 250 });
   const [isMobile, setIsMobile] = useState(false);
   const [renderLeft, setRenderLeft] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Mobile Click States
   const [activeChildMenu, setActiveChildMenu] = useState<number | null>(null);
   const [activeDeepMenu, setActiveDeepMenu] = useState<number | null>(null);
 
@@ -864,9 +978,48 @@ function SubMenu({
         overflowY: isMobile ? "auto" : "visible",
       }}
     >
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        .canvas-menu-link {
+          transition: color 0.2s ease !important;
+        }
+        .canvas-menu-link:hover {
+          color: #ff5e14 !important;
+        }
+      `,
+        }}
+      />
+
       {items.map((item, i) => {
-        const hasSubSub = !!(item.subItems && item.subItems.length > 0);
+        const hasSubSub = !!(item.nestedItems && item.nestedItems.length > 0);
         const isChildOpen = activeChildMenu === i;
+
+        const isItemActive =
+          currentService &&
+          item.link
+            .toLowerCase()
+            .includes(`service=${currentService.toLowerCase()}`);
+        const isAnySubActive = item.nestedItems?.some((subSub) => {
+          if (
+            currentService &&
+            subSub.link
+              .toLowerCase()
+              .includes(`service=${currentService.toLowerCase()}`)
+          )
+            return true;
+          return subSub.deepItems?.some(
+            (deep) =>
+              currentService &&
+              deep.link
+                .toLowerCase()
+                .includes(`service=${currentService.toLowerCase()}`),
+          );
+        });
+        const finalItemColor =
+          isItemActive || isAnySubActive || (isChildOpen && isMobile)
+            ? "#ff5e14"
+            : "#cccccc";
 
         return (
           <li
@@ -885,17 +1038,17 @@ function SubMenu({
           >
             <Link
               href={item.link}
+              className="canvas-menu-link"
               onClick={(e) => handleItemClick(e, i, hasSubSub)}
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
                 padding: "10px 18px",
-                color: isChildOpen && isMobile ? "#ff5e14" : "#cccccc",
+                color: finalItemColor,
                 fontSize: "16px",
                 textDecoration: "none",
                 whiteSpace: isMobile ? "normal" : "nowrap",
-                transition: "background 0.15s ease",
               }}
             >
               <span>{item.title}</span>
@@ -913,8 +1066,7 @@ function SubMenu({
               )}
             </Link>
 
-            {/* ── ২য় লেয়ার সাব-মেনু ── */}
-            {hasSubSub && isChildOpen && item.subItems && (
+            {hasSubSub && isChildOpen && item.nestedItems && (
               <ul
                 style={{
                   position: isMobile ? "relative" : "absolute",
@@ -924,7 +1076,7 @@ function SubMenu({
                   listStyle: "none",
                   margin: 0,
                   padding: "4px 0",
-                  background: isMobile ? "#222222" : "#222222",
+                  background: "#222222",
                   boxShadow: isMobile ? "none" : "0 8px 24px rgba(0,0,0,0.5)",
                   borderRadius: isMobile ? "0" : "6px",
                   borderLeft: isMobile
@@ -936,11 +1088,30 @@ function SubMenu({
                   zIndex: 100000,
                 }}
               >
-                {item.subItems.map((subSub, subIdx) => {
+                {item?.nestedItems.map((subSub, subIdx) => {
                   const hasDeepSub = !!(
-                    subSub.subItems && subSub.subItems.length > 0
+                    subSub.deepItems && subSub.deepItems.length > 0
                   );
                   const isDeepOpen = activeDeepMenu === subIdx;
+
+                  const isSubSubActive =
+                    currentService &&
+                    subSub.link
+                      .toLowerCase()
+                      .includes(`service=${currentService.toLowerCase()}`);
+                  const isAnyDeepActive = subSub.deepItems?.some(
+                    (deep) =>
+                      currentService &&
+                      deep.link
+                        .toLowerCase()
+                        .includes(`service=${currentService.toLowerCase()}`),
+                  );
+                  const finalSubSubColor =
+                    isSubSubActive ||
+                    isAnyDeepActive ||
+                    (isDeepOpen && isMobile)
+                      ? "#ff5e14"
+                      : "#bbbbbb";
 
                   return (
                     <li
@@ -955,6 +1126,7 @@ function SubMenu({
                     >
                       <Link
                         href={subSub.link}
+                        className="canvas-menu-link"
                         onClick={(e) =>
                           handleSubSubClick(e, subIdx, hasDeepSub)
                         }
@@ -963,7 +1135,7 @@ function SubMenu({
                           justifyContent: "space-between",
                           alignItems: "center",
                           padding: "10px 18px",
-                          color: isDeepOpen && isMobile ? "#ff5e14" : "#bbbbbb",
+                          color: finalSubSubColor,
                           fontSize: "15px",
                           textDecoration: "none",
                           whiteSpace: isMobile ? "normal" : "nowrap",
@@ -995,8 +1167,7 @@ function SubMenu({
                         )}
                       </Link>
 
-                      {/* ── ৩য় লেয়ার সাব-মেনু ── */}
-                      {hasDeepSub && isDeepOpen && subSub.subItems && (
+                      {hasDeepSub && isDeepOpen && subSub.deepItems && (
                         <ul
                           style={{
                             position: isMobile ? "relative" : "absolute",
@@ -1010,13 +1181,13 @@ function SubMenu({
                             listStyle: "none",
                             margin: 0,
                             padding: "4px 0",
-                            background: isMobile ? "#2d2d2d" : "#2d2d2d",
+                            background: "#2d2d2d",
                             boxShadow: isMobile
                               ? "none"
                               : "0 8px 24px rgba(0,0,0,0.5)",
                             borderRadius: isMobile ? "0" : "6px",
                             borderLeft: isMobile
-                              ? "3px solid #fff"
+                              ? "3px solid #ff5e14"
                               : "1px solid #4a4a4a",
                             borderTop: isMobile ? "none" : "1px solid #4a4a4a",
                             borderBottom: isMobile
@@ -1028,23 +1199,37 @@ function SubMenu({
                             zIndex: 100001,
                           }}
                         >
-                          {subSub.subItems.map((deepItem, deepIdx) => (
-                            <li key={deepIdx} style={{ padding: "0" }}>
-                              <Link
-                                href={deepItem.link}
-                                style={{
-                                  display: "block",
-                                  padding: "10px 25px",
-                                  color: "#aaaaaa",
-                                  fontSize: "14px",
-                                  textDecoration: "none",
-                                  whiteSpace: isMobile ? "normal" : "nowrap",
-                                }}
-                              >
-                                {deepItem.title}
-                              </Link>
-                            </li>
-                          ))}
+                          {subSub.deepItems.map((deepItem, deepIdx) => {
+                            const isDeepActive =
+                              currentService &&
+                              deepItem.link
+                                .toLowerCase()
+                                .includes(
+                                  `service=${currentService.toLowerCase()}`,
+                                );
+                            const finalDeepColor = isDeepActive
+                              ? "#ff5e14"
+                              : "#aaaaaa";
+
+                            return (
+                              <li key={deepIdx} style={{ padding: "0" }}>
+                                <Link
+                                  href={deepItem.link}
+                                  className="canvas-menu-link"
+                                  style={{
+                                    display: "block",
+                                    padding: "10px 25px",
+                                    color: finalDeepColor,
+                                    fontSize: "14px",
+                                    textDecoration: "none",
+                                    whiteSpace: isMobile ? "normal" : "nowrap",
+                                  }}
+                                >
+                                  {deepItem.title}
+                                </Link>
+                              </li>
+                            );
+                          })}
                         </ul>
                       )}
                     </li>
@@ -1069,17 +1254,81 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
   const { initIsotop, isotopContainer } = useIsotop();
   const searchParams = useSearchParams();
 
+  // ১. মেইন স্টেটটি প্রথমে service_data স্ট্যাটিক অ্যারে দিয়ে ইনিশিয়ালাইজ করা হলো
+  const [allServiceData, setAllServiceData] =
+    useState<ServiceData[]>(service_data);
   const [currentService, setCurrentService] = useState<string | null>(null);
   const [filteredData, setFilteredData] = useState<PortfolioItem[]>([]);
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [hoveredId, setHoveredId] = useState<number | string | null>(null);
   const [width, setWidth] = useState(0);
 
-  // Modal Controls
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalItem, setModalItem] = useState<PortfolioItem | null>(null);
 
-  const titleRefs = useRef<{ [key: number]: HTMLHeadingElement | null }>({});
+  const titleRefs = useRef<{
+    [key: string | number]: HTMLHeadingElement | null;
+  }>({});
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const fetchSanityServices = async () => {
+      try {
+        const query = `*[_type == "our-canvas"] {
+          "id": _id,
+          item,
+          subItems[] {
+            "title": coalesce(atlSub, btlSub, digitalSub),
+            link,
+            "data": data[] {
+              "id": _key,
+              title,
+              mediaType,
+              "src": src.asset->url,
+              youtubeUrl
+            },
+            "nestedItems": subItems[] {
+              title,
+              link,
+              "data": data[] {
+                "id": _key,
+                title,
+                mediaType,
+                "src": src.asset->url,
+                youtubeUrl
+              },
+              "deepItems": deepItems[] {
+                title,
+                link,
+                "data": data[] {
+                  "id": _key,
+                  title,
+                  mediaType,
+                  "src": src.asset->url,
+                  youtubeUrl
+                }
+              }
+            }
+          }
+        }`;
+
+        const sanityData = await client.fetch(query);
+        console.log("Sanity Raw Data:", sanityData);
+
+        if (sanityData && sanityData.length > 0) {
+          const finalMergedData = mergeStaticAndSanityData(
+            service_data,
+            sanityData,
+          );
+          console.log("Merged Final Data:", finalMergedData);
+          setAllServiceData(finalMergedData);
+        }
+      } catch (error) {
+        console.error("Sanity connection error:", error);
+      }
+    };
+
+    fetchSanityServices();
+  }, []);
 
   useEffect(() => {
     if (filteredData.length > 0) {
@@ -1094,16 +1343,18 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // ৩. ফিল্টারিং লজিক এখন ‘allServiceData’ (স্ট্যাটিক + স্যানিটি) স্টেটের ওপর কাজ করবে
   useEffect(() => {
     const serviceParam: any = searchParams?.get("service");
     setCurrentService(serviceParam);
 
-    if (serviceParam) {
+    if (serviceParam && allServiceData.length > 0) {
       let targetData: PortfolioItem[] = [];
 
-      for (const service of service_data) {
+      for (const service of allServiceData) {
         for (const sub of service.subItems) {
           if (
+            sub.link &&
             sub.link
               .toLowerCase()
               .includes(`service=${serviceParam.toLowerCase()}`) &&
@@ -1112,11 +1363,13 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
             targetData = sub.data;
             break;
           }
-          if (sub.subItems) {
-            const matchedSubSub = sub.subItems.find((subSub) =>
-              subSub.link
-                .toLowerCase()
-                .includes(`service=${serviceParam.toLowerCase()}`),
+          if (sub.nestedItems) {
+            const matchedSubSub = sub.nestedItems.find(
+              (subSub) =>
+                subSub.link &&
+                subSub.link
+                  .toLowerCase()
+                  .includes(`service=${serviceParam.toLowerCase()}`),
             );
 
             if (
@@ -1128,12 +1381,14 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
               break;
             }
 
-            for (const subSub of sub.subItems) {
-              if (subSub.subItems) {
-                const matchedDeep = subSub.subItems.find((deepItem) =>
-                  deepItem.link
-                    .toLowerCase()
-                    .includes(`service=${serviceParam.toLowerCase()}`),
+            for (const subSub of sub.nestedItems) {
+              if (subSub.deepItems) {
+                const matchedDeep = subSub.deepItems.find(
+                  (deepItem) =>
+                    deepItem.link &&
+                    deepItem.link
+                      .toLowerCase()
+                      .includes(`service=${serviceParam.toLowerCase()}`),
                 );
                 if (matchedDeep && matchedDeep.data) {
                   targetData = matchedDeep.data;
@@ -1167,9 +1422,9 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
     } else {
       setFilteredData([]);
     }
-  }, [searchParams]);
+  }, [searchParams, allServiceData]);
 
-  const handleMainItemClick = (id: number) => {
+  const handleMainItemClick = (id: number | string) => {
     if (window.innerWidth <= 768) {
       if (hoveredId === id) {
         setHoveredId(null);
@@ -1179,7 +1434,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
     }
   };
 
-  const handleEnter = (id: number) => {
+  const handleEnter = (id: number | string) => {
     if (window.innerWidth > 768) {
       if (leaveTimer.current) clearTimeout(leaveTimer.current);
       setHoveredId(id);
@@ -1207,24 +1462,28 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
     if (!currentService) return false;
     return s.subItems.some((sub) => {
       if (
+        sub.link &&
         sub.link
           .toLowerCase()
           .includes(`service=${currentService.toLowerCase()}`)
       )
         return true;
-      if (sub.subItems) {
-        return sub.subItems.some((subSub) => {
+      if (sub.nestedItems) {
+        return sub.nestedItems.some((subSub) => {
           if (
+            subSub.link &&
             subSub.link
               .toLowerCase()
               .includes(`service=${currentService.toLowerCase()}`)
           )
             return true;
-          if (subSub.subItems) {
-            return subSub.subItems.some((deep) =>
-              deep.link
-                .toLowerCase()
-                .includes(`service=${currentService.toLowerCase()}`),
+          if (subSub.deepItems) {
+            return subSub.deepItems.some(
+              (deep) =>
+                deep.link &&
+                deep.link
+                  .toLowerCase()
+                  .includes(`service=${currentService.toLowerCase()}`),
             );
           }
           return false;
@@ -1262,14 +1521,13 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         </div>
       </div>
 
-      {/* Main navigation */}
       <div
         id="service-section"
         className="container mt-80"
         style={{ maxWidth: "1200px" }}
       >
         <div className="row justify-content-center align-items-center text-center">
-          {service_data.map((s) => (
+          {allServiceData.map((s) => (
             <div
               key={s.id}
               className="col-lg-4 col-md-4 col-4 d-flex justify-content-center align-items-center mb-40"
@@ -1280,14 +1538,26 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                   className="tp-service-icon mb-2 mb-md-0"
                   style={{ marginRight: width > 768 ? "15px" : "0px" }}
                 >
-                  <Image
-                    src={s.icon}
-                    alt="icon"
-                    style={{
-                      width: width > 768 ? "40px" : "25px",
-                      height: "auto",
-                    }}
-                  />
+                  {typeof s.icon === "string" ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={s.icon}
+                      alt="icon"
+                      style={{
+                        width: width > 768 ? "40px" : "25px",
+                        height: "auto",
+                      }}
+                    />
+                  ) : (
+                    <Image
+                      src={s.icon}
+                      alt="icon"
+                      style={{
+                        width: width > 768 ? "40px" : "25px",
+                        height: "auto",
+                      }}
+                    />
+                  )}
                 </div>
                 <div
                   className="tp-service-content"
@@ -1311,11 +1581,12 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                       transition: "color 0.2s ease",
                     }}
                   >
-                    <span>{s.title}</span>
+                    <span>{s.item}</span>
                   </h4>
 
                   {s.subItems && (
                     <SubMenu
+                      currentService={currentService}
                       items={s.subItems}
                       anchorEl={titleRefs.current[s.id] ?? null}
                       visible={hoveredId === s.id}
@@ -1347,7 +1618,6 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         </span>
       </p>
 
-      {/* Grid Portfolio Display Section */}
       {currentService && (
         <div className="container mt-60">
           <div className="row grid" ref={isotopContainer}>
@@ -1358,7 +1628,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                   className="col-xl-4 col-lg-6 col-md-6 grid-item"
                 >
                   <div className="tp-project-5-2-thumb mb-30 p-relative not-hide-cursor">
-                    {item.type === "video" ? (
+                    {item.mediaType === "video" ? (
                       <div
                         className="portfolio-video-wrapper"
                         onClick={(e) => handleOpenModal(e, item)}
@@ -1373,9 +1643,8 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                           cursor: "pointer",
                         }}
                       >
-                        {/* Preview without control buttons to prevent conflict with overlay layer */}
                         <video
-                          src={item.src}
+                          src={item?.src}
                           muted
                           loop
                           playsInline
@@ -1386,7 +1655,6 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                             objectFit: "fill",
                           }}
                         />
-                        {/* Play Icon Indicator Overlay */}
                         <div
                           style={{
                             position: "absolute",
@@ -1416,20 +1684,38 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                             position: "relative",
                           }}
                         >
-                          <Image
-                            className="anim-zoomin"
-                            src={item.src}
-                            alt={item.title}
-                            width={750}
-                            height={750}
-                            style={{
-                              width: "100%",
-                              maxWidth: "300px",
-                              height: "auto",
-                              objectFit: "fill",
-                              borderRadius: "5px",
-                            }}
-                          />
+                          {typeof item.src === "string" &&
+                          (item.src.startsWith("http") ||
+                            item.src.startsWith("/")) ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              className="anim-zoomin"
+                              src={item.src}
+                              alt={item.title}
+                              style={{
+                                width: "100%",
+                                maxWidth: "300px",
+                                height: "auto",
+                                objectFit: "fill",
+                                borderRadius: "5px",
+                              }}
+                            />
+                          ) : (
+                            <Image
+                              className="anim-zoomin"
+                              src={item.src}
+                              alt={item.title}
+                              width={750}
+                              height={750}
+                              style={{
+                                width: "100%",
+                                maxWidth: "300px",
+                                height: "auto",
+                                objectFit: "fill",
+                                borderRadius: "5px",
+                              }}
+                            />
+                          )}
                         </div>
                       </Link>
                     )}
@@ -1450,7 +1736,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         </div>
       )}
 
-      {/* ── Portfolio Lightbox Modal (React-Bootstrap) ── */}
+      {/* ── Lightbox Modal ── */}
       <Modal
         show={showModal}
         onHide={handleCloseModal}
@@ -1476,7 +1762,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
             overflow: "hidden",
           }}
         >
-          {modalItem?.type === "video" ? (
+          {modalItem?.mediaType === "video" ? (
             <video
               src={modalItem.src}
               controls
@@ -1488,10 +1774,10 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                 backgroundColor: "#000",
               }}
             />
-          ) : modalItem?.type == "yt" ? (
+          ) : modalItem?.mediaType === "youtube" ? (
             <iframe
-              src={modalItem?.youtubeUrl}
-              // title={activeSlide.title}
+              // 🟢 এখানে ফাংশনটি কল করা হয়েছে যা লিংকটিকে সেফলি এম্বেড লিংকে কনভার্ট করবে
+              src={getEmbedUrl(modalItem?.youtubeUrl)}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               style={{
