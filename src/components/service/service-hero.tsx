@@ -18,15 +18,25 @@ export default function ServiceHero() {
         <div className="row">
           <div className="col-xl-11">
             <div className="sv-hero-title-box">
-              <h6
-                style={{ fontSize: width > 768 ? "75px" : "45px" }}
-                className="sv-hero-title tp-char"
-                data-on-scroll="0"
-                data-delay="0.6"
-              >
-                We are all about adaptable approaches, implementing creative
-                thinking, and driving long-lasting effective strategies that
-                ensure a brand’s success.
+              <h6>
+                <span
+                  style={{ fontSize: width > 768 ? "75px" : "45px" }}
+                  className="sv-hero-title tp-char-animation "
+                >
+                  We are all about adaptable approaches,{" "}
+                </span>
+                <span
+                  style={{ fontSize: width > 768 ? "75px" : "45px" }}
+                  className="sv-hero-title tp-char-animation "
+                >
+                  implementing creative thinking, and driving long-lasting{" "}
+                </span>
+                <span
+                  style={{ fontSize: width > 768 ? "75px" : "45px" }}
+                  className="sv-hero-title tp-char-animation "
+                >
+                  effective strategies that ensure a brand’s success.
+                </span>
               </h6>
               {/* <p className="tp_fade_bottom">
                 We provide powerful marketing services .

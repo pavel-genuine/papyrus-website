@@ -1499,13 +1499,21 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         <div className="row">
           <div className="col-xl-11">
             <div className="sv-hero-title-box">
-              <h6
-                style={{ fontSize: width > 768 ? "75px" : "45px" }}
-                className="sv-hero-title "
-              >
-                Our expertise lies in crafting perceptions that empower brands,
-                making them exceptional and significant in the minds of
-                consumers.
+              <h6>
+                <span
+                  style={{ fontSize: width > 768 ? "75px" : "45px" }}
+                  className="sv-hero-title tp-char-animation "
+                >
+                  Our expertise lies in crafting perceptions that empower
+                  brands,
+                </span>
+                <span
+                  style={{ fontSize: width > 768 ? "75px" : "45px" }}
+                  className="sv-hero-title tp-char-animation"
+                >
+                  making them exceptional and significant in the minds of
+                  consumers.
+                </span>
               </h6>
             </div>
           </div>
