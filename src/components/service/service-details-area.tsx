@@ -865,6 +865,7 @@ function SubMenu({
   onMouseEnter,
   onMouseLeave,
   currentService,
+  onMouseLeaveMobile, // 👈 ১. এখানে নতুন প্রপসটি রিসিভ করুন
 }: {
   items: SubItem[];
   anchorEl: HTMLElement | null;
@@ -872,6 +873,7 @@ function SubMenu({
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   currentService: string | null;
+  onMouseLeaveMobile?: () => void; // 👈 ২. টাইপ ডেফিনিশনে এটি অপশনাল হিসেবে যোগ করুন
 }) {
   const [pos, setPos] = useState({ top: 0, left: 0, width: 250 });
   const [isMobile, setIsMobile] = useState(false);
@@ -892,28 +894,42 @@ function SubMenu({
   useEffect(() => {
     if (anchorEl && visible) {
       const rect = anchorEl.getBoundingClientRect();
+      const dropdownWidth = 250; // Your standard menu width
+      const paddingOffset = 6;
 
       if (window.innerWidth <= 768) {
+        // Mobile Layout logic remains the same
         setPos({
-          top: rect.bottom + window.scrollY + 6,
+          top: rect.bottom + window.scrollY + paddingOffset,
           left: 15,
           width: window.innerWidth - 30,
         });
       } else {
         const spaceRight = window.innerWidth - rect.left;
+
         if (spaceRight < 700) {
           setRenderLeft(true);
+
+          // --- FIX FOR 768px - 860px SCREEN OUT OF BOUNDS ---
+          // Calculate the tentative left position if rendered to the left
+          let targetLeft = rect.right + window.scrollX - dropdownWidth;
+
+          // If it starts shifting outside the viewport's left boundary (< 0)
+          if (targetLeft < 0) {
+            targetLeft = 15; // Hard constraint to keep it inside the screen padding
+          }
+
           setPos({
-            top: rect.bottom + window.scrollY + 6,
-            left: rect.right + window.scrollX - 250,
-            width: 250,
+            top: rect.bottom + window.scrollY + paddingOffset,
+            left: targetLeft,
+            width: dropdownWidth,
           });
         } else {
           setRenderLeft(false);
           setPos({
-            top: rect.bottom + window.scrollY + 6,
+            top: rect.bottom + window.scrollY + paddingOffset,
             left: rect.left + window.scrollX,
-            width: 250,
+            width: dropdownWidth,
           });
         }
       }
@@ -1254,7 +1270,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
   const { initIsotop, isotopContainer } = useIsotop();
   const searchParams = useSearchParams();
 
-  // ১. মেইন স্টেটটি প্রথমে service_data স্ট্যাটিক অ্যারে দিয়ে ইনিশিয়ালাইজ করা হলো
+  // ১. মেইন স্টেটটি প্রথমে service_data স্ট্যাটিক অ্যারে দিয়ে ইনিশিয়ালাইজ করা হলো
   const [allServiceData, setAllServiceData] =
     useState<ServiceData[]>(service_data);
   const [currentService, setCurrentService] = useState<string | null>(null);
@@ -1269,6 +1285,26 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
     [key: string | number]: HTMLHeadingElement | null;
   }>({});
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // ── FIX 1: CLICK OUTSIDE TO CLOSE SUBMENU ON MOBILE ──
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (window.innerWidth <= 768) {
+        // Find if the click landed inside any service title wrapper or portal menu
+        const target = event.target as HTMLElement;
+        const clickedInsideMenu =
+          target.closest(".tp-service-item") ||
+          target.closest('ul[style*="position: absolute"]');
+
+        if (!clickedInsideMenu) {
+          setHoveredId(null);
+        }
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+    return () => document.removeEventListener("click", handleOutsideClick);
+  }, []);
 
   useEffect(() => {
     const fetchSanityServices = async () => {
@@ -1347,6 +1383,9 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
   useEffect(() => {
     const serviceParam: any = searchParams?.get("service");
     setCurrentService(serviceParam);
+
+    // ── FIX 2: HIDE SUBMENU IMMEDIATELY WHEN PARAMETER/PICTURES CHANGES ──
+    setHoveredId(null);
 
     if (serviceParam && allServiceData.length > 0) {
       let targetData: PortfolioItem[] = [];
@@ -1576,7 +1615,11 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                     ref={(el: any) => (titleRefs.current[s.id] = el)}
                     onMouseEnter={() => handleEnter(s.id)}
                     onMouseLeave={handleLeave}
-                    onClick={() => handleMainItemClick(s.id)}
+                    onClick={(e) => {
+                      // Prevent parent elements from intercepting mobile toggle
+                      e.stopPropagation();
+                      handleMainItemClick(s.id);
+                    }}
                     style={{
                       cursor: "pointer",
                       fontSize: width > 768 ? "36px" : "20px",
@@ -1600,6 +1643,8 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                       visible={hoveredId === s.id}
                       onMouseEnter={() => handleEnter(s.id)}
                       onMouseLeave={handleLeave}
+                      // Pass callback to manually shut menu from deep elements inside portal
+                      onMouseLeaveMobile={() => setHoveredId(null)}
                     />
                   )}
                 </div>
@@ -1784,7 +1829,6 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
             />
           ) : modalItem?.mediaType === "youtube" ? (
             <iframe
-              // 🟢 এখানে ফাংশনটি কল করা হয়েছে যা লিংকটিকে সেফলি এম্বেড লিংকে কনভার্ট করবে
               src={getEmbedUrl(modalItem?.youtubeUrl)}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen

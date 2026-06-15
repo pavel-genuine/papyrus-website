@@ -180,13 +180,13 @@ export default function ServiceHome() {
         </div>
 
         <div className="row align-items-center mt-50">
-          <div className="col-xl-6 col-lg-6 col-md-4">
+          <div className="col-xl-6 col-lg-6 col-md-12">
             <div className="tp-service-2 text-center text-lg-start">
               <Image
                 style={{
                   width: width > 768 ? "550px" : "100vw",
                   height: width > 768 ? "auto" : "auto",
-                  marginBottom: width > 768 ? "110px" : "40px",
+                  marginBottom: width > 768 ? "50px" : "50px",
                   borderRadius: "10px",
                 }}
                 src={shape}
@@ -195,7 +195,7 @@ export default function ServiceHome() {
             </div>
           </div>
 
-          <div className="col-xl-6 col-lg-6 col-md-8">
+          <div className="col-xl-6 col-lg-6 col-md-12">
             <div className="tp-service-2-accordion-box">
               <div className="accordion" id="accordionExample">
                 {service_accordion.map((s) => (

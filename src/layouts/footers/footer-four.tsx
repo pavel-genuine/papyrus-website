@@ -22,7 +22,7 @@ export default function FooterFour() {
         <div className="container">
           <div className="row">
             <div
-              className={`col-xl-4 col-lg-6 col-md-6 ${width > 768 ? "mb-60" : ""}`}
+              className={`col-xl-4 col-lg-6 col-md-12 ${width > 768 ? "mb-60" : ""}`}
             >
               <div className="tp-footer-3-widget-wrapper footer-col-3-1">
                 <div className="tp-footer-3-widget mb-40">
@@ -70,7 +70,7 @@ export default function FooterFour() {
                 borderRight: "1px solid #414141a4",
                 paddingRight: "50px",
               }}
-              className={`col-xl-4 col-lg-6 col-md-6 ${width > 768 ? "mb-60" : ""} `}
+              className={`col-xl-4 col-lg-6 col-md-12 ${width > 768 ? "mb-60" : ""} `}
             >
               <div className="tp-footer-3-widget text-md-center footer-col-2-2">
                 <div className="tp-footer-3-logo-box">
@@ -80,8 +80,8 @@ export default function FooterFour() {
                   </p> */}
                   <Link
                     style={{
-                      scale: width > 768 ? "2" : "1",
-                      marginBottom: width > 768 ? " " : "40px",
+                      scale: width > 768 ? "1.5" : ".9",
+                      marginBottom: width > 768 ? "40px " : "40px",
                     }}
                     className={`tp-footer-3-logo p-relative ${width > 768 ? "mt-100" : ""} `}
                     href="/"
@@ -95,8 +95,12 @@ export default function FooterFour() {
                 </div>
               </div>
             </div>
-            <div className="col-xl-4 col-lg-6 col-md-6 mb-60">
-              <div className="tp-footer-3-widget-wrapper footer-col-2-2">
+            <div
+              className={`col-xl-4 col-lg-6 col-md-12 mb-60 ${width > 768 ? "" : "mt-40"}`}
+            >
+              <div
+                className={`tp-footer-3-widget-wrapper  ${width < 1200 ? "" : "footer-col-2-2"}`}
+              >
                 <div className="tp-footer-3-widget mb-30">
                   <h4 className="tp-footer-3-title">Contact</h4>
                   <div className="tp-footer-2-contact-item">

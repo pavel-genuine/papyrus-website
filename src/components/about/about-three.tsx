@@ -47,13 +47,13 @@ export default function AboutThree() {
           // style={{ textAlign: "justify" }}
           className="row align-items-center "
         >
-          <div className="col-xl-6 col-lg-6 col-md-4">
+          <div className="col-xl-6 col-lg-6 col-md-12">
             <div className="">
               <Image
                 style={{
                   width: width > 768 ? "550px" : "100vw",
                   height: width > 768 ? "450px" : "auto",
-                  marginBottom: width > 768 ? "" : "40px",
+                  marginBottom: width > 768 ? "50px" : "50px",
                   borderRadius: "10px",
                 }}
                 src={shape}
@@ -61,7 +61,7 @@ export default function AboutThree() {
               />
             </div>
           </div>
-          <div className="col-xl-6 col-lg-6 col-md-8">
+          <div className="col-xl-6 col-lg-6 col-md-12">
             <div className="tp-about-3-content">
               <p className="mb-30 tp_fade_bottom">
                 PAPYRUS is an advertising agency for 19 years, located in

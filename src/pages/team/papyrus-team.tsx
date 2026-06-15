@@ -18,7 +18,7 @@ const PapyrusTeam = () => {
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []); // Added dependency array to stop infinite rendering loops
+  }, []);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -27,15 +27,33 @@ const PapyrusTeam = () => {
     if (width === 0) return [];
 
     const isMobile = width <= 768;
+    const isTablet = width > 768 && width <= 1200; // 768 থেকে 1200 রেঞ্জ ট্র্যাক করার জন্য
 
-    // DESKTOP stays EXACTLY as your provided values (6 rows, 5 cols). MOBILE shifts safely.
-    const rows = isMobile ? 11 : 6;
-    const cols = isMobile ? 3 : 5;
+    // ১. গ্রিড রো এবং কলাম ব্রেকপয়েন্ট নির্ধারণ
+    let rows = 6;
+    let cols = 5;
+
+    if (isMobile) {
+      rows = 11;
+      cols = 3;
+    } else if (isTablet) {
+      rows = 8; // ট্যাবলেটের জন্য রো বাড়িয়ে ছড়ানো হয়েছে
+      cols = 4; // ৪ কলাম করা হয়েছে যাতে ওভারল্যাপ না হয়
+    }
+
     const memberData = [];
 
-    // DESKTOP uses your exact values (85/cols and 90/rows). MOBILE tightens grid scales.
-    const cellWidth = isMobile ? 85 / cols : 85 / cols;
-    const cellHeight = isMobile ? 95 / rows : 90 / rows;
+    // ২. সেল এর উইডথ এবং হাইট নির্ধারণ
+    let cellWidth = 85 / cols;
+    let cellHeight = 90 / rows;
+
+    if (isMobile) {
+      cellWidth = 85 / cols;
+      cellHeight = 95 / rows;
+    } else if (isTablet) {
+      cellWidth = 88 / cols; // ট্যাবলেট স্ক্রিনে একটু বেশি স্পেস নেওয়ার জন্য
+      cellHeight = 92 / rows;
+    }
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
@@ -53,10 +71,15 @@ const PapyrusTeam = () => {
         const left = cellX + leftOffset;
         const top = cellY + topOffset;
 
-        // DESKTOP stays exactly your size calculation. MOBILE drops size to fix overlapping.
-        const size = isMobile
-          ? Math.floor(Math.random() * (135 - 115) + 115)
-          : Math.floor(Math.random() * (165 - 135) + 320);
+        // ৩. রেসপনসিভ ইমেজ সাইজিং (ডেক্সটপ অবিকৃত রাখা হয়েছে)
+        let size = Math.floor(Math.random() * (165 - 135) + 320); // Desktop default
+
+        if (isMobile) {
+          size = Math.floor(Math.random() * (135 - 115) + 115);
+        } else if (isTablet) {
+          // ট্যাবলেটের জন্য পারফেক্ট ব্যালেন্সড সাইজ (১৭০px - ২১০px) যাতে ওভারল্যাপ না হয়
+          size = Math.floor(Math.random() * (210 - 170) + 170);
+        }
 
         memberData.push({
           id: index,
@@ -70,7 +93,7 @@ const PapyrusTeam = () => {
       }
     }
     return memberData;
-  }, [width]); // Triggers cleanly when screen changes
+  }, [width]);
 
   useGSAP(
     () => {
@@ -134,15 +157,23 @@ const PapyrusTeam = () => {
           .team-container {
             position: relative;
             width: 100vw;
-            height: 230vh; /* Keeps your exact desktop height */
+            height: 230vh; /* ডেক্সটপের আগের হাইট অপরিবর্তিত আছে */
             background: #000000;
             overflow: hidden;
           }
 
-          /* Targets small screens only - No changes applied to desktop layout viewports */
+          /* ট্যাবলেটের জন্য হাইট অ্যাডজাস্টমেন্ট (768px থেকে 1200px) */
+          @media (min-width: 769px) and (max-width: 1200px) {
+            .team-container {
+              height: 250vh; /* ইমেজ ছড়ানোর জন্য হাইট সামান্য বাড়ানো হয়েছে */
+              overflow-y: auto;
+            }
+          }
+
+          /* মোবাইলের জন্য (768px বা তার নিচে) */
           @media (max-width: 768px) {
             .team-container {
-              height: 190vh; /* Scaled down for mobile layout heights */
+              height: 190vh;
               overflow-y: auto;
             }
           }
@@ -177,7 +208,7 @@ const PapyrusTeam = () => {
           }
 
           .photo {
-            object-fit: contain !important; /* Contain handles transparent backgrounds perfectly */
+            object-fit: contain !important;
           }
         `}</style>
       </section>

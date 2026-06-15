@@ -206,7 +206,7 @@ export default function PortfolioHome() {
         </div>
 
         <div className="row align-items-center mt-50">
-          <div className="col-xl-6 col-lg-6 col-md-4">
+          <div className="col-xl-6 col-lg-6 col-md-12">
             <div className="">
               <Image
                 style={{
@@ -225,9 +225,9 @@ export default function PortfolioHome() {
           <div
             style={{
               paddingLeft: width > 768 ? "70px" : "20px",
-              paddingTop: width > 768 ? "0px" : "50px",
+              paddingTop: width > 768 ? "50px" : "50px",
             }}
-            className="col-xl-6 col-lg-6 col-md-8"
+            className="col-xl-6 col-lg-6 col-md-12"
           >
             <div className="tp-service-right-wrap">
               {service_data.map((s) => (
