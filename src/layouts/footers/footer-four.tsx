@@ -22,7 +22,7 @@ export default function FooterFour() {
         <div className="container">
           <div className="row">
             <div
-              className={`col-xl-4 col-lg-6 col-md-12 ${width > 768 ? "mb-60" : ""}`}
+              className={`col-xl-4 col-lg-4 col-md-12 ${width > 768 ? "mb-60" : ""}`}
             >
               <div className="tp-footer-3-widget-wrapper footer-col-3-1">
                 <div className="tp-footer-3-widget mb-40">
@@ -70,7 +70,7 @@ export default function FooterFour() {
                 borderRight: "1px solid #414141a4",
                 paddingRight: "50px",
               }}
-              className={`col-xl-4 col-lg-6 col-md-12 ${width > 768 ? "mb-60" : ""} `}
+              className={`col-xl-4 col-lg-4 col-md-12 ${width > 768 ? "mb-60" : ""} `}
             >
               <div className="tp-footer-3-widget text-md-center footer-col-2-2">
                 <div className="tp-footer-3-logo-box">
@@ -96,12 +96,12 @@ export default function FooterFour() {
               </div>
             </div>
             <div
-              className={`col-xl-4 col-lg-6 col-md-12 mb-60 ${width > 768 ? "" : "mt-40"}`}
+              className={`col-xl-4 col-lg-4 col-md-12 mb-60 ${width > 768 ? "mt-0" : "mt-40"}`}
             >
               <div
-                className={`tp-footer-3-widget-wrapper  ${width < 1200 ? "" : "footer-col-2-2"}`}
+                className={`tp-footer-3-widget-wrapper  ${width < 991 ? "" : "footer-col-2-2"}`}
               >
-                <div className="tp-footer-3-widget mb-30">
+                <div className="tp-footer-3-widget ">
                   <h4 className="tp-footer-3-title">Contact</h4>
                   <div className="tp-footer-2-contact-item">
                     <span>
@@ -141,7 +141,7 @@ export default function FooterFour() {
                     </span>
                   </div>
                 </div>
-                <div className="tp-footer-3-widget mb-100">
+                <div className="tp-footer-3-widget mb-100 mt-60">
                   <h4 className="tp-footer-3-title">Follow</h4>
                   <div className="tp-footer-3-social">
                     <Link
