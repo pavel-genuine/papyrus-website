@@ -1,6 +1,6 @@
 "use client";
 import { gsap } from "gsap";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useScrollSmooth from "@/hooks/use-scroll-smooth";
 import { ScrollSmoother, ScrollTrigger, SplitText } from "@/plugins";
 import { useGSAP } from "@gsap/react";
@@ -19,6 +19,11 @@ import HeaderOne from "@/layouts/headers/header-one";
 
 const ContactMain = () => {
   useScrollSmooth();
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
 
   useGSAP(() => {
     const timer = setTimeout(() => {
@@ -71,7 +76,7 @@ const ContactMain = () => {
                     <div className="row">
                       <div className="">
                         <div
-                          style={{ height: "80vh" }}
+                          style={{ height: width > 768 ? "80vh" : "60vh" }}
                           className="cn-contactform-2-map "
                         >
                           <iframe
