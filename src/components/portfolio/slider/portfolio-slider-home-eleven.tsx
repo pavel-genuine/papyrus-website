@@ -6,8 +6,9 @@ import Image from "next/image";
 import Modal from "react-bootstrap/Modal";
 import gsap from "gsap";
 import { verTextFragment } from "@/utils/webgl-anim";
-
 import { WebGL } from "@/plugins";
+import Link from "next/link";
+
 import showcase_1 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (1).png";
 import showcase_2 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (2).png";
 import showcase_3 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (3).png";
@@ -30,7 +31,6 @@ import showcase_21 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (2
 import showcase_22 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (22).png";
 import showcase_23 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (23).png";
 import showcase_24 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (24).png";
-import Link from "next/link";
 
 // ─── Slider Data ─────────────────────────────────────────────────────────────
 const slider_data = [
@@ -178,7 +178,6 @@ const slider_data = [
     client: "Diplomilk",
     year: "2025",
   },
-
   {
     id: 7007,
     subtitle: "Branding & Marketing",
@@ -197,7 +196,6 @@ const slider_data = [
     client: "DEKKO CORPORATE",
     year: "2025",
   },
-
   {
     id: 7009,
     subtitle: "Branding & Marketing",
@@ -207,7 +205,6 @@ const slider_data = [
     client: "EAGLE MOSQUITO COIL",
     year: "2025",
   },
-
   {
     id: 7011,
     subtitle: "Branding & Marketing",
@@ -250,7 +247,6 @@ const slider_images = [
   showcase_9,
   showcase_10,
   showcase_11,
-
   showcase_15,
   showcase_16,
   showcase_17,
@@ -306,7 +302,6 @@ export default function PortfolioSliderHomeEleven() {
   const [activeSlide, setActiveSlide] = useState<
     (typeof slider_data)[0] | null
   >(null);
-
   const [iframeReady, setIframeReady] = useState(false);
 
   useEffect(() => {
@@ -364,9 +359,8 @@ export default function PortfolioSliderHomeEleven() {
     return `${baseUrl}?autoplay=1&origin=${origin}`;
   };
 
-  // কাস্টম বাটন ইভেন্ট হ্যান্ডলার (Direct Swiper Method Trigger)
   const goPrev = (e: React.MouseEvent) => {
-    e.stopPropagation(); // আটকাতে যেন মেইন স্লাইড ক্লিকে মোডাল ওপেন না হয়
+    e.stopPropagation();
     if (swiperRef.current) {
       swiperRef.current.slidePrev();
     }
@@ -382,29 +376,35 @@ export default function PortfolioSliderHomeEleven() {
   return (
     <>
       <style jsx>{`
-        /* ── Core Layout Dimensions with Header Offset ── */
+        /* ── Core Layout Dimensions with Image Aspect Ratio Locking ── */
         #port-showcase-slider-main {
           position: relative;
           width: 100%;
           margin-top: ${width > 768 ? "90px" : "80px"};
-          height: ${width > 768 ? "calc(100vh - 90px)" : "calc(100vh - 80px)"};
+          /* সব স্ক্রিন সাইজেই ব্যানারগুলোর অরিজিনাল রেশিও (800x369) ফোর্সড থাকবে */
+          height: auto !important;
+          aspect-ratio: 800 / 369 !important;
+          max-height: ${width > 768
+            ? "calc(100vh - 90px)"
+            : "calc(100vh - 80px)"};
           display: flex;
           align-items: center;
           justify-content: center;
           background-color: #000;
-          object-fit: cover;
+          overflow: hidden;
         }
 
         .port-showcase-slider-spaces {
           position: relative;
           width: 100%;
           height: 100%;
+          aspect-ratio: 800 / 369 !important;
         }
 
         /* ── Absolute Global Play Icon Overlay Layering ── */
         .video-play-overlay {
           position: absolute;
-          bottom: 50%;
+          top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
           z-index: 999 !important;
@@ -448,7 +448,7 @@ export default function PortfolioSliderHomeEleven() {
           }
         }
 
-        /* ── কাস্টম নেভিগেশন বাটন স্টাইল ── */
+        /* ── Navigation Controls Style ── */
         .tp-showcase-arrow-box {
           display: flex !important;
           align-items: center;
@@ -457,15 +457,14 @@ export default function PortfolioSliderHomeEleven() {
           background-color: rgba(0, 0, 0, 0.85) !important;
           border-radius: 30px;
           position: absolute !important;
-          bottom: 2% !important;
-          left: 48% !important;
-          scale: 0.5;
-          transform: translateX(-50%) !important;
-          z-index: 9999 !important; /* সর্বোচ্চ লেয়ারে নিয়ে আসা হলো */
+          bottom: 4% !important;
+          left: 50% !important;
+          transform: translateX(-50%) scale(0.7) !important;
+          z-index: 9999 !important;
           padding: 10px 20px;
           visibility: visible !important;
           opacity: 1 !important;
-          pointer-events: auto !important; /* ক্লিক যাতে কোনোভাবেই ব্লক না হয় */
+          pointer-events: auto !important;
           border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -488,16 +487,34 @@ export default function PortfolioSliderHomeEleven() {
         }
 
         .tp-showcase-arrow-box button:active {
-          transform: scale(0.9); /* মোবাইলে টাচ রেসপন্স এর জন্য */
+          transform: scale(0.9);
         }
 
-        /* ── Absolute Mobile Aspect Sizing Fixes ── */
+        /* ── WebGL & Next Image Handling to prevent stretching ── */
+        #canvas-slider {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          aspect-ratio: 800 / 369 !important;
+        }
+
+        #canvas-slider canvas {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: contain !important; /* ইমেজ যাতে চ্যাপ্টা বা বিকৃত না হয় */
+        }
+
+        .slide-img {
+          object-fit: contain !important;
+        }
+
+        /* ── Responsive Screen Tuning ── */
         @media (max-width: 768px) {
           .tp-showcase-arrow-box {
-            bottom: 1% !important; /* মোবাইলে পজিশন ঠিক করা হলো */
-            left: 35% !important;
-            padding: 6px 14px;
-            scale: 0.3;
+            bottom: 2% !important;
+            transform: translateX(-50%) scale(0.5) !important;
             z-index: 99999 !important;
           }
 
@@ -509,23 +526,11 @@ export default function PortfolioSliderHomeEleven() {
           #port-showcase-slider-main,
           .port-showcase-slider-spaces,
           #showcase-slider-holder,
-          #showcase-slider {
-            height: auto !important;
-            aspect-ratio: 800 / 369 !important;
-            min-height: unset !important;
-          }
-
+          #showcase-slider,
           #canvas-slider {
             height: auto !important;
             aspect-ratio: 800 / 369 !important;
-          }
-
-          #canvas-slider canvas {
-            width: 100% !important;
-            height: 100% !important;
-            position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
+            min-height: unset !important;
           }
 
           .video-play-overlay {
@@ -565,10 +570,7 @@ export default function PortfolioSliderHomeEleven() {
           </div>
         </div>
 
-        {/* CRITICAL FIXES:
-          ১. `pointer-events: "auto"` ইনলাইন ফোর্স করা হয়েছে।
-          ২. `onClick` দিয়ে সরাসরি Swiper কন্ট্রোল করা হচ্ছে, যা নেভিগেশনের বাগগুলোকে দূর করবে।
-        */}
+        {/* নেভিগেশন কন্ট্রোল */}
         <div
           className="tp-showcase-arrow-box"
           style={{ pointerEvents: "auto" }}
@@ -586,6 +588,7 @@ export default function PortfolioSliderHomeEleven() {
             ></i>
           </button>
         </div>
+
         <div
           style={{
             position: "absolute",
@@ -596,7 +599,7 @@ export default function PortfolioSliderHomeEleven() {
             backgroundColor: "#000000",
             padding: width > 768 ? "3px 20px" : "0px 10px",
             borderRadius: "30px",
-            fontSize: width > 768 ? "20px" : "10px",
+            fontSize: width > 768 ? "14px" : "10px",
           }}
           className="show-all"
         >
@@ -635,9 +638,7 @@ export default function PortfolioSliderHomeEleven() {
                 touchStartPreventDefault={false}
                 speed={1000}
                 loop={true}
-                simulateTouch={
-                  true
-                } /* মোবাইলে টেনে ড্র্যাগ/সোয়াইপ করার সুবিধাও থাকবে */
+                simulateTouch={true}
                 autoplay={{
                   delay: 3000,
                   disableOnInteraction: false,
@@ -665,16 +666,15 @@ export default function PortfolioSliderHomeEleven() {
           </div>
         </div>
 
-        {/* WebGL canvas container */}
+        {/* WebGL canvas container with strict sizing */}
         <div
           id="canvas-slider"
           className="canvas-slider"
           ref={webGLContainerRef}
           style={{
             position: "absolute",
-            top: width < 768 ? "50%" : 0,
-            left: width < 768 ? "50%" : 0,
-            transform: width < 768 ? "translate(-50%, -50%)" : "none",
+            top: 0,
+            left: 0,
             width: "100%",
             height: "100%",
             zIndex: 1,
@@ -693,6 +693,7 @@ export default function PortfolioSliderHomeEleven() {
                 src={imgSrc}
                 alt="showcase-img"
                 priority
+                style={{ objectFit: "contain" }}
               />
             </div>
           ))}
@@ -711,7 +712,7 @@ export default function PortfolioSliderHomeEleven() {
         <Modal.Body>
           {activeSlide && (
             <div className="bg-dark" style={{ width: "100vw" }}>
-              <div className=" ">
+              <div>
                 {iframeReady ? (
                   <iframe
                     src={buildIframeSrc(activeSlide.youtubeUrl)}
