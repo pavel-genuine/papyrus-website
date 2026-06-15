@@ -384,9 +384,9 @@ export default function PortfolioSliderHomeEleven() {
           /* সব স্ক্রিন সাইজেই ব্যানারগুলোর অরিজিনাল রেশিও (800x369) ফোর্সড থাকবে */
           height: auto !important;
           aspect-ratio: 800 / 369 !important;
-          max-height: ${width > 768
-            ? "calc(100vh - 90px)"
-            : "calc(100vh - 80px)"};
+          max-height: ${
+            width > 768 ? "calc(100vh - 90px)" : "calc(100vh - 80px)"
+          };
           display: flex;
           align-items: center;
           justify-content: center;
@@ -419,7 +419,7 @@ export default function PortfolioSliderHomeEleven() {
         .play-icon-circle {
           width: 70px;
           height: 70px;
-          background-color: rgba(247, 149, 29, 0.66);
+          background-color: #f7951da8;
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -433,7 +433,7 @@ export default function PortfolioSliderHomeEleven() {
 
         #showcase-slider:hover .play-icon-circle {
           transform: scale(1.1);
-          background-color: rgba(247, 148, 29, 1);
+          background-color: #f7951da8;
         }
 
         @keyframes pulse-play {
@@ -512,8 +512,9 @@ export default function PortfolioSliderHomeEleven() {
 
         /* ── Responsive Screen Tuning ── */
         @media (max-width: 768px) {
+        
           .tp-showcase-arrow-box {
-            bottom: 2% !important;
+            bottom: -4% !important;
             transform: translateX(-50%) scale(0.5) !important;
             z-index: 99999 !important;
           }
@@ -542,8 +543,8 @@ export default function PortfolioSliderHomeEleven() {
           .play-icon-circle {
             width: 55px !important;
             height: 55px !important;
-            font-size: 22px !important;
-            background-color: #f7941d !important;
+            font-size: 15px !important;
+            background-color: #f7951da8; !important;
           }
         }
 
@@ -565,7 +566,7 @@ export default function PortfolioSliderHomeEleven() {
           <div className="play-icon-circle">
             <i
               className="fa-solid fa-play"
-              style={{ marginLeft: "4px", color: "#ffffff" }}
+              style={{ marginLeft: "4px", color: "#ffffffd1" }}
             ></i>
           </div>
         </div>
