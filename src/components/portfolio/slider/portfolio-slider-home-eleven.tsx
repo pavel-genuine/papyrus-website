@@ -31,6 +31,7 @@ import showcase_21 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (2
 import showcase_22 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (22).png";
 import showcase_23 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (23).png";
 import showcase_24 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (24).png";
+import showcase_25 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (25).png";
 
 // ─── Slider Data ─────────────────────────────────────────────────────────────
 const slider_data = [
@@ -232,6 +233,15 @@ const slider_data = [
     client: "ICY Guest",
     year: "2025",
   },
+  {
+    id: 7014,
+    subtitle: "Branding & Marketing",
+    title: "football",
+    youtubeUrl: "https://www.youtube.com/embed/vpqvbCCl-lg",
+    description: "Luxury real estate digital experience.",
+    client: "ICY Guest",
+    year: "2025",
+  },
 ];
 
 const slider_images = [
@@ -257,6 +267,7 @@ const slider_images = [
   showcase_22,
   showcase_23,
   showcase_24,
+  showcase_25,
 ];
 
 // ─── WebGL Transition Helper ──────────────────────────────────────────────────
