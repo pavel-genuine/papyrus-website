@@ -118,7 +118,7 @@ const service_data: ServiceData[] = [
       {
         title: "Logo",
         link: "/our-canvas?service=logo",
-        data: Array.from({ length: 45 }, (_, index) => ({
+        data: Array.from({ length: 51 }, (_, index) => ({
           id: index + 1,
 
           src: `/assets/img/home-01/portfolio/Logo/logo (${index + 1}).png`,
@@ -128,7 +128,7 @@ const service_data: ServiceData[] = [
       {
         title: "Packaging",
         link: "/our-canvas?service=packaging",
-        data: Array.from({ length: 66 }, (_, index) => ({
+        data: Array.from({ length: 76 }, (_, index) => ({
           id: index + 101,
           mediaType: "image",
           src: `/assets/img/home-01/portfolio/Packaging/packaging (${index + 1}).png`,
@@ -735,7 +735,7 @@ const service_data: ServiceData[] = [
       {
         title: "Static",
         link: "/our-canvas?service=static",
-        data: Array.from({ length: 45 }, (_, index) => ({
+        data: Array.from({ length: 104 }, (_, index) => ({
           id: index + 4001,
 
           mediaType: "image",
@@ -746,7 +746,7 @@ const service_data: ServiceData[] = [
       {
         title: "Motion",
         link: "/our-canvas?service=motion",
-        data: Array.from({ length: 30 }, (_, index) => ({
+        data: Array.from({ length: 33 }, (_, index) => ({
           id: index + 4101,
 
           mediaType: "video",

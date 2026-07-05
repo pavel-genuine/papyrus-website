@@ -126,14 +126,14 @@ export default function FooterFour() {
                       <Link href="tel:+880 1986-661166">+880 1986-661166</Link>
                     </span>
                     <br />
-                    <span>
+                    <span style={{ textTransform: "lowercase" }}>
                       {" "}
                       <Link href="mailto:info@papyrus.agency">
                         info@papyrus.agency
                       </Link>
                     </span>
                     <br />
-                    <span>
+                    <span style={{ textTransform: "lowercase" }}>
                       {" "}
                       <Link href="mailto:musfiqurpapyrusimc@gmail.com">
                         musfiqurpapyrusimc@gmail.com

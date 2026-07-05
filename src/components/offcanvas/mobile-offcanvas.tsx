@@ -44,7 +44,9 @@ export default function MobileOffcanvas({
           </div>
           <div className="tp-offcanvas-main">
             <div className="tp-offcanvas-content">
-              <h3 className="tp-offcanvas-title">Hello There!</h3>
+              <h3 className="tp-offcanvas-title">
+                Papyrus a full service agency.
+              </h3>
               {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, </p> */}
             </div>
             <div className="tp-main-menu-mobile d-xl-none">
@@ -64,7 +66,7 @@ export default function MobileOffcanvas({
               </div> */}
             </div>
             <div className="tp-offcanvas-contact">
-              <h3 className="tp-offcanvas-title sm">Information</h3>
+              <h3 className="tp-offcanvas sm">Information</h3>
 
               <ul>
                 <li>
