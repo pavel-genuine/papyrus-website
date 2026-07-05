@@ -28,8 +28,8 @@ function MarqueImage({
   isMobile: boolean;
 }) {
   // আগের চেয়ে উইডথ ও হাইট বাড়িয়ে দেওয়া হলো
-  const width = isMobile ? 220 : 450;
-  const height = isMobile ? 140 : 280;
+  const width = isMobile ? 220 : 700;
+  const height = isMobile ? 140 : 460;
 
   return (
     <div
