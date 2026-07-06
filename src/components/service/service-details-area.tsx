@@ -1576,7 +1576,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         style={{ maxWidth: "1200px" }}
       >
         <div className="row justify-content-center align-items-center text-center">
-          {allServiceData.map((s) => (
+          {allServiceData?.map((s) => (
             <div
               key={s.id}
               className="col-lg-4 col-md-4 col-4 d-flex justify-content-center align-items-center mb-40"
@@ -1677,7 +1677,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         <div className="container mt-60">
           <div className="row grid" ref={isotopContainer}>
             {filteredData.length > 0 ? (
-              filteredData.map((item) => (
+              filteredData.toReversed()?.map((item) => (
                 <div
                   key={item.id}
                   className="col-xl-3 col-lg-3 col-md-6 col-6 grid-item"

@@ -119,7 +119,7 @@ const HomeMain = () => {
             {/* <StudioPanelThree /> */}
             {/* <AwardTwo /> */}
           </main>
-          <FooterFive />
+          {/* <FooterFive /> */}
           <FooterFour />
         </div>
       </div>
