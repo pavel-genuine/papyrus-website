@@ -29,7 +29,7 @@ export default function BigText({ cls = "" }: IProps) {
             <h4
               style={{
                 // scale: width > 768 ? "70%" : "80%",
-                fontSize: width > 768 ? "120px" : "100px",
+                fontSize: "100px",
                 fontWeight: "700",
               }}
               className="sv-big-text tp-char-animation"
