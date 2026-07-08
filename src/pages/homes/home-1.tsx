@@ -111,15 +111,16 @@ const HomeMain = () => {
         <div id="smooth-content">
           <main>
             <PortfolioSliderHomeEleven />
-            <AboutThree />
             <PortfolioHome></PortfolioHome>
+            <AboutThree />
+
             <ServiceHome></ServiceHome>
             {/* <PortfolioStandardMain /> */}
             <CounterOne />
             {/* <StudioPanelThree /> */}
             {/* <AwardTwo /> */}
           </main>
-          {/* <FooterFive /> */}
+          <FooterFive />
           <FooterFour />
         </div>
       </div>

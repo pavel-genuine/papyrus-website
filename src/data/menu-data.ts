@@ -7,15 +7,14 @@ const menu_data: IMenuDT[] = [
     link: "/",
   },
   {
-    id: 4,
-    title: "Our Story",
-    link: "/about",
-  },
-
-  {
     id: 2,
     title: "Our Canvas",
     link: "/our-canvas",
+  },
+  {
+    id: 4,
+    title: "Our Story",
+    link: "/about",
   },
 
   {

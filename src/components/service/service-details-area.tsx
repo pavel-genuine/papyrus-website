@@ -506,7 +506,7 @@ const service_data: ServiceData[] = [
       },
       {
         title: "Activations",
-        link: "/our-canvas?service=ACI–STALL-DESIGN-AND-EXECUTION",
+        link: "/our-canvas?service=AKIJ-PLASTICS",
         nestedItems: [
           {
             title: "AKIJ PLASTICS",

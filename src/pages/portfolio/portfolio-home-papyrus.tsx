@@ -41,9 +41,18 @@ const service_data = [
     id: 2,
     title: "BTL",
     subItems: [
-      { title: "Events", link: "/our-canvas?service=event" },
-      { title: "Activations", link: "/our-canvas?service=activation" },
-      { title: "Stall", link: "/our-canvas?service=stall" },
+      {
+        title: "Events",
+        link: "/our-canvas?service=manikganj-school-100-years",
+      },
+      {
+        title: "Activations",
+        link: "/our-canvas?service=AKIJ-PLASTICS",
+      },
+      {
+        title: "Stall",
+        link: "/our-canvas?service=ACI–STALL-DESIGN-AND-EXECUTION",
+      },
     ],
     icon: s_2,
   },
