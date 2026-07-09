@@ -7,20 +7,20 @@ import { useSearchParams } from "next/navigation";
 import shape from "@/assets/img/home-01/portfolio/shape1.jpg";
 import { useIsotop } from "@/hooks/use-isotop";
 import Modal from "react-bootstrap/Modal";
-
-// Icons & Images
-import s_1 from "@/assets/img/home-01/service/service-icon-1.png";
-import s_2 from "@/assets/img/home-01/service/service-icon-2.png";
-import s_3 from "@/assets/img/home-01/service/service-icon-3.png";
 import { createPortal } from "react-dom";
-
-// ── Sanity Client Import ──
 import { client } from "@/sanity/lib/client";
 
-const getEmbedUrl = (url: any) => {
-  // যদি ইউআরএল না থাকে, টাইপ স্ট্রিং না হয় বা ফাঁকা হয়, তবে এরর না দিয়ে সরাসরি খালি রিটার্ন করবে
-  if (!url || typeof url !== "string") return "";
+// Shared Dynamic Data, Types & Logic Import
+import {
+  static_service_data,
+  mergeStaticAndSanityData,
+  ServiceData,
+  SubItem,
+  PortfolioItem,
+} from "@/data/service-data";
 
+const getEmbedUrl = (url: any) => {
+  if (!url || typeof url !== "string") return "";
   try {
     let videoId = "";
     const trimmedUrl = url.trim();
@@ -34,50 +34,12 @@ const getEmbedUrl = (url: any) => {
     } else if (trimmedUrl.includes("/embed/")) {
       return trimmedUrl;
     }
-
     return videoId ? `https://www.youtube.com/embed/${videoId}` : trimmedUrl;
   } catch (error) {
     console.error("YouTube URL parsing error:", error);
-    return ""; // ব্যাকআপ হিসেবে কোনো ক্র্যাশ ছাড়া খালি স্ট্রিং
+    return "";
   }
 };
-
-// Interfaces
-interface PortfolioItem {
-  id: number | string; // Sanity string ID সাপোর্ট করার জন্য number | string করা হলো
-
-  src: string;
-  mediaType?: string;
-  youtubeUrl?: string;
-  title: string;
-}
-
-interface DeepSubItem {
-  title: string;
-  link: string;
-  data: PortfolioItem[];
-}
-
-interface SubSubItem {
-  title: string;
-  link: string;
-  data?: PortfolioItem[];
-  deepItems?: DeepSubItem[];
-}
-
-interface SubItem {
-  title: string;
-  link: string;
-  data?: PortfolioItem[];
-  nestedItems?: SubSubItem[];
-}
-
-interface ServiceData {
-  id: number | string;
-  item: string;
-  subItems: SubItem[];
-  icon: any;
-}
 
 const tvcYoutubeUrls = [
   ,
@@ -92,774 +54,529 @@ const tvcYoutubeUrls = [
   "https://www.youtube.com/embed/TR833DwttyA", // index 9
   "https://www.youtube.com/embed/_0hHGdVTq8M", // index 10
   "https://www.youtube.com/embed/i0bTZdPnsOE", // index 11
-  "https://www.youtube.com/embed/fh5EQnNrJzM", // index 12 (Blank)
-  "https://www.youtube.com/embed/LZoncSoN5uI", // index 13 (Blank)
-  "https://www.youtube.com/embed/Nhvi0TvxS6E",
-  "https://www.youtube.com/embed/403f6-iGrYc", // index 14
-  "https://www.youtube.com/embed/FqzXlfjXRT0", // index 15
-  "https://www.youtube.com/embed/ezZzHU8cQoc", // index 16
-  "https://www.youtube.com/embed/oyMGZ3MuHSQ", // index 17
-  "https://www.youtube.com/embed/-RONGs06cAg", // index 18
-  "https://www.youtube.com/embed/HBouDycfTFI", // index 19
-  "https://www.youtube.com/embed/WoIPSIOr55k", // index 20
-  "https://www.youtube.com/embed/Im0RkJ3WdME", // index 21
-  "https://www.youtube.com/embed/Xg-Mp2iWSj8", // index 22
-  "https://www.youtube.com/embed/PheBReZDBIk", // index 23
-  "https://www.youtube.com/embed/vpqvbCCl-lg", // index 23
-  ,
+  "https://www.youtube.com/embed/fh5EQnNrJzM", // index 12
+  "https://www.youtube.com/embed/LZoncSoN5uI", // index 13
+  "https://www.youtube.com/embed/Nhvi0TvxS6E", // index 14
+  "https://www.youtube.com/embed/403f6-iGrYc", // index 15
+  "https://www.youtube.com/embed/FqzXlfjXRT0", // index 16
+  "https://www.youtube.com/embed/ezZzHU8cQoc", // index 17
+  "https://www.youtube.com/embed/oyMGZ3MuHSQ", // index 18
+  "https://www.youtube.com/embed/-RONGs06cAg", // index 19
+  "https://www.youtube.com/embed/HBouDycfTFI", // index 20
+  "https://www.youtube.com/embed/WoIPSIOr55k", // index 21
+  "https://www.youtube.com/embed/Im0RkJ3WdME", // index 22
+  "https://www.youtube.com/embed/Xg-Mp2iWSj8", // index 23
+  "https://www.youtube.com/embed/PheBReZDBIk", // index 24
+  "https://www.youtube.com/embed/vpqvbCCl-lg", // index 25
+  // ── এখান থেকে স্ক্রিনশট অনুযায়ী নতুন লিঙ্কগুলো ক্রমানুসারে অ্যাড করা হলো ──
+  "https://www.youtube.com/embed/byyIECUZ0ew", // index 26 -> Meena Click (tvc-banner (26).png)
+  "https://www.youtube.com/embed/-Rmqrix5Wzw", // index 27 -> জরায়ুমুখ ক্যান্সার (tvc-banner (27).png)
+  "https://www.youtube.com/embed/rP9mO7bpA0Q", // index 28 -> Jafflong Tea (tvc-banner (28).png)
+  "https://www.youtube.com/embed/VcX_nqsn4aw", // index 29 -> Jamuna Cash Back (tvc-banner (29).png)
+  "https://www.youtube.com/embed/lM36azJ2J4M", // index 30 -> Igloo বাবার জন্য কথামালা (tvc-banner (30).png)
+  "https://www.youtube.com/embed/ty3a0Tf_FmE", // index 31 -> Igloo Logo (tvc-banner (31).png)
+  "https://www.youtube.com/embed/z8G634sn630", // index 32 -> Good Luck Pen (tvc-banner (32).png)
+  "https://www.youtube.com/embed/PrfMuYePF70", // index 33 -> Eagle Coil (tvc-banner (33).png)
+  "https://www.youtube.com/embed/RTAbjiEzF20", // index 34 -> Good Luck Pen 2 (tvc-banner (34).png)
+  "https://www.youtube.com/embed/-7G0UUMJVt8", // index 35 -> Champ Juice / Milk (tvc-banner (35).png)
+  "https://www.youtube.com/embed/Lq9GUZPqwJo", // index 36 -> প্লট রেডি (tvc-banner (36).png)
+  "https://www.youtube.com/embed/EWu5zuBKzmc", // index 37 -> তারা লিকুইড ক্লিনার (tvc-banner (37).png)
+  "https://www.youtube.com/embed/Q18Wr3dM7tk", // index 38 -> বসুন্ধরা নুডুলস (tvc-banner (38).png)
+  "https://www.youtube.com/embed/We_fy6Ehpyw", // index 39 -> বিনা তারের পাঠশালা Green (tvc-banner (39).png)
+  "https://www.youtube.com/watch?v=Ps1tcAZ94n8", // index 40 -> বসুন্ধরা আটা ময়দা সুজি (tvc-banner (40).png)
+  "https://www.youtube.com/embed/1sMeuwoiSn0", // index 40 -> বসুন্ধরা আটা ময়দা সুজি (tvc-banner (40).png)
+  "https://www.youtube.com/embed/BT9N7srMjTw", // index 41 -> Chartered Life Insurance (tvc-banner (41).png)
+  "https://www.youtube.com/embed/KRtb5vMrgM0", // index 42 -> Haier Logo (tvc-banner (42).png)
+  "https://www.youtube.com/watch?v=6kIieLYHsHU", // index 43 -> Haier AC Clean Cool (tvc-banner (43).png)
+  "https://www.youtube.com/embed/vELrRtS4tw4", // index 44 -> আকিজ প্লাস্টিকস (tvc-banner (44).png)
+  "https://www.youtube.com/watch?v=oJx2yIx2J8Y", // index 45 -> Jhalak Detergent Powder (tvc-banner (45).png)
+  "https://www.youtube.com/embed/QP31KrK8dmM", // index 46 -> বই পড়া দৃশ্য (tvc-banner (46).png)
+  "https://www.youtube.com/embed/_yPvcg7R9b4", // index 48 -> বাবা ও মেয়ে কাপড়ের ব্যাগ দৃশ্য (tvc-banner (48).png)
+  "https://www.youtube.com/watch?v=QP31KrK8dmM", // index 47 -> অফিস/টেবিল সিন (tvc-banner (47).png)
 ];
 
-// ── Service Data ───────────────────────────────────────────────────────────
-const service_data: ServiceData[] = [
-  {
-    id: 1,
-    item: "ATL",
-    subItems: [
-      {
-        title: "Logo",
-        link: "/our-canvas?service=logo",
-        data: Array.from({ length: 51 }, (_, index) => ({
-          id: index + 1,
+// Inject static images arrays onto the structure dynamically if required
+static_service_data[0].subItems[0].data = Array.from(
+  { length: 51 },
+  (_, index) => ({
+    id: index + 1,
+    src: `/assets/img/home-01/portfolio/Logo/logo (${index + 1}).png`,
+    title: `Logo Project ${index + 1}`,
+  }),
+);
+static_service_data[0].subItems[1].data = Array.from(
+  { length: 76 },
+  (_, index) => ({
+    id: index + 101,
+    mediaType: "image",
+    src: `/assets/img/home-01/portfolio/Packaging/packaging (${index + 1}).png`,
+    title: `Packaging Project ${index + 1}`,
+  }),
+);
+static_service_data[0].subItems[2].data = Array.from(
+  { length: 49 },
+  (_, index) => ({
+    id: index + 101,
+    mediaType: "image",
+    src: `/assets/img/home-01/portfolio/Press-add/press-ad (${index + 1}).png`,
+    title: `Press Ad Project ${index + 1}`,
+  }),
+);
+static_service_data[0].subItems[5].data = Array.from(
+  { length: 23 },
+  (_, index) => ({
+    id: index + 101,
+    mediaType: "image",
+    src: `/assets/img/home-01/portfolio/Brochure-Catalogue/Brochure-catalogue (${index + 1}).png`,
+    title: `Brochure Project ${index + 1}`,
+  }),
+);
+static_service_data[0].subItems[6].data = Array.from(
+  { length: 33 },
+  (_, index) => ({
+    id: index + 101,
+    mediaType: "image",
+    src: `/assets/img/home-01/portfolio/Calandar/calandar (${index + 1}).png`,
+    title: `Calendar Project ${index + 1}`,
+  }),
+);
+static_service_data[0].subItems[8].data = Array.from(
+  { length: 48 },
+  (_, index) => ({
+    id: index + 101,
+    mediaType: "youtube",
+    src: `/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (${index + 1}).png`,
+    title: `TVC Project ${index + 1}`,
+    youtubeUrl: tvcYoutubeUrls[index + 1] || "",
+  }),
+);
+static_service_data[0].subItems[9].data = Array.from(
+  { length: 1 },
+  (_, index) => ({
+    id: index + 101,
+    mediaType: "video",
+    src: `/assets/img/home-01/portfolio/AV/AV (${index + 1}).mp4`,
+    title: `AV Project ${index + 1}`,
+  }),
+);
 
-          src: `/assets/img/home-01/portfolio/Logo/logo (${index + 1}).png`,
-          title: `Logo Project ${index + 1}`,
-        })),
-      },
-      {
-        title: "Packaging",
-        link: "/our-canvas?service=packaging",
-        data: Array.from({ length: 76 }, (_, index) => ({
-          id: index + 101,
-          mediaType: "image",
-          src: `/assets/img/home-01/portfolio/Packaging/packaging (${index + 1}).png`,
-          title: `Packaging Project ${index + 1}`,
-        })),
-      },
-      {
-        title: "Press Ad",
-        link: "/our-canvas?service=press-ad",
-        data: Array.from({ length: 49 }, (_, index) => ({
-          id: index + 101,
-          mediaType: "image",
-          src: `/assets/img/home-01/portfolio/Press-add/press-ad (${index + 1}).png`,
-          title: `Press Ad Project ${index + 1}`,
-        })),
-      },
-      {
-        title: "Billboard - Out-door",
-        link: "/our-canvas?service=bill-board",
-        data: [],
-      },
-      {
-        title: "Leaflet - Flyer",
-        link: "/our-canvas?service=leaflet",
-        data: [],
-      },
-      {
-        title: "Brochure - Catalogue",
-        link: "/our-canvas?service=brochure-catalogue",
-        data: Array.from({ length: 23 }, (_, index) => ({
-          id: index + 101,
-          mediaType: "image",
-          src: `/assets/img/home-01/portfolio/Brochure-Catalogue/Brochure-catalogue (${index + 1}).png`,
-          title: `Brochure Project ${index + 1}`,
-        })),
-      },
-      {
-        title: "Calendar",
-        link: "/our-canvas?service=calendar",
-        data: Array.from({ length: 33 }, (_, index) => ({
-          id: index + 101,
-          mediaType: "image",
-          src: `/assets/img/home-01/portfolio/Calandar/calandar (${index + 1}).png`,
-          title: `Calendar Project ${index + 1}`,
-        })),
-      },
-      {
-        title: "Annual Report",
-        link: "/our-canvas?service=annual-report",
-        data: [],
-      },
-      {
-        title: "TVC",
-        link: "/our-canvas?service=TVC",
-        data: Array.from({ length: 25 }, (_, index) => ({
-          id: index + 101,
-          mediaType: "youtube",
-          src: `/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (${index + 1}).png`,
-          title: `TVC Project ${index + 1}`,
-          youtubeUrl: tvcYoutubeUrls[index + 1] || "",
-        })),
-      },
-      {
-        title: "AV",
-        link: "/our-canvas?service=av",
-        data: Array.from({ length: 1 }, (_, index) => ({
-          id: index + 101,
-          mediaType: "video",
-          src: `/assets/img/home-01/portfolio/AV/AV (${index + 1}).mp4`,
-          title: `AV Project ${index + 1}`,
-        })),
-      },
-      { title: "PR", link: "/our-canvas?service=pr-media-buying", data: [] },
-      {
-        title: "Others",
-        link: "/our-canvas?service=others-campaign",
-        data: [],
-      },
-    ],
-    icon: s_1,
-  },
-  {
-    id: 2,
-    item: "BTL",
-    subItems: [
-      {
-        title: "Events",
-        link: "/our-canvas?service=manikganj-school-100-years",
-        nestedItems: [
-          {
-            title: "Manikganj Model High School 100 Years Celebration Event",
-            link: "/our-canvas?service=manikganj-school-100-years",
-            data: Array.from({ length: 12 }, (_, index) => ({
-              id: index + 1001,
+// Populate BTL nested elements with local imagery paths dynamically
+if (static_service_data[1].subItems[0].nestedItems) {
+  static_service_data[1].subItems[0].nestedItems[0].data = Array.from(
+    { length: 12 },
+    (_, index) => ({
+      id: index + 1001,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/1.Manikganj Model High School 100 Years Celebration Event/manikganj (${index + 1}).jpg`,
+      title: `Manikganj Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[1].data = Array.from(
+    { length: 18 },
+    (_, index) => ({
+      id: index + 1101,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/2.6th-generation Kia Sportage 2026 Launching Event/kia (${index + 1}).jpg`,
+      title: `Kia Sportage Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[2].data = Array.from(
+    { length: 6 },
+    (_, index) => ({
+      id: index + 1201,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/3. EC Daily pakage reviled event/ec-package (${index + 1}).jpg`,
+      title: `EC Package Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[3].data = Array.from(
+    { length: 1 },
+    (_, index) => ({
+      id: index + 1301,
+      mediaType: "video",
+      src: `/assets/img/home-01/portfolio/Events/4. Finlay South City Shopping Mall Grand Launching Event/south-city (${index + 1}).mp4`,
+      title: `Finlay Mall Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[4].data = Array.from(
+    { length: 11 },
+    (_, index) => ({
+      id: index + 1401,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/5. Forland, Metal Motors Limited 6th Dhaka Commercial Automotive Show 2024/img (${index + 1}).jpg`,
+      title: `Forland Automotive Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[5].data = Array.from(
+    { length: 6 },
+    (_, index) => ({
+      id: index + 1501,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/6. EC sunflower Product Launching Ceremony/img (${index + 1}).jpg`,
+      title: `EC Sunflower Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[6].data = Array.from(
+    { length: 12 },
+    (_, index) => ({
+      id: index + 1601,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/7. ACI Motors,5th Dhaka Commercial Automotive Show 2023/img (${index + 1}).jpg`,
+      title: `ACI Motors Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[7].data = Array.from(
+    { length: 16 },
+    (_, index) => ({
+      id: index + 1701,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/8. Chartered Life Annual Awards Night 2022/img (${index + 1}).jpg`,
+      title: `Chartered Life Awards Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[8].data = Array.from(
+    { length: 27 },
+    (_, index) => ({
+      id: index + 1801,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/9.Rupayan City Uttara, Project Handover Ceremony/img (${index + 1}).jpg`,
+      title: `Rupayan Handover Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[9].data = Array.from(
+    { length: 21 },
+    (_, index) => ({
+      id: index + 1901,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/10.Bosudhara Group, চেতনার বর্ণমালা Event/img (${index + 1}).jpg`,
+      title: `Bosudhara Event Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[10].data = Array.from(
+    { length: 26 },
+    (_, index) => ({
+      id: index + 2001,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/11. Pharmasia Limited,Pharmasia Conference 2022/img (${index + 1}).jpg`,
+      title: `Pharmasia Conference Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[11].data = Array.from(
+    { length: 33 },
+    (_, index) => ({
+      id: index + 2101,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/12. Chartered Life Insurance Company Limited, Annual Award Program 2021/img (${index + 1}).jpg`,
+      title: `Chartered Life Conf Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[12].data = Array.from(
+    { length: 13 },
+    (_, index) => ({
+      id: index + 2201,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/13. চার্টার্ড লাইফ ইন্স্যুরেন্স কোম্পানী লিমিটেড, রং তুলিতে বিজয় উৎসব/img (${index + 1}).jpg`,
+      title: `রং তুলিতে মুক্তিযুদ্ধ Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[13].data = Array.from(
+    { length: 12 },
+    (_, index) => ({
+      id: index + 2301,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/14. Channel I + Safe Hands,রং তুলিতে মুক্তিযুদ্ধ Event/img (${index + 1}).jpg`,
+      title: `Channel I Event Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[14].data = Array.from(
+    { length: 23 },
+    (_, index) => ({
+      id: index + 2401,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/15. Fogg Spcial Audition Launching Press Conference/img (${index + 1}).jpg`,
+      title: `Fogg Press Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[15].data = Array.from(
+    { length: 6 },
+    (_, index) => ({
+      id: index + 2501,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/16. DT( Dhaka Tribune ),5th Anniversary of DT/img (${index + 1}).jpg`,
+      title: `Dhaka Tribune Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[16].data = Array.from(
+    { length: 4 },
+    (_, index) => ({
+      id: index + 2601,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/17. Jafflong Tea Event/img (${index + 1}).jpg`,
+      title: `Jafflong Tea Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[17].data = Array.from(
+    { length: 50 },
+    (_, index) => ({
+      id: index + 2701,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/18. Launching of CLUB LOVELLO/img (${index + 1}).jpg`,
+      title: `Club Lovello Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[0].nestedItems[18].data = Array.from(
+    { length: 45 },
+    (_, index) => ({
+      id: index + 2801,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/Events/19. Kulna Titens Activation Work/img (${index + 1}).jpg`,
+      title: `Khulna Titans Project ${index + 1}`,
+    }),
+  );
 
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/1.Manikganj Model High School 100 Years Celebration Event/manikganj (${index + 1}).jpg`,
-              title: `Manikganj Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "6th-generation Kia Sportage 2026 Launching Event",
-            link: "/our-canvas?service=kia-sportage-2026-launch",
-            data: Array.from({ length: 18 }, (_, index) => ({
-              id: index + 1101,
+  if (static_service_data[1].subItems[0].nestedItems[19].deepItems) {
+    static_service_data[1].subItems[0].nestedItems[19].deepItems[0].data =
+      Array.from({ length: 1 }, (_, index) => ({
+        id: index + 3001,
+        mediaType: "image",
+        src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Aglabazar Branch Opening/img (${index + 1}).jpg`,
+        title: `Aglabazar Project ${index + 1}`,
+      }));
+    static_service_data[1].subItems[0].nestedItems[19].deepItems[1].data =
+      Array.from({ length: 2 }, (_, index) => ({
+        id: index + 3101,
+        mediaType: "image",
+        src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Airport Branding/img (${index + 1}).jpg`,
+        title: `Airport Branding Project ${index + 1}`,
+      }));
+    static_service_data[1].subItems[0].nestedItems[19].deepItems[2].data =
+      Array.from({ length: 5 }, (_, index) => ({
+        id: index + 3201,
+        mediaType: "image",
+        src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Annual General Meeting/img (${index + 1}).jpg`,
+        title: `AGM Project ${index + 1}`,
+      }));
+    static_service_data[1].subItems[0].nestedItems[19].deepItems[3].data =
+      Array.from({ length: 1 }, (_, index) => ({
+        id: index + 3301,
+        mediaType: "image",
+        src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/CSR Event,Nowakhali Chatkhil/img (${index + 1}).jpg`,
+        title: `CSR Event Project ${index + 1}`,
+      }));
+    static_service_data[1].subItems[0].nestedItems[19].deepItems[4].data =
+      Array.from({ length: 1 }, (_, index) => ({
+        id: index + 3401,
+        mediaType: "image",
+        src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Narshindi Branch Opening/img (${index + 1}).jpg`,
+        title: `Narshindi Project ${index + 1}`,
+      }));
+    static_service_data[1].subItems[0].nestedItems[19].deepItems[5].data =
+      Array.from({ length: 1 }, (_, index) => ({
+        id: index + 3501,
+        mediaType: "image",
+        src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Sylhet Branch Opening/img (${index + 1}).jpg`,
+        title: `Sylhet Project ${index + 1}`,
+      }));
+  }
+}
 
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/2.6th-generation Kia Sportage 2026 Launching Event/kia (${index + 1}).jpg`,
-              title: `Kia Sportage Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "EC Daily pakage reviled event",
-            link: "/our-canvas?service=ec-daily-package-revealed",
-            data: Array.from({ length: 6 }, (_, index) => ({
-              id: index + 1201,
+if (static_service_data[1].subItems[1].nestedItems) {
+  static_service_data[1].subItems[1].nestedItems[0].data = Array.from(
+    { length: 6 },
+    (_, index) => ({
+      id: index + 11001,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/ACTIVATIONS/AKIJ PLASTICS/img (${index + 1}).jpg`,
+      title: `Activations ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[1].nestedItems[1].data = Array.from(
+    { length: 3 },
+    (_, index) => ({
+      id: index + 1002,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/ACTIVATIONS/BERGER EASY CLEAN ACTIVATION/img (${index + 1}).jpg`,
+      title: `Activations ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[1].nestedItems[2].data = Array.from(
+    { length: 4 },
+    (_, index) => ({
+      id: index + 1003,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/ACTIVATIONS/DABUR RED TOOTHPASTE/img (${index + 1}).jpg`,
+      title: `Activations ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[1].nestedItems[3].data = Array.from(
+    { length: 5 },
+    (_, index) => ({
+      id: index + 1004,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/ACTIVATIONS/EAGLE SUPER AEROSOL/img (${index + 1}).jpg`,
+      title: `Activations Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[1].nestedItems[4].data = Array.from(
+    { length: 8 },
+    (_, index) => ({
+      id: index + 1005,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/ACTIVATIONS/FREEDOM SANITARY NAPKIN/img (${index + 1}).jpg`,
+      title: `Activations Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[1].nestedItems[5].data = Array.from(
+    { length: 6 },
+    (_, index) => ({
+      id: index + 1006,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/ACTIVATIONS/Mr White/img (${index + 1}).jpg`,
+      title: `Activations Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[1].nestedItems[6].data = Array.from(
+    { length: 19 },
+    (_, index) => ({
+      id: index + 1007,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/ACTIVATIONS/QUAZI ENTERPRISES/CARAVAN ACTIVATIONS/img (${index + 1}).jpg`,
+      title: `Activations Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[1].nestedItems[7].data = Array.from(
+    { length: 9 },
+    (_, index) => ({
+      id: index + 1008,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/ACTIVATIONS/SAFE HANDS/img (${index + 1}).png`,
+      title: `Activations Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[1].nestedItems[8].data = Array.from(
+    { length: 2 },
+    (_, index) => ({
+      id: index + 1009,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/ACTIVATIONS/Wonder/img (${index + 1}).jpg`,
+      title: `Activations Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[1].nestedItems[9].data = Array.from(
+    { length: 4 },
+    (_, index) => ({
+      id: index + 10010,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/ACTIVATIONS/SAVLON HAND WASH/img (${index + 1}).jpg`,
+      title: `Activations Project ${index + 1}`,
+    }),
+  );
+}
 
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/3. EC Daily pakage reviled event/ec-package (${index + 1}).jpg`,
-              title: `EC Package Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Finlay South City Shopping Mall Grand Launching Event",
-            link: "/our-canvas?service=finlay-south-city-launch",
-            data: Array.from({ length: 1 }, (_, index) => ({
-              id: index + 1301,
+if (static_service_data[1].subItems[2].nestedItems) {
+  static_service_data[1].subItems[2].nestedItems[0].data = Array.from(
+    { length: 2 },
+    (_, index) => ({
+      id: index + 2001,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/STALLS/ACI – STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
+      title: `Stalls Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[2].nestedItems[1].data = Array.from(
+    { length: 4 },
+    (_, index) => ({
+      id: index + 2002,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/STALLS/AIRPORT IMMIGRATION BOOTH BRANDING/img (${index + 1}).jpg`,
+      title: `Stalls Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[2].nestedItems[2].data = Array.from(
+    { length: 2 },
+    (_, index) => ({
+      id: index + 2003,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/STALLS/FREEDOM - DITF STALL EXECUTION/img (${index + 1}).jpg`,
+      title: `Stalls Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[2].nestedItems[3].data = Array.from(
+    { length: 2 },
+    (_, index) => ({
+      id: index + 2004,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/STALLS/GLOBAL BRAND STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
+      title: `Stalls Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[2].nestedItems[4].data = Array.from(
+    { length: 2 },
+    (_, index) => ({
+      id: index + 2005,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/STALLS/GUARDIAN STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
+      title: `Stalls Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[2].nestedItems[5].data = Array.from(
+    { length: 4 },
+    (_, index) => ({
+      id: index + 2006,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/STALLS/METAL – STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
+      title: `Stalls Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[2].nestedItems[6].data = Array.from(
+    { length: 6 },
+    (_, index) => ({
+      id: index + 2007,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/STALLS/RUPAYAN - STALL DESIGN & EXECUTION/img (${index + 1}).png`,
+      title: `Stalls Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[2].nestedItems[7].data = Array.from(
+    { length: 7 },
+    (_, index) => ({
+      id: index + 2008,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/STALLS/SHANTA HOLDINGS – STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
+      title: `Stalls Project ${index + 1}`,
+    }),
+  );
+  static_service_data[1].subItems[2].nestedItems[8].data = Array.from(
+    { length: 2 },
+    (_, index) => ({
+      id: index + 2009,
+      mediaType: "image",
+      src: `/assets/img/home-01/portfolio/STALLS/TOTALGAZ - STALL DESIGN & EXECUTION/img (${index + 1}).jpg`,
+      title: `Stalls Project ${index + 1}`,
+    }),
+  );
+}
 
-              mediaType: "video",
-              src: `/assets/img/home-01/portfolio/Events/4. Finlay South City Shopping Mall Grand Launching Event/south-city (${index + 1}).mp4`,
-              title: `Finlay Mall Project ${index + 1}`,
-            })),
-          },
-          {
-            title:
-              "Forland, Metal Motors Limited 6th Dhaka Commercial Automotive Show",
-            link: "/our-canvas?service=forland-metal-motors-automotive-show",
-            data: Array.from({ length: 11 }, (_, index) => ({
-              id: index + 1401,
+static_service_data[2].subItems[0].data = Array.from(
+  { length: 104 },
+  (_, index) => ({
+    id: index + 4001,
+    mediaType: "image",
+    src: `/assets/img/home-01/portfolio/Static/static (${index + 1}).png`,
+    title: `Static Project ${index + 1}`,
+  }),
+);
+static_service_data[2].subItems[1].data = Array.from(
+  { length: 33 },
+  (_, index) => ({
+    id: index + 4101,
+    mediaType: "video",
+    src: `/assets/img/home-01/portfolio/Motion/motion (${index + 1}).mp4`,
+    title: `Motion Project ${index + 1}`,
+  }),
+);
 
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/5. Forland,  Metal 𝐌𝐨𝐭𝐨𝐫𝐬 𝐋imi𝐭e𝐝 𝟔𝐭𝐡 𝐃𝐡𝐚𝐤𝐚 𝐂𝐨𝐦𝐦𝐞𝐫𝐜𝐢𝐚𝐥 𝐀𝐮𝐭𝐨𝐦𝐨𝐭𝐢𝐯𝐞 𝐒𝐡𝐨𝐰 𝟐𝟎𝟐𝟒/img (${index + 1}).jpg`,
-              title: `Forland Automotive Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "EC sunflower Product Launching Ceremony",
-            link: "/our-canvas?service=ec-sunflower-launch",
-            data: Array.from({ length: 6 }, (_, index) => ({
-              id: index + 1501,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/6. EC sunflower  Product Launching Ceremony/img (${index + 1}).jpg`,
-              title: `EC Sunflower Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "ACI Motors,5th Dhaka Commercial Automotive Show",
-            link: "/our-canvas?service=aci-motors-automotive-show",
-            data: Array.from({ length: 12 }, (_, index) => ({
-              id: index + 1601,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/7. ACI Motors,5th Dhaka Commercial Automotive Show 2023/img (${index + 1}).jpg`,
-              title: `ACI Motors Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Chartered Life Annual Awards Night 2022",
-            link: "/our-canvas?service=chartered-life-awards-2022",
-            data: Array.from({ length: 16 }, (_, index) => ({
-              id: index + 1701,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/8. Chartered Life Annual Awards Night 2022/img (${index + 1}).jpg`,
-              title: `Chartered Life Awards Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Rupayan City Uttara, Project Handover Ceremony",
-            link: "/our-canvas?service=rupayan-city-handover",
-            data: Array.from({ length: 27 }, (_, index) => ({
-              id: index + 1801,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/9.Rupayan City Uttara, Project Handover Ceremony/img (${index + 1}).jpg`,
-              title: `Rupayan Handover Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Bosudhara Group, চেতনার বর্ণমালা Event",
-            link: "/our-canvas?service=bosudhara-chetonar-bornomala",
-            data: Array.from({ length: 21 }, (_, index) => ({
-              id: index + 1901,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/10.Bosudhara Group, চেতনার বর্ণমালা Event/img (${index + 1}).jpg`,
-              title: `Bosudhara Event Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Pharmasia Limited,Pharmasia Conference 2022",
-            link: "/our-canvas?service=pharmasia-conference-2022",
-            data: Array.from({ length: 26 }, (_, index) => ({
-              id: index + 2001,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/11. Pharmasia Limited,Pharmasia Conference 2022/img (${index + 1}).jpg`,
-              title: `Pharmasia Conference Project ${index + 1}`,
-            })),
-          },
-          {
-            title:
-              "Chartered Life Insurance Company Limited, Annual Conference",
-            link: "/our-canvas?service=chartered-life-annual-conference",
-            data: Array.from({ length: 33 }, (_, index) => ({
-              id: index + 2101,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/12. Chartered Life Insurance Company Limited, Annual Award Program 2021/img (${index + 1}).jpg`,
-              title: `Chartered Life Conf Project ${index + 1}`,
-            })),
-          },
-          {
-            title:
-              "চার্টার্ড লাইফ ইন্সুরেন্স কোম্পানী লিমিটেড, রং তুলিতে মুক্তিযুদ্ধ",
-            link: "/our-canvas?service=chartered-life-rong-tulite-muktijuddho",
-            data: Array.from({ length: 13 }, (_, index) => ({
-              id: index + 2201,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/13.  চার্টার্ড লাইফ ইন্স্যুরেন্স কোম্পানী লিমিটেড, রং তুলিতে বিজয় উৎসব/img (${index + 1}).jpg`,
-              title: `রং তুলিতে মুক্তিযুদ্ধ Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Channel I + Safe Hands, রং তুলিতে মুক্তিযুদ্ধ Event",
-            link: "/our-canvas?service=channel-i-safe-hands-muktijuddho",
-            data: Array.from({ length: 12 }, (_, index) => ({
-              id: index + 2301,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/14. Channel I + Safe Hands,রং তুলিতে মুক্তিযুদ্ধ Event/img (${index + 1}).jpg`,
-              title: `Channel I Event Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Fogg Spcial Audition Launching Press Conference",
-            link: "/our-canvas?service=fogg-special-audition-press-conf",
-            data: Array.from({ length: 23 }, (_, index) => ({
-              id: index + 2401,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/15. Fogg Spcial Audition Launching Press Conference/img (${index + 1}).jpg`,
-              title: `Fogg Press Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "DT( Dhaka Tribune ),5th Anniversary of DT",
-            link: "/our-canvas?service=dhaka-tribune-5th-anniversary",
-            data: Array.from({ length: 6 }, (_, index) => ({
-              id: index + 2501,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/16. DT( Dhaka Tribune ),5th Anniversary of DT/img (${index + 1}).jpg`,
-              title: `Dhaka Tribune Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Jafflong Tea Event",
-            link: "/our-canvas?service=jafflong-tea-event",
-            data: Array.from({ length: 4 }, (_, index) => ({
-              id: index + 2601,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/17. Jafflong Tea Event/img (${index + 1}).jpg`,
-              title: `Jafflong Tea Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Launching of CLUB LOVELLO",
-            link: "/our-canvas?service=launching-of-club-lovello",
-            data: Array.from({ length: 50 }, (_, index) => ({
-              id: index + 2701,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/18. Launching of CLUB LOVELLO/img (${index + 1}).jpg`,
-              title: `Club Lovello Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Kulna Titens Activation Work",
-            link: "/our-canvas?service=khulna-titans-activation",
-            data: Array.from({ length: 45 }, (_, index) => ({
-              id: index + 2801,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/Events/19. Kulna Titens Activation Work/img (${index + 1}).jpg`,
-              title: `Khulna Titans Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Bank Asia Limited",
-            link: "/our-canvas?service=bank-asia-limited",
-            deepItems: [
-              {
-                title: "Aglabazar Branch Opening",
-                link: "/our-canvas?service=aglabazar-branch-opening",
-                data: Array.from({ length: 1 }, (_, index) => ({
-                  id: index + 3001,
-
-                  mediaType: "image",
-                  src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Aglabazar Branch Opening/img (${index + 1}).jpg`,
-                  title: `Aglabazar Project ${index + 1}`,
-                })),
-              },
-              {
-                title: "Airport Branding",
-                link: "/our-canvas?service=airport-branding",
-                data: Array.from({ length: 2 }, (_, index) => ({
-                  id: index + 3101,
-
-                  mediaType: "image",
-                  src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Airport Branding/img (${index + 1}).jpg`,
-                  title: `Airport Branding Project ${index + 1}`,
-                })),
-              },
-              {
-                title: "Annual General Meeting",
-                link: "/our-canvas?service=annual-general-meeting",
-                data: Array.from({ length: 5 }, (_, index) => ({
-                  id: index + 3201,
-
-                  mediaType: "image",
-                  src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Annual General Meeting/img (${index + 1}).jpg`,
-                  title: `AGM Project ${index + 1}`,
-                })),
-              },
-              {
-                title: "CSR Event, Nowakhali Chatkhil",
-                link: "/our-canvas?service=csr-event-noakhali-chatkhil",
-                data: Array.from({ length: 1 }, (_, index) => ({
-                  id: index + 3301,
-
-                  mediaType: "image",
-                  src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/CSR Event,Nowakhali Chatkhil/img (${index + 1}).jpg`,
-                  title: `CSR Event Project ${index + 1}`,
-                })),
-              },
-              {
-                title: "Narshindi Branch Opening",
-                link: "/our-canvas?service=narshindi-branch-opening",
-                data: Array.from({ length: 1 }, (_, index) => ({
-                  id: index + 3401,
-
-                  mediaType: "image",
-                  src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Narshindi Branch Opening/img (${index + 1}).jpg`,
-                  title: `Narshindi Project ${index + 1}`,
-                })),
-              },
-              {
-                title: "Sylhet Branch Opening",
-                link: "/our-canvas?service=sylhet-branch-opening",
-                data: Array.from({ length: 1 }, (_, index) => ({
-                  id: index + 3501,
-
-                  mediaType: "image",
-                  src: `/assets/img/home-01/portfolio/Events/20.Bank Asia Limited/Sylhet Branch Opening/img (${index + 1}).jpg`,
-                  title: `Sylhet Project ${index + 1}`,
-                })),
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title: "Activations",
-        link: "/our-canvas?service=AKIJ-PLASTICS",
-        nestedItems: [
-          {
-            title: "AKIJ PLASTICS",
-            link: "/our-canvas?service=AKIJ-PLASTICS",
-            data: Array.from({ length: 6 }, (_, index) => ({
-              id: index + 11001,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/ACTIVATIONS/AKIJ PLASTICS/img (${index + 1}).jpg`,
-              title: `Activations ${index + 1}`,
-            })),
-          },
-          {
-            title: "BERGER EASY CLEAN ACTIVATION",
-            link: "/our-canvas?service=BERGER-EASY-CLEAN-ACTIVATION",
-            data: Array.from({ length: 3 }, (_, index) => ({
-              id: index + 1002,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/ACTIVATIONS/BERGER EASY CLEAN ACTIVATION/img (${index + 1}).jpg`,
-              title: `Activations ${index + 1}`,
-            })),
-          },
-          {
-            title: "DABUR RED TOOTHPASTE",
-            link: "/our-canvas?service=DABUR-RED-TOOTHPASTE",
-            data: Array.from({ length: 4 }, (_, index) => ({
-              id: index + 1003,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/ACTIVATIONS/DABUR RED TOOTHPASTE/img (${index + 1}).jpg`,
-              title: `Activations ${index + 1}`,
-            })),
-          },
-          {
-            title: "EAGLE SUPER AEROSOL",
-            link: "/our-canvas?service=EAGLE-SUPER-AEROSOL",
-            data: Array.from({ length: 5 }, (_, index) => ({
-              id: index + 1004,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/ACTIVATIONS/EAGLE SUPER AEROSOL/img (${index + 1}).jpg`,
-              title: `Activations Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "FREEDOM SANITARY NAPKIN",
-            link: "/our-canvas?service=FREEDOM-SANITARY-NAPKIN",
-            data: Array.from({ length: 8 }, (_, index) => ({
-              id: index + 1005,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/ACTIVATIONS/FREEDOM SANITARY NAPKIN/img (${index + 1}).jpg`,
-              title: `Activations Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Mr White",
-            link: "/our-canvas?service=Mr-White",
-            data: Array.from({ length: 6 }, (_, index) => ({
-              id: index + 1006,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/ACTIVATIONS/Mr White/img (${index + 1}).jpg`,
-              title: `Activations Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "QUAZI ENTERPRISES CARAVAN ACTIVATIONS",
-            link: "/our-canvas?service=QUAZI-ENTERPRISES-CARAVAN-ACTIVATIONS",
-            data: Array.from({ length: 19 }, (_, index) => ({
-              id: index + 1007,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/ACTIVATIONS/QUAZI ENTERPRISES/CARAVAN ACTIVATIONS/img (${index + 1}).jpg`,
-              title: `Activations Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "SAFE HANDS",
-            link: "/our-canvas?service=SAFE-HANDS",
-            data: Array.from({ length: 9 }, (_, index) => ({
-              id: index + 1008,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/ACTIVATIONS/SAFE HANDS/img (${index + 1}).png`,
-              title: `Activations Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "Wonder",
-            link: "/our-canvas?service=Wonder",
-            data: Array.from({ length: 2 }, (_, index) => ({
-              id: index + 1009,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/ACTIVATIONS/Wonder/img (${index + 1}).jpg`,
-              title: `Activations Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "SAVLON HAND WASH",
-            link: "/our-canvas?service=SAVLON-HAND-WASH",
-            data: Array.from({ length: 4 }, (_, index) => ({
-              id: index + 10010,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/ACTIVATIONS/SAVLON HAND WASH/img (${index + 1}).jpg`,
-              title: `Activations Project ${index + 1}`,
-            })),
-          },
-        ],
-      },
-      {
-        title: "Stall",
-        link: "/our-canvas?service=ACI–STALL-DESIGN-AND-EXECUTION",
-        nestedItems: [
-          {
-            title: "ACI – STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=ACI–STALL-DESIGN-AND-EXECUTION",
-            data: Array.from({ length: 2 }, (_, index) => ({
-              id: index + 2001,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/STALLS/ACI – STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
-              title: `Stalls Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "AIRPORT IMMIGRATION BOOTH BRANDING",
-            link: "/our-canvas?service=AIRPORT-IMMIGRATION-BOOTH-BRANDING",
-            data: Array.from({ length: 4 }, (_, index) => ({
-              id: index + 2002,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/STALLS/AIRPORT IMMIGRATION BOOTH BRANDING/img (${index + 1}).jpg`,
-              title: `Stalls Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "FREEDOM - DITF STALL EXECUTION",
-            link: "/our-canvas?service=FREEDOM-DITF-STALL-EXECUTION",
-            data: Array.from({ length: 2 }, (_, index) => ({
-              id: index + 2003,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/STALLS/FREEDOM - DITF STALL EXECUTION/img (${index + 1}).jpg`,
-              title: `Stalls Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "GLOBAL BRAND STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=GLOBAL-BRAND-STALL-DESIGN-AND-EXECUTION",
-            data: Array.from({ length: 2 }, (_, index) => ({
-              id: index + 2004,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/STALLS/GLOBAL BRAND STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
-              title: `Stalls Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "GUARDIAN STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=GUARDIAN-STALL-DESIGN-AND-EXECUTION",
-            data: Array.from({ length: 2 }, (_, index) => ({
-              id: index + 2005,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/STALLS/GUARDIAN STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
-              title: `Stalls Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "METAL – STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=METAL–STALL-DESIGN-AND-EXECUTION",
-            data: Array.from({ length: 4 }, (_, index) => ({
-              id: index + 2006,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/STALLS/METAL – STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
-              title: `Stalls Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "RUPAYAN - STALL DESIGN & EXECUTION",
-            link: "/our-canvas?service=RUPAYAN-STALL-DESIG-&-EXECUTION",
-            data: Array.from({ length: 6 }, (_, index) => ({
-              id: index + 2007,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/STALLS/RUPAYAN - STALL DESIGN & EXECUTION/img (${index + 1}).png`,
-              title: `Stalls Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "SHANTA HOLDINGS – STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=SHANTA-HOLDINGS–STALL-DESIGN-AND-EXECUTION",
-            data: Array.from({ length: 7 }, (_, index) => ({
-              id: index + 2008,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/STALLS/SHANTA HOLDINGS – STALL DESIGN AND EXECUTION/img (${index + 1}).jpg`,
-              title: `Stalls Project ${index + 1}`,
-            })),
-          },
-          {
-            title: "TOTALGAZ - STALL DESIGN & EXECUTION",
-            link: "/our-canvas?service=TOTALGAZ-STALL-DESIGN-&-EXECUTION",
-            data: Array.from({ length: 2 }, (_, index) => ({
-              id: index + 2009,
-
-              mediaType: "image",
-              src: `/assets/img/home-01/portfolio/STALLS/TOTALGAZ - STALL DESIGN & EXECUTION/img (${index + 1}).jpg`,
-              title: `Stalls Project ${index + 1}`,
-            })),
-          },
-        ],
-      },
-    ],
-    icon: s_2,
-  },
-  {
-    id: 3,
-    item: "Digital",
-    subItems: [
-      {
-        title: "Static",
-        link: "/our-canvas?service=static",
-        data: Array.from({ length: 104 }, (_, index) => ({
-          id: index + 4001,
-
-          mediaType: "image",
-          src: `/assets/img/home-01/portfolio/Static/static (${index + 1}).png`,
-          title: `Static Project ${index + 1}`,
-        })),
-      },
-      {
-        title: "Motion",
-        link: "/our-canvas?service=motion",
-        data: Array.from({ length: 33 }, (_, index) => ({
-          id: index + 4101,
-
-          mediaType: "video",
-          src: `/assets/img/home-01/portfolio/Motion/motion (${index + 1}).mp4`,
-          title: `Motion Project ${index + 1}`,
-        })),
-      },
-      { title: "OVC", link: "/our-canvas?service=ovc", data: [] },
-      {
-        title: "Music Video",
-        link: "/our-canvas?service=music-video",
-        data: [],
-      },
-      {
-        title: "Digital Campaign",
-        link: "/our-canvas?service=digital-social-media-marketing",
-        data: [],
-      },
-    ],
-    icon: s_3,
-  },
-];
-
-// ── ৩-লেয়ারের হাইব্রিড ডাটা মার্জিং লজিক ──
-const mergeStaticAndSanityData = (
-  staticData: ServiceData[],
-  sanityData: any[],
-): ServiceData[] => {
-  const merged: ServiceData[] = JSON.parse(JSON.stringify(staticData));
-
-  sanityData.forEach((sanityService: any) => {
-    if (!sanityService.item) return;
-
-    const matchService = merged.find(
-      (s) =>
-        s.item?.trim().toLowerCase() ===
-        sanityService.item?.trim().toLowerCase(),
-    );
-
-    if (matchService) {
-      sanityService.subItems?.forEach((sanitySub: any) => {
-        if (!sanitySub.title) return; // স্টুডিওতে টাইটেল সেভ না থাকলে এখান থেকে ব্যাক করবে
-
-        const matchSub = matchService.subItems.find(
-          (sub) =>
-            sub.title?.trim().toLowerCase() ===
-            sanitySub.title?.trim().toLowerCase(),
-        );
-
-        if (matchSub) {
-          // ১ম লেয়ারের পোর্টফোলিও ডাটা মার্জ
-          if (sanitySub.data && sanitySub.data.length > 0) {
-            matchSub.data = [...(matchSub.data || []), ...sanitySub.data];
-          }
-
-          // ২য় লেয়ারের মার্জ
-          sanitySub.nestedItems?.forEach((sanitySubSub: any) => {
-            if (!sanitySubSub.title) return;
-
-            if (!matchSub.nestedItems) matchSub.nestedItems = [];
-            const matchSubSub = matchSub.nestedItems.find(
-              (ss) =>
-                ss.title?.trim().toLowerCase() ===
-                sanitySubSub.title?.trim().toLowerCase(),
-            );
-
-            if (matchSubSub) {
-              if (sanitySubSub.data && sanitySubSub.data.length > 0) {
-                matchSubSub.data = [
-                  ...(matchSubSub.data || []),
-                  ...sanitySubSub.data,
-                ];
-              }
-
-              // ৩য় লেয়ারের মার্জ
-              sanitySubSub.deepItems?.forEach((sanityDeep: any) => {
-                if (!sanityDeep.title) return;
-
-                if (!matchSubSub.deepItems) matchSubSub.deepItems = [];
-                const matchDeep = matchSubSub.deepItems.find(
-                  (d) =>
-                    d.title?.trim().toLowerCase() ===
-                    sanityDeep.title?.trim().toLowerCase(),
-                );
-
-                if (matchDeep) {
-                  if (sanityDeep.data && sanityDeep.data.length > 0) {
-                    matchDeep.data = [
-                      ...(matchDeep.data || []),
-                      ...sanityDeep.data,
-                    ];
-                  }
-                } else {
-                  matchSubSub.deepItems.push(sanityDeep);
-                }
-              });
-            } else {
-              matchSub.nestedItems.push(sanitySubSub);
-            }
-          });
-        } else {
-          matchService.subItems.push(sanitySub);
-        }
-      });
-    } else {
-      merged.push(sanityService);
-    }
-  });
-
-  return merged;
-};
-
-// ── Smart Portal Dropdown ───────────────────────────────────────────────────
+// ── Dropdown Portal Component ───────────────────────────────────────────────
 function SubMenu({
   items,
   anchorEl,
@@ -867,7 +584,7 @@ function SubMenu({
   onMouseEnter,
   onMouseLeave,
   currentService,
-  onMouseLeaveMobile, // 👈 ১. এখানে নতুন প্রপসটি রিসিভ করুন
+  onMouseLeaveMobile,
 }: {
   items: SubItem[];
   anchorEl: HTMLElement | null;
@@ -875,7 +592,7 @@ function SubMenu({
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   currentService: string | null;
-  onMouseLeaveMobile?: () => void; // 👈 ২. টাইপ ডেফিনিশনে এটি অপশনাল হিসেবে যোগ করুন
+  onMouseLeaveMobile?: () => void;
 }) {
   const [pos, setPos] = useState({ top: 0, left: 0, width: 250 });
   const [isMobile, setIsMobile] = useState(false);
@@ -896,11 +613,10 @@ function SubMenu({
   useEffect(() => {
     if (anchorEl && visible) {
       const rect = anchorEl.getBoundingClientRect();
-      const dropdownWidth = 250; // Your standard menu width
+      const dropdownWidth = 250;
       const paddingOffset = 6;
 
       if (window.innerWidth <= 768) {
-        // Mobile Layout logic remains the same
         setPos({
           top: rect.bottom + window.scrollY + paddingOffset,
           left: 15,
@@ -908,19 +624,10 @@ function SubMenu({
         });
       } else {
         const spaceRight = window.innerWidth - rect.left;
-
         if (spaceRight < 700) {
           setRenderLeft(true);
-
-          // --- FIX FOR 768px - 860px SCREEN OUT OF BOUNDS ---
-          // Calculate the tentative left position if rendered to the left
           let targetLeft = rect.right + window.scrollX - dropdownWidth;
-
-          // If it starts shifting outside the viewport's left boundary (< 0)
-          if (targetLeft < 0) {
-            targetLeft = 15; // Hard constraint to keep it inside the screen padding
-          }
-
+          if (targetLeft < 0) targetLeft = 15;
           setPos({
             top: rect.bottom + window.scrollY + paddingOffset,
             left: targetLeft,
@@ -999,12 +706,8 @@ function SubMenu({
       <style
         dangerouslySetInnerHTML={{
           __html: `
-        .canvas-menu-link {
-          transition: color 0.2s ease !important;
-        }
-        .canvas-menu-link:hover {
-          color: #ff5e14 !important;
-        }
+        .canvas-menu-link { transition: color 0.2s ease !important; }
+        .canvas-menu-link:hover { color: #ff5e14 !important; }
       `,
         }}
       />
@@ -1034,6 +737,7 @@ function SubMenu({
                 .includes(`service=${currentService.toLowerCase()}`),
           );
         });
+
         const finalItemColor =
           isItemActive || isAnySubActive || (isChildOpen && isMobile)
             ? "#ff5e14"
@@ -1055,7 +759,7 @@ function SubMenu({
             }}
           >
             <Link
-              href={item.link}
+              href={hasSubSub ? "#" : item.link}
               className="canvas-menu-link"
               onClick={(e) => handleItemClick(e, i, hasSubSub)}
               style={{
@@ -1067,6 +771,7 @@ function SubMenu({
                 fontSize: "16px",
                 textDecoration: "none",
                 whiteSpace: isMobile ? "normal" : "nowrap",
+                cursor: hasSubSub ? "default" : "pointer",
               }}
             >
               <span>{item.title}</span>
@@ -1084,6 +789,7 @@ function SubMenu({
               )}
             </Link>
 
+            {/* Layer 2 SubSub-Menu */}
             {hasSubSub && isChildOpen && item.nestedItems && (
               <ul
                 style={{
@@ -1106,7 +812,7 @@ function SubMenu({
                   zIndex: 100000,
                 }}
               >
-                {item?.nestedItems.map((subSub, subIdx) => {
+                {item.nestedItems.map((subSub, subIdx) => {
                   const hasDeepSub = !!(
                     subSub.deepItems && subSub.deepItems.length > 0
                   );
@@ -1143,7 +849,7 @@ function SubMenu({
                       }}
                     >
                       <Link
-                        href={subSub.link}
+                        href={hasDeepSub ? "#" : subSub.link}
                         className="canvas-menu-link"
                         onClick={(e) =>
                           handleSubSubClick(e, subIdx, hasDeepSub)
@@ -1157,6 +863,7 @@ function SubMenu({
                           fontSize: "15px",
                           textDecoration: "none",
                           whiteSpace: isMobile ? "normal" : "nowrap",
+                          cursor: hasDeepSub ? "default" : "pointer",
                         }}
                       >
                         <span
@@ -1185,6 +892,7 @@ function SubMenu({
                         )}
                       </Link>
 
+                      {/* Layer 3 Deep Submenu */}
                       {hasDeepSub && isDeepOpen && subSub.deepItems && (
                         <ul
                           style={{
@@ -1225,10 +933,6 @@ function SubMenu({
                                 .includes(
                                   `service=${currentService.toLowerCase()}`,
                                 );
-                            const finalDeepColor = isDeepActive
-                              ? "#ff5e14"
-                              : "#aaaaaa";
-
                             return (
                               <li key={deepIdx} style={{ padding: "0" }}>
                                 <Link
@@ -1237,7 +941,7 @@ function SubMenu({
                                   style={{
                                     display: "block",
                                     padding: "10px 25px",
-                                    color: finalDeepColor,
+                                    color: isDeepActive ? "#ff5e14" : "#aaaaaa",
                                     fontSize: "14px",
                                     textDecoration: "none",
                                     whiteSpace: isMobile ? "normal" : "nowrap",
@@ -1263,18 +967,15 @@ function SubMenu({
   );
 }
 
-type IProps = {
-  style_2?: boolean;
-};
+type IProps = { style_2?: boolean };
 
 // ── Inner Content Component ──────────────────────────────────────────────────
 function ServiceDetailsContent({ style_2 = false }: IProps) {
   const { initIsotop, isotopContainer } = useIsotop();
   const searchParams = useSearchParams();
 
-  // ১. মেইন স্টেটটি প্রথমে service_data স্ট্যাটিক অ্যারে দিয়ে ইনিশিয়ালাইজ করা হলো
   const [allServiceData, setAllServiceData] =
-    useState<ServiceData[]>(service_data);
+    useState<ServiceData[]>(static_service_data);
   const [currentService, setCurrentService] = useState<string | null>(null);
   const [filteredData, setFilteredData] = useState<PortfolioItem[]>([]);
   const [hoveredId, setHoveredId] = useState<number | string | null>(null);
@@ -1288,22 +989,16 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
   }>({});
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── FIX 1: CLICK OUTSIDE TO CLOSE SUBMENU ON MOBILE ──
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (window.innerWidth <= 768) {
-        // Find if the click landed inside any service title wrapper or portal menu
         const target = event.target as HTMLElement;
         const clickedInsideMenu =
           target.closest(".tp-service-item") ||
           target.closest('ul[style*="position: absolute"]');
-
-        if (!clickedInsideMenu) {
-          setHoveredId(null);
-        }
+        if (!clickedInsideMenu) setHoveredId(null);
       }
     };
-
     document.addEventListener("click", handleOutsideClick);
     return () => document.removeEventListener("click", handleOutsideClick);
   }, []);
@@ -1317,61 +1012,33 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
           subItems[] {
             "title": coalesce(atlSub, btlSub, digitalSub),
             link,
-            "data": data[] {
-              "id": _key,
-              title,
-              mediaType,
-              "src": src.asset->url,
-              youtubeUrl
-            },
+            "data": data[] { "id": _key, title, mediaType, "src": src.asset->url, youtubeUrl },
             "nestedItems": subItems[] {
               title,
               link,
-              "data": data[] {
-                "id": _key,
-                title,
-                mediaType,
-                "src": src.asset->url,
-                youtubeUrl
-              },
-              "deepItems": deepItems[] {
-                title,
-                link,
-                "data": data[] {
-                  "id": _key,
-                  title,
-                  mediaType,
-                  "src": src.asset->url,
-                  youtubeUrl
-                }
-              }
+              "data": data[] { "id": _key, title, mediaType, "src": src.asset->url, youtubeUrl },
+              "deepItems": deepItems[] { title, link, "data": data[] { "id": _key, title, mediaType, "src": src.asset->url, youtubeUrl } }
             }
           }
         }`;
 
         const sanityData = await client.fetch(query);
-        console.log("Sanity Raw Data:", sanityData);
-
         if (sanityData && sanityData.length > 0) {
           const finalMergedData = mergeStaticAndSanityData(
-            service_data,
+            static_service_data,
             sanityData,
           );
-          console.log("Merged Final Data:", finalMergedData);
           setAllServiceData(finalMergedData);
         }
       } catch (error) {
         console.error("Sanity connection error:", error);
       }
     };
-
     fetchSanityServices();
   }, []);
 
   useEffect(() => {
-    if (filteredData.length > 0) {
-      initIsotop();
-    }
+    if (filteredData.length > 0) initIsotop();
   }, [initIsotop, filteredData]);
 
   useEffect(() => {
@@ -1381,12 +1048,9 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // ৩. ফিল্টারিং লজিক এখন ‘allServiceData’ (স্ট্যাটিক + স্যানিটি) স্টেটের ওপর কাজ করবে
   useEffect(() => {
     const serviceParam: any = searchParams?.get("service");
     setCurrentService(serviceParam);
-
-    // ── FIX 2: HIDE SUBMENU IMMEDIATELY WHEN PARAMETER/PICTURES CHANGES ──
     setHoveredId(null);
 
     if (serviceParam && allServiceData.length > 0) {
@@ -1406,13 +1070,12 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
           }
           if (sub.nestedItems) {
             const matchedSubSub = sub.nestedItems.find(
-              (subSub) =>
-                subSub.link &&
-                subSub.link
+              (ss) =>
+                ss.link &&
+                ss.link
                   .toLowerCase()
                   .includes(`service=${serviceParam.toLowerCase()}`),
             );
-
             if (
               matchedSubSub &&
               matchedSubSub.data &&
@@ -1421,13 +1084,12 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
               targetData = matchedSubSub.data;
               break;
             }
-
             for (const subSub of sub.nestedItems) {
               if (subSub.deepItems) {
                 const matchedDeep = subSub.deepItems.find(
-                  (deepItem) =>
-                    deepItem.link &&
-                    deepItem.link
+                  (d) =>
+                    d.link &&
+                    d.link
                       .toLowerCase()
                       .includes(`service=${serviceParam.toLowerCase()}`),
                 );
@@ -1451,13 +1113,8 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
           const offset = 120;
           const bodyRect = document.body.getBoundingClientRect().top;
           const elementRect = element.getBoundingClientRect().top;
-          const elementPosition = elementRect - bodyRect;
-          const offsetPosition = elementPosition - offset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth",
-          });
+          const offsetPosition = elementRect - bodyRect - offset;
+          window.scrollTo({ top: offsetPosition, behavior: "smooth" });
         }
       });
     } else {
@@ -1467,11 +1124,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
 
   const handleMainItemClick = (id: number | string) => {
     if (window.innerWidth <= 768) {
-      if (hoveredId === id) {
-        setHoveredId(null);
-      } else {
-        setHoveredId(id);
-      }
+      setHoveredId(hoveredId === id ? null : id);
     }
   };
 
@@ -1543,7 +1196,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
               <h6>
                 <span
                   style={{ fontSize: width > 768 ? "75px" : "45px" }}
-                  className="sv-hero-title tp-char-animation "
+                  className="sv-hero-title tp-char-animation"
                 >
                   Our expertise lies in crafting perceptions that empower
                   brands,
@@ -1587,26 +1240,14 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                   className="tp-service-icon mb-2 mb-md-0"
                   style={{ marginRight: width > 768 ? "15px" : "0px" }}
                 >
-                  {typeof s.icon === "string" ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={s.icon}
-                      alt="icon"
-                      style={{
-                        width: width > 768 ? "40px" : "25px",
-                        height: "auto",
-                      }}
-                    />
-                  ) : (
-                    <Image
-                      src={s.icon}
-                      alt="icon"
-                      style={{
-                        width: width > 768 ? "40px" : "25px",
-                        height: "auto",
-                      }}
-                    />
-                  )}
+                  <img
+                    src={s.icon?.src || s.icon}
+                    alt="icon"
+                    style={{
+                      width: width > 768 ? "40px" : "25px",
+                      height: "auto",
+                    }}
+                  />
                 </div>
                 <div
                   className="tp-service-content"
@@ -1618,7 +1259,6 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                     onMouseEnter={() => handleEnter(s.id)}
                     onMouseLeave={handleLeave}
                     onClick={(e) => {
-                      // Prevent parent elements from intercepting mobile toggle
                       e.stopPropagation();
                       handleMainItemClick(s.id);
                     }}
@@ -1645,7 +1285,6 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                       visible={hoveredId === s.id}
                       onMouseEnter={() => handleEnter(s.id)}
                       onMouseLeave={handleLeave}
-                      // Pass callback to manually shut menu from deep elements inside portal
                       onMouseLeaveMobile={() => setHoveredId(null)}
                     />
                   )}
@@ -1655,6 +1294,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
           ))}
         </div>
       </div>
+
       <p
         style={{
           textAlign: "center",
@@ -1664,10 +1304,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         }}
       >
         <span
-          style={{
-            borderBottom: "1px solid",
-            textTransform: "capitalize",
-          }}
+          style={{ borderBottom: "1px solid", textTransform: "capitalize" }}
         >
           {currentService}
         </span>
@@ -1739,38 +1376,18 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
                             position: "relative",
                           }}
                         >
-                          {typeof item.src === "string" &&
-                          (item.src.startsWith("http") ||
-                            item.src.startsWith("/")) ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                              className="anim-zoomin"
-                              src={item.src}
-                              alt={item.title}
-                              style={{
-                                width: "100%",
-                                maxWidth: "300px",
-                                height: "auto",
-                                objectFit: "fill",
-                                borderRadius: "5px",
-                              }}
-                            />
-                          ) : (
-                            <Image
-                              className="anim-zoomin"
-                              src={item.src}
-                              alt={item.title}
-                              width={750}
-                              height={750}
-                              style={{
-                                width: "100%",
-                                maxWidth: "300px",
-                                height: "auto",
-                                objectFit: "fill",
-                                borderRadius: "5px",
-                              }}
-                            />
-                          )}
+                          <img
+                            className="anim-zoomin"
+                            src={item.src}
+                            alt={item.title}
+                            style={{
+                              width: "100%",
+                              maxWidth: "300px",
+                              height: "auto",
+                              objectFit: "fill",
+                              borderRadius: "5px",
+                            }}
+                          />
                         </div>
                       </Link>
                     )}
@@ -1802,10 +1419,7 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
         <Modal.Header
           closeButton
           closeVariant="white"
-          style={{
-            background: "#1a1a1a",
-            borderBottom: "1px solid #2e2e2e",
-          }}
+          style={{ background: "#1a1a1a", borderBottom: "1px solid #2e2e2e" }}
         ></Modal.Header>
         <Modal.Body
           style={{
@@ -1844,7 +1458,6 @@ function ServiceDetailsContent({ style_2 = false }: IProps) {
             />
           ) : (
             modalItem && (
-              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={modalItem.src}
                 alt={modalItem.title}

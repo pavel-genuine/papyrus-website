@@ -3,279 +3,19 @@ import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { createPortal } from "react-dom";
+import { client } from "@/sanity/lib/client";
 
-// internal imports
+// Internal imports
 import shape from "@/assets/img/home-01/portfolio/shape1.jpg";
-
-// service images
-import s_1 from "@/assets/img/home-01/service/service-icon-1.png";
-import s_2 from "@/assets/img/home-01/service/service-icon-2.png";
-import s_3 from "@/assets/img/home-01/service/service-icon-3.png";
 import { ArrowBg, RightArrowTwo } from "@/components/svg";
 
-// Interfaces
-interface DeepSubItem {
-  title: string;
-  link: string;
-}
-
-interface SubSubItem {
-  title: string;
-  link: string;
-  deepItems?: DeepSubItem[];
-}
-
-interface SubItem {
-  title: string;
-  link: string;
-  nestedItems?: SubSubItem[];
-}
-
-interface ServiceData {
-  id: number;
-  title: string;
-  subItems: SubItem[];
-  icon: any;
-}
-
-// Complete 3-layer service data integrated from service-details-area
-const service_data: ServiceData[] = [
-  {
-    id: 1,
-    title: "ATL",
-    subItems: [
-      { title: "Logo", link: "/our-canvas?service=logo" },
-      { title: "Packaging", link: "/our-canvas?service=packaging" },
-      { title: "Press Ad", link: "/our-canvas?service=press-ad" },
-      { title: "Billboard / Out-door", link: "/our-canvas?service=bill-board" },
-      { title: "Leaflet / Flyer", link: "/our-canvas?service=leaflet" },
-      {
-        title: "Brochure / Catalogue",
-        link: "/our-canvas?service=brochure-catalogue",
-      },
-      { title: "Calendar", link: "/our-canvas?service=calendar" },
-      { title: "Annual Report", link: "/our-canvas?service=annual-report" },
-      { title: "TVC", link: "/our-canvas?service=TVC" },
-      { title: "AV", link: "/our-canvas?service=av" },
-      { title: "PR", link: "/our-canvas?service=pr-media-buying" },
-      { title: "Others", link: "/our-canvas?service=others-campaign" },
-    ],
-    icon: s_1,
-  },
-  {
-    id: 2,
-    title: "BTL",
-    subItems: [
-      {
-        title: "Events",
-        link: "/our-canvas?service=manikganj-school-100-years",
-        nestedItems: [
-          {
-            title: "Manikganj Model High School 100 Years Celebration Event",
-            link: "/our-canvas?service=manikganj-school-100-years",
-          },
-          {
-            title: "6th-generation Kia Sportage 2026 Launching Event",
-            link: "/our-canvas?service=kia-sportage-2026-launch",
-          },
-          {
-            title: "EC Daily pakage reviled event",
-            link: "/our-canvas?service=ec-daily-package-revealed",
-          },
-          {
-            title: "Finlay South City Shopping Mall Grand Launching Event",
-            link: "/our-canvas?service=finlay-south-city-launch",
-          },
-          {
-            title:
-              "Forland, Metal Motors Limited 6th Dhaka Commercial Automotive Show",
-            link: "/our-canvas?service=forland-metal-motors-automotive-show",
-          },
-          {
-            title: "EC sunflower Product Launching Ceremony",
-            link: "/our-canvas?service=ec-sunflower-launch",
-          },
-          {
-            title: "ACI Motors,5th Dhaka Commercial Automotive Show",
-            link: "/our-canvas?service=aci-motors-automotive-show",
-          },
-          {
-            title: "Chartered Life Annual Awards Night 2022",
-            link: "/our-canvas?service=chartered-life-awards-2022",
-          },
-          {
-            title: "Rupayan City Uttara, Project Handover Ceremony",
-            link: "/our-canvas?service=rupayan-city-handover",
-          },
-          {
-            title: "Bosudhara Group, চেতনার বর্ণমালা Event",
-            link: "/our-canvas?service=bosudhara-chetonar-bornomala",
-          },
-          {
-            title: "Pharmasia Limited,Pharmasia Conference 2022",
-            link: "/our-canvas?service=pharmasia-conference-2022",
-          },
-          {
-            title:
-              "Chartered Life Insurance Company Limited, Annual Conference",
-            link: "/our-canvas?service=chartered-life-annual-conference",
-          },
-          {
-            title:
-              "চার্টার্ড লাইফ ইন্সুরেন্স কোম্পানী লিমিটেড, রং তুলিতে মুক্তিযুদ্ধ",
-            link: "/our-canvas?service=chartered-life-rong-tulite-muktijuddho",
-          },
-          {
-            title: "Channel I + Safe Hands, রং তুলিতে মুক্তিযুদ্ধ Event",
-            link: "/our-canvas?service=channel-i-safe-hands-muktijuddho",
-          },
-          {
-            title: "Fogg Spcial Audition Launching Press Conference",
-            link: "/our-canvas?service=fogg-special-audition-press-conf",
-          },
-          {
-            title: "DT( Dhaka Tribune ),5th Anniversary of DT",
-            link: "/our-canvas?service=dhaka-tribune-5th-anniversary",
-          },
-          {
-            title: "Jafflong Tea Event",
-            link: "/our-canvas?service=jafflong-tea-event",
-          },
-          {
-            title: "Launching of CLUB LOVELLO",
-            link: "/our-canvas?service=launching-of-club-lovello",
-          },
-          {
-            title: "Kulna Titens Activation Work",
-            link: "/our-canvas?service=khulna-titans-activation",
-          },
-          {
-            title: "Bank Asia Limited",
-            link: "/our-canvas?service=bank-asia-limited",
-            deepItems: [
-              {
-                title: "Aglabazar Branch Opening",
-                link: "/our-canvas?service=aglabazar-branch-opening",
-              },
-              {
-                title: "Airport Branding",
-                link: "/our-canvas?service=airport-branding",
-              },
-              {
-                title: "Annual General Meeting",
-                link: "/our-canvas?service=annual-general-meeting",
-              },
-              {
-                title: "CSR Event, Nowakhali Chatkhil",
-                link: "/our-canvas?service=csr-event-noakhali-chatkhil",
-              },
-              {
-                title: "Narshindi Branch Opening",
-                link: "/our-canvas?service=narshindi-branch-opening",
-              },
-              {
-                title: "Sylhet Branch Opening",
-                link: "/our-canvas?service=sylhet-branch-opening",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title: "Activations",
-        link: "/our-canvas?service=AKIJ-PLASTICS",
-        nestedItems: [
-          { title: "AKIJ PLASTICS", link: "/our-canvas?service=AKIJ-PLASTICS" },
-          {
-            title: "BERGER EASY CLEAN ACTIVATION",
-            link: "/our-canvas?service=BERGER-EASY-CLEAN-ACTIVATION",
-          },
-          {
-            title: "DABUR RED TOOTHPASTE",
-            link: "/our-canvas?service=DABUR-RED-TOOTHPASTE",
-          },
-          {
-            title: "EAGLE SUPER AEROSOL",
-            link: "/our-canvas?service=EAGLE-SUPER-AEROSOL",
-          },
-          {
-            title: "FREEDOM SANITARY NAPKIN",
-            link: "/our-canvas?service=FREEDOM-SANITARY-NAPKIN",
-          },
-          { title: "Mr White", link: "/our-canvas?service=Mr-White" },
-          {
-            title: "QUAZI ENTERPRISES CARAVAN ACTIVATIONS",
-            link: "/our-canvas?service=QUAZI-ENTERPRISES-CARAVAN-ACTIVATIONS",
-          },
-          { title: "SAFE HANDS", link: "/our-canvas?service=SAFE-HANDS" },
-          { title: "Wonder", link: "/our-canvas?service=Wonder" },
-          {
-            title: "SAVLON HAND WASH",
-            link: "/our-canvas?service=SAVLON-HAND-WASH",
-          },
-        ],
-      },
-      {
-        title: "Stall",
-        link: "/our-canvas?service=ACI–STALL-DESIGN-AND-EXECUTION",
-        nestedItems: [
-          {
-            title: "ACI – STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=ACI–STALL-DESIGN-AND-EXECUTION",
-          },
-          {
-            title: "AIRPORT IMMIGRATION BOOTH BRANDING",
-            link: "/our-canvas?service=AIRPORT-IMMIGRATION-BOOTH-BRANDING",
-          },
-          {
-            title: "FREEDOM - DITF STALL EXECUTION",
-            link: "/our-canvas?service=FREEDOM-DITF-STALL-EXECUTION",
-          },
-          {
-            title: "GLOBAL BRAND STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=GLOBAL-BRAND-STALL-DESIGN-AND-EXECUTION",
-          },
-          {
-            title: "GUARDIAN STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=GUARDIAN-STALL-DESIGN-AND-EXECUTION",
-          },
-          {
-            title: "METAL – STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=METAL–STALL-DESIGN-AND-EXECUTION",
-          },
-          {
-            title: "RUPAYAN - STALL DESIGN & EXECUTION",
-            link: "/our-canvas?service=RUPAYAN-STALL-DESIG-&-EXECUTION",
-          },
-          {
-            title: "SHANTA HOLDINGS – STALL DESIGN AND EXECUTION",
-            link: "/our-canvas?service=SHANTA-HOLDINGS–STALL-DESIGN-AND-EXECUTION",
-          },
-          {
-            title: "TOTALGAZ - STALL DESIGN & EXECUTION",
-            link: "/our-canvas?service=TOTALGAZ-STALL-DESIGN-&-EXECUTION",
-          },
-        ],
-      },
-    ],
-    icon: s_2,
-  },
-  {
-    id: 3,
-    title: "Digital",
-    subItems: [
-      { title: "Static", link: "/our-canvas?service=static" },
-      { title: "Motion", link: "/our-canvas?service=motion" },
-      { title: "OVC", link: "/our-canvas?service=ovc" },
-      { title: "Music Video", link: "/our-canvas?service=music-video" },
-      {
-        title: "Digital Campaign",
-        link: "/our-canvas?service=digital-social-media-marketing",
-      },
-    ],
-    icon: s_3,
-  },
-];
+// Shared Dynamic Data & Types Import
+import {
+  static_service_data,
+  mergeStaticAndSanityData,
+  ServiceData,
+  SubItem,
+} from "@/data/service-data";
 
 // ── Smart 3-Layer Portal Dropdown ────────────────────────────────────────────
 function SubMenu({
@@ -353,7 +93,8 @@ function SubMenu({
             onMouseLeave={() => setActiveChildMenu(null)}
           >
             <Link
-              href={item.link}
+              href={hasSubSub ? "#" : item.link}
+              onClick={(e) => hasSubSub && e.preventDefault()}
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -365,13 +106,14 @@ function SubMenu({
                 whiteSpace: "nowrap",
                 background: isChildOpen ? "#2a2a2a" : "transparent",
                 transition: "all 0.2s ease",
+                cursor: hasSubSub ? "default" : "pointer",
               }}
             >
               <span>{item.title}</span>
               {hasSubSub && <span style={{ fontSize: "12px" }}>▶</span>}
             </Link>
 
-            {/* Layer 2: Nested Items (e.g., Manikganj School, Kia Sportage) */}
+            {/* Layer 2: Nested Items (Events, Activations, Stall) */}
             {hasSubSub && isChildOpen && item.nestedItems && (
               <ul
                 style={{
@@ -405,7 +147,8 @@ function SubMenu({
                       onMouseLeave={() => setActiveDeepMenu(null)}
                     >
                       <Link
-                        href={subSub.link}
+                        href={hasDeepSub ? "#" : subSub.link}
+                        onClick={(e) => hasDeepSub && e.preventDefault()}
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
@@ -415,6 +158,7 @@ function SubMenu({
                           fontSize: "14px",
                           textDecoration: "none",
                           background: isDeepOpen ? "#2d2d2d" : "transparent",
+                          cursor: hasDeepSub ? "default" : "pointer",
                         }}
                       >
                         <span
@@ -432,7 +176,7 @@ function SubMenu({
                         )}
                       </Link>
 
-                      {/* Layer 3: Deep Items (e.g., Bank Asia Branch Openings) */}
+                      {/* Layer 3: Deep Items (Bank Asia Limited branches) */}
                       {hasDeepSub && isDeepOpen && subSub.deepItems && (
                         <ul
                           style={{
@@ -487,18 +231,81 @@ function SubMenu({
   );
 }
 
-// ── Main Component ───────────────────────────────────────────────────────────
+// ── Main Exported Component ──────────────────────────────────────────────────
 export default function PortfolioHome() {
   const [width, setWidth] = useState(0);
+  const [allServiceData, setAllServiceData] =
+    useState<ServiceData[]>(static_service_data);
+  const [hoveredId, setHoveredId] = useState<number | string | null>(null);
+
+  const titleRefs = useRef<{
+    [key: string | number]: HTMLHeadingElement | null;
+  }>({});
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setWidth(window.innerWidth);
   }, []);
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
-  const titleRefs = useRef<{ [key: number]: HTMLHeadingElement | null }>({});
-  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleEnter = (id: number) => {
+  // Fetch from Sanity and Merge via centralized logic
+  useEffect(() => {
+    const fetchSanityServices = async () => {
+      try {
+        const query = `*[_type == "our-canvas"] {
+          "id": _id,
+          item,
+          subItems[] {
+            "title": coalesce(atlSub, btlSub, digitalSub),
+            link,
+            "data": data[] {
+              "id": _key,
+              title,
+              mediaType,
+              "src": src.asset->url,
+              youtubeUrl
+            },
+            "nestedItems": subItems[] {
+              title,
+              link,
+              "data": data[] {
+                "id": _key,
+                title,
+                mediaType,
+                "src": src.asset->url,
+                youtubeUrl
+              },
+              "deepItems": deepItems[] {
+                title,
+                link,
+                "data": data[] {
+                  "id": _key,
+                  title,
+                  mediaType,
+                  "src": src.asset->url,
+                  youtubeUrl
+                }
+              }
+            }
+          }
+        }`;
+
+        const sanityData = await client.fetch(query);
+        if (sanityData && sanityData.length > 0) {
+          const finalMergedData = mergeStaticAndSanityData(
+            static_service_data,
+            sanityData,
+          );
+          setAllServiceData(finalMergedData);
+        }
+      } catch (error) {
+        console.error("Sanity connection error on Home:", error);
+      }
+    };
+
+    fetchSanityServices();
+  }, []);
+
+  const handleEnter = (id: number | string) => {
     if (leaveTimer.current) clearTimeout(leaveTimer.current);
     setHoveredId(id);
   };
@@ -517,9 +324,6 @@ export default function PortfolioHome() {
                 Our expertise lies in crafting perceptions that empower brands,
                 making them exceptional and significant in the minds of
                 consumers.
-                <span>
-                  <br />
-                </span>
               </h5>
             </div>
           </div>
@@ -535,7 +339,7 @@ export default function PortfolioHome() {
                   borderRadius: "10px",
                 }}
                 src={shape}
-                alt=""
+                alt="portfolio-canvas"
               />
             </div>
           </div>
@@ -543,12 +347,12 @@ export default function PortfolioHome() {
           <div
             style={{
               paddingLeft: width > 768 ? "70px" : "20px",
-              paddingTop: width > 768 ? "50px" : "50px",
+              paddingTop: "50px",
             }}
             className="col-xl-6 col-lg-6 col-md-12"
           >
             <div className="tp-service-right-wrap">
-              {service_data.map((s) => (
+              {allServiceData.map((s) => (
                 <div
                   key={s.id}
                   className="tp-service-item d-flex align-items-start mb-75 tp_fade_bottom"
@@ -572,7 +376,9 @@ export default function PortfolioHome() {
                       onMouseLeave={handleLeave}
                       style={{ cursor: "pointer", display: "inline-block" }}
                     >
-                      <Link href="#">{s.title}</Link>
+                      <Link href="#" onClick={(e) => e.preventDefault()}>
+                        {s.item}
+                      </Link>
                     </h4>
 
                     {s.subItems && (
