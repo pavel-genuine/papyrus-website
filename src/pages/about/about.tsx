@@ -42,6 +42,12 @@ const socialData = Array.from({ length: 14 }, (_, index) => ({
   mediaType: "image",
   src: `/assets/img/home-01/papyrus-about/Social/img (${index + 1}).jpg`,
 }));
+const btsData = Array.from({ length: 1 }, (_, index) => ({
+  id: index + 101,
+  mediaType: "youtube",
+  youtubeUrl: "https://youtu.be/jubAn7F6ueg?si=Y6-p-ZZvGfLQibuC",
+  src: `/assets/img/home-01/papyrus-about/BTS/img (${index + 1}).png`,
+}));
 
 const AboutMeMain = () => {
   useScrollSmooth();
@@ -179,8 +185,8 @@ const AboutMeMain = () => {
               </div>
             </div>
             <div className="tp-brand-4-area pt-20 pb-120">
-              <p className="text-center text-white"> Up Comming....</p>
-              {/* <PortfolioGridFourColArea portfolio_data={portfolio_data} /> */}
+              {/* <p className="text-center text-white"> Up Comming....</p> */}
+              <PortfolioGridFourColArea portfolio_data={btsData} />
             </div>
 
             {/* big text */}
