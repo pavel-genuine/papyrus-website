@@ -68,7 +68,7 @@ const tvcYoutubeUrls = [
   "https://www.youtube.com/embed/Xg-Mp2iWSj8", // index 23
   "https://www.youtube.com/embed/PheBReZDBIk", // index 24
   "https://www.youtube.com/embed/vpqvbCCl-lg", // index 25
-  // ── এখান থেকে স্ক্রিনশট অনুযায়ী নতুন লিঙ্কগুলো ক্রমানুসারে অ্যাড করা হলো ──
+
   "https://www.youtube.com/embed/byyIECUZ0ew", // index 26 -> Meena Click (tvc-banner (26).png)
   "https://www.youtube.com/embed/-Rmqrix5Wzw", // index 27 -> জরায়ুমুখ ক্যান্সার (tvc-banner (27).png)
   "https://www.youtube.com/embed/rP9mO7bpA0Q", // index 28 -> Jafflong Tea (tvc-banner (28).png)
@@ -93,6 +93,19 @@ const tvcYoutubeUrls = [
   "https://www.youtube.com/embed/QP31KrK8dmM", // index 46 -> বই পড়া দৃশ্য (tvc-banner (46).png)
   "https://www.youtube.com/embed/_yPvcg7R9b4", // index 48 -> বাবা ও মেয়ে কাপড়ের ব্যাগ দৃশ্য (tvc-banner (48).png)
   "https://www.youtube.com/watch?v=QP31KrK8dmM", // index 47 -> অফিস/টেবিল সিন (tvc-banner (47).png)
+];
+
+const ovcYoutubeUrls = [
+  ,
+  "https://youtu.be/xLoHWcDGEPc?si=4asMiyVYf8_EnjaZ",
+  "https://youtu.be/1zooG6E_7DA?si=yt-mWgwOmGB2-P5I",
+  "https://youtu.be/cADFGF4R1o4?si=kda1hcrTjRUkJ3FK",
+  "https://www.youtube.com/watch?v=Ps1tcAZ94n8",
+];
+const musicVideoYoutubeUrls = [
+  ,
+  "https://youtu.be/AQ3BYfb2nhU?si=9zkTnSsLG5M0vJwD",
+  "https://youtu.be/4ADJoyJf0og?si=astme6biI8o4equf",
 ];
 
 // Inject static images arrays onto the structure dynamically if required
@@ -144,10 +157,10 @@ static_service_data[0].subItems[8].data = Array.from(
   { length: 48 },
   (_, index) => ({
     id: index + 101,
-    mediaType: "youtube",
     src: `/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (${index + 1}).png`,
     title: `TVC Project ${index + 1}`,
     youtubeUrl: tvcYoutubeUrls[index + 1] || "",
+    mediaType: "youtube",
   }),
 );
 static_service_data[0].subItems[9].data = Array.from(
@@ -572,6 +585,26 @@ static_service_data[2].subItems[1].data = Array.from(
     id: index + 4101,
     mediaType: "video",
     src: `/assets/img/home-01/portfolio/Motion/motion (${index + 1}).mp4`,
+    title: `Motion Project ${index + 1}`,
+  }),
+);
+static_service_data[2].subItems[2].data = Array.from(
+  { length: 4 },
+  (_, index) => ({
+    id: index + 4101,
+    youtubeUrl: ovcYoutubeUrls[index + 1] || "",
+    mediaType: "youtube",
+    src: `/assets/img/home-01/portfolio/OVC/img (${index + 1}).png`,
+    title: `Motion Project ${index + 1}`,
+  }),
+);
+static_service_data[2].subItems[3].data = Array.from(
+  { length: 2 },
+  (_, index) => ({
+    id: index + 4101,
+    youtubeUrl: musicVideoYoutubeUrls[index + 1] || "",
+    mediaType: "youtube",
+    src: `/assets/img/home-01/portfolio/Music-Video/img (${index + 1}).png`,
     title: `Motion Project ${index + 1}`,
   }),
 );
