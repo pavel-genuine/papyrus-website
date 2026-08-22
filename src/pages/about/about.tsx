@@ -32,6 +32,11 @@ import PapyrusTeam from "../team/papyrus-team";
 import PortfolioGridFourColArea from "@/components/portfolio/portfolio-grid-4-col-area";
 import portfolio_data from "@/data/portfolio-data";
 
+const btsYoutubeUrls = [
+  "https://youtu.be/jubAn7F6ueg?si=Y6-p-ZZvGfLQibuC",
+  "https://youtu.be/o75B3mxx4d8?si=seqjnu6QuSEn5xYd",
+];
+
 const ARMData = Array.from({ length: 29 }, (_, index) => ({
   id: index + 101,
   mediaType: "image",
@@ -42,10 +47,10 @@ const socialData = Array.from({ length: 14 }, (_, index) => ({
   mediaType: "image",
   src: `/assets/img/home-01/papyrus-about/Social/img (${index + 1}).jpg`,
 }));
-const btsData = Array.from({ length: 1 }, (_, index) => ({
+const btsData = Array.from({ length: 2 }, (_, index) => ({
   id: index + 101,
   mediaType: "youtube",
-  youtubeUrl: "https://youtu.be/jubAn7F6ueg?si=Y6-p-ZZvGfLQibuC",
+  youtubeUrl: btsYoutubeUrls[index] || "",
   src: `/assets/img/home-01/papyrus-about/BTS/img (${index + 1}).png`,
 }));
 
