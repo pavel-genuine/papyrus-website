@@ -32,6 +32,7 @@ import showcase_22 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (2
 import showcase_23 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (23).png";
 import showcase_24 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (24).png";
 import showcase_25 from "@/assets/img/home-01/portfolio/TVC-Banner/tvc-banner (25).png";
+import showcase_26 from "@/assets/img/home-01/papyrus-about/BTS/img (2).png";
 
 // ─── Slider Data ─────────────────────────────────────────────────────────────
 const slider_data = [
@@ -43,6 +44,15 @@ const slider_data = [
     description: "Modern branding and web experience.",
     client: "Milk Land",
     year: "2024",
+  },
+  {
+    id: 70155,
+    subtitle: "Branding & Marketing",
+    title: "football",
+    youtubeUrl: "https://youtu.be/o75B3mxx4d8",
+    description: "Luxury real estate digital experience.",
+    client: "ICY Guest",
+    year: "2025",
   },
   {
     id: 2001,
@@ -246,6 +256,7 @@ const slider_data = [
 
 const slider_images = [
   showcase_14,
+  showcase_26,
   showcase_1,
   showcase_2,
   showcase_3,
