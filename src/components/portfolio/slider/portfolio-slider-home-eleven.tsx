@@ -49,9 +49,9 @@ const slider_data = [
     id: 70155,
     subtitle: "Branding & Marketing",
     title: "football",
-    youtubeUrl: "https://youtu.be/o75B3mxx4d8",
+    youtubeUrl: "https://www.youtube.com/embed/o75B3mxx4d8",
     description: "Luxury real estate digital experience.",
-    client: "ICY Guest",
+    client: "pubg",
     year: "2025",
   },
   {
